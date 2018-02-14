@@ -13,7 +13,7 @@ Toolbox contains various components written in Swift.
 
 ## Components List
 
-- [x] Keychain
+- Keychain
     - KeychainWrapper - easy add/remove/get Encodable struct to/from Keychain.
 
 ## Requirements
