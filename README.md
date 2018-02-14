@@ -1,7 +1,10 @@
-# Shakuro iOS Toolbox
+# Shakuro iOS Toolbox 
+
+![Version](https://img.shields.io/badge/version-0.5.4-blue.svg)
+![Platform](https://img.shields.io/badge/platform-iOS-lightgrey.svg)
+![License MIT](https://img.shields.io/badge/license-MIT-green.svg)
 
 Toolbox contains various components written in Swift.
-Current version is `0.5.4`.
 
 - [Components List](#components-list)
 - [Requirements](#requirements)
