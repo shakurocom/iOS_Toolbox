@@ -51,6 +51,8 @@ You can use integrate only needed components. To do this you need to specify sub
 
 ```ruby
 target '<Your Target Name>' do
+    pod 'Shakuro.iOS_Toolbox/<Component Name>', :git => 'https://github.com/shakurocom/iOS_Toolbox', :tag => '0.5.4'
+#example:
     pod 'Shakuro.iOS_Toolbox/Keychain', :git => 'https://github.com/shakurocom/iOS_Toolbox', :tag => '0.5.4'
 end
 ```
