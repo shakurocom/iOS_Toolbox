@@ -16,8 +16,7 @@ Toolbox contains various components written in Swift.
 - [Device](/Device/)
     - **DeviceType** - Helper for detecting model of the device / simulator.
     - **DeviceOrientationListener** - Alternative for UIDevice.current.orientation.
-- [Extensions](/Extensions/)
-    Various extensions with small helper functions.
+- [Extensions](/Extensions/) - Various extensions with small helper functions.
 - [ImageProcessing](/ImageProcessing/)
     - **ImageProcessor** - Helper for CGImage and UIImage
 - [Keychain](/Keychain/)
