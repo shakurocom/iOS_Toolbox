@@ -15,6 +15,8 @@ Toolbox contains various components written in Swift.
 
 - [Keychain](/Keychain/)
     - **KeychainWrapper** - easy add/remove/get Codable object to/from Keychain.
+- [Keyboard](/Keyboard/)
+    - **KeyboardHandler** - wrapper around keyboard notifications
 
 ## Requirements
 
