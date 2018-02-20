@@ -13,6 +13,9 @@ Toolbox contains various components written in Swift.
 
 ## Components List
 
+- [Device](/Device/)
+    - **DeviceType** - Helper for detecting model of the device / simulator.
+    - **DeviceOrientationListener** - Alternative for UIDevice.current.orientation.
 - [Keychain](/Keychain/)
     - **KeychainWrapper** - easy add/remove/get Codable object to/from Keychain.
 - [Keyboard](/Keyboard/)
