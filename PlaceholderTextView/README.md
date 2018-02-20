@@ -1,63 +1,34 @@
-# Shakuro iOS Toolbox / Keychain
+# Shakuro iOS Toolbox / PlaceholderTextView
 
-Easy to use wrapper for adding, removing and reading `Codable` objects to/from Keychain.
+UITextView subclass with a placeholder feature and ability to change own size depending on text contents. 
 
 ## Usage
 
-Import module:
+Add `UITextView` control in storyboard to your scene (controller) and change it's class to `PlaceholderTextView`.
+By default `PlaceholderTextView` will behave exactly as `UITextView`.
 
 ```swift
-import Shakuro_iOS_Toolbox
+@IBOutlet private var textView: PlaceholderTextView!
 ```
 
-KeychainWrapper work with `Codable` objects:
+You need to enable additional features in code.
+
+Placeholder label:
 
 ```swift
-struct UserCredentials: Codable {
-    let username: String
-    let password: String
-}
-
-enum Constant {
-    static let keychainServiceName: String = "com.shakuro.testApp"
-    static let keychainItemId: String = "testUserCredentials"
-}
+textView.placeholder = NSLocalizedString("Placeholder text", comment: "")
 ```
 
-Save data into Keychain:
+Contents hagging:
 
 ```swift
-func saveItemToKeychain() {
-    let credentials = UserCredentials(username: "Vasya", password: "123")
-    let item = KeychainWrapper.Item(
-        serviceName: Constant.keychainServiceName,
-        itemId: Constant.keychainItemId,
-        itemName: nil,
-        secValue: credentials)
-    KeychainWrapper.saveKeychainItem(item)
-}
+textView.layoutContainerView = textViewContinerView
+textView.animateIntrinsicContentSize = true
+textView.contentSizeBased = true
 ```
 
-Read item from Keychain:
+If you set `maxLength` property to non-zero value, than characters counter label will be displayed in lower-right corner:
 
 ```swift
-func readItemFromKeychain() {
-    let keychainItem: KeychainWrapper.Item<UserCredentials>? = KeychainWrapper.keychainItem(
-        itemId: Constant.keychainItemId, 
-        serviceName: Constant.keychainServiceName)
-    if let userCredentials = keychainItem?.secValue {
-        print("username: \(userCredentials.username)")
-        print("password: \(userCredentials.password)")
-    }
-}
-```
-
-Remove item from Keychain:
-
-```swift
-func removeItemFromKeychain() {
-    KeychainWrapper.removeKeychainItem(
-        itemId: Constant.keychainItemId,
-        serviceName: Constant.keychainServiceName)
-}
+textView.maxLength = 144
 ```
