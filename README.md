@@ -69,7 +69,7 @@ end
 
 ### Manually
 
-If you prefer to not use CocoPods, than you can integrate any/all components from Shakuro iOS Toolbox simply by copuing them to your project
+If you prefer to not use CocoPods, than you can integrate any/all components from Shakuro iOS Toolbox simply by copying them to your project
 
 ## License
 
