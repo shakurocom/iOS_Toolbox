@@ -1,69 +1,41 @@
-# Shakuro iOS Toolbox 
+# Shakuro iOS Toolbox / Keyboard
 
-![Version](https://img.shields.io/badge/version-0.5.4-blue.svg)
-![Platform](https://img.shields.io/badge/platform-iOS-lightgrey.svg)
-![License MIT](https://img.shields.io/badge/license-MIT-green.svg)
+Wrapper around keyboard notifications.
 
-Toolbox contains various components written in Swift.
+## Usage
 
-- [Components List](#components-list)
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [License](#license)
+Add a strong reference inside your `UIViewController`:
 
-## Components List
-
-- [Keychain](/Keychain/)
-    - **KeychainWrapper** - easy add/remove/get Codable object to/from Keychain.
-
-## Requirements
-
-- iOS 10.0+
-- Xcode 9.2+
-- Swift 4.0+
-
-## Installation
-
-### CocaPods
-
-[CocaPods](http://cocapods.org) is a dependency manager for Coca projects. You can install it with the following command:
-
-```bash
-$ gem install cocoapods
+```swift
+private var keyboardHandler: KeyboardHandler!
 ```
 
-To integrate Toolbox into you Xcode project, specify it in your `Podfile`:
+Initialize it inside `viewDidLoad()`:
 
-```ruby
-source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '10.0'
-use_frameworks!
-
-target '<Your Target Name>' do
-    pod 'Shakuro.iOS_Toolbox', :git => 'https://github.com/shakurocom/iOS_Toolbox', :tag => '0.5.4'
-end
+```swift
+keyboardHandler = KeyboardHandler(heightDidChange: { [weak self] (newKeyboardHeight: CGFloat, animationDuration: TimeInterval) in
+    if let strongSelf = self {
+        // animate UI
+    }
+})
 ```
 
-Then, run the following command:
+## iPhone X
 
-```bash
-$ pod install
+On **iPhone X** exists new feature to quickly switch between apps. Quick change between two apps one of which has open keyboard leads to several notifications generated with wrong data. At the moment there is no way to detect these "bad" notifications. So, it is strongly advised to add additional check before you do your animations:
+
+```swift
+// inside KeyboardHandler's block
+if let strongSelf = self {
+    if strongSelf.controlWithKeyboardIsEditing() || newKeyboardHeight == 0 {
+        // animate UI
+    }
+}
+
+
+
+// somewhere in your UIViewController
+private func controlWithKeyboardIsEditing() -> Bool {
+    return someTextField.isEditing   // come with expression, that suits your needs
+}
 ```
-
-You can use integrate only needed components. To do this you need to specify subpod:
-
-```ruby
-target '<Your Target Name>' do
-    pod 'Shakuro.iOS_Toolbox/<Component Name>', :git => 'https://github.com/shakurocom/iOS_Toolbox', :tag => '0.5.4'
-#example:
-    pod 'Shakuro.iOS_Toolbox/Keychain', :git => 'https://github.com/shakurocom/iOS_Toolbox', :tag => '0.5.4'
-end
-```
-
-### Manually
-
-If you prefer to not use CocoPods, than you can integrate any/all components from Shakuro iOS Toolbox simply by copuing them to your project
-
-## License
-
-Shakuro iOS Toolbox is released under the MIT license. [See LICENSE](https://github.com/shakurocom/iOS_Toolbox/blob/master/LICENSE) for details.
