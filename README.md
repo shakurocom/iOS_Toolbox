@@ -1,5 +1,7 @@
 ![Shakuro iOS Toolbox](title_image.svg)
 
+<br><br>
+
 ![Version](https://img.shields.io/badge/version-0.5.4-blue.svg)
 ![Platform](https://img.shields.io/badge/platform-iOS-lightgrey.svg)
 ![License MIT](https://img.shields.io/badge/license-MIT-green.svg)
