@@ -1,5 +1,4 @@
 ![Shakuro iOS Toolbox](title_image.svg)
-
 <br><br>
 
 ![Version](https://img.shields.io/badge/version-0.5.4-blue.svg)
