@@ -24,7 +24,7 @@ public enum VideoCameraError: Error {
     case videoDataOutputIsUnavailable
     case metadataOutputIsUnavailable
 
-    public var localizedDescription: String {
+    public func errorDescription() -> String {
         switch self {
         case .invalidConfiguration(let message):
             return "Invalid configuration: " + message
@@ -78,4 +78,5 @@ public enum VideoCameraError: Error {
             return "Metadta output is unavailable."
         }
     }
+
 }
