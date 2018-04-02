@@ -83,8 +83,21 @@ public extension DeviceType {
                 identifier.append(String(UnicodeScalar(UInt8(value))))
             }
         }
-
         return DeviceType(identifier: identifier)
+    }
+
+    /**
+     Returns the current model.
+     For real devices this property will return same result as `current`.
+     For Simulator it will return simulated device model.
+     This property is supposed to never return `DeviceType.simulator` value - use `current` if you need to detect simulator.
+     */
+    public static var model: DeviceType {
+        var deviceType = DeviceType.current
+        if deviceType == .simulator {
+            deviceType = DeviceType(identifier: String(cString: getenv("SIMULATOR_MODEL_IDENTIFIER")))
+        }
+        return deviceType
     }
 
     /**
