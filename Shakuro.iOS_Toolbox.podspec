@@ -45,7 +45,7 @@ TODO: Add long description of the pod here.
 
         sp.source_files = 'Extensions/Source/Classes/**/*'
         sp.frameworks = 'UIKit'
-        sp.dependency 'CommonCrypto', '1.1'
+        sp.dependency 'CommonCryptoModule', '1.0.2'
 
     end
 

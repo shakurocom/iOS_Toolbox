@@ -1,4 +1,9 @@
+//
+//
+//
+
 import Foundation
+import CommonCryptoModule
 
 // MARK: - SHA512, MD5
 extension String {
