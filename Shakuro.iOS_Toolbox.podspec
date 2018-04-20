@@ -9,7 +9,7 @@
 # TODO: add email validator
 Pod::Spec.new do |s|
     s.name             = 'Shakuro.iOS_Toolbox'
-    s.version          = '0.6.6'
+    s.version          = '0.6.7'
     s.summary          = 'A bunch of components for iOS'
 
 # This description is used to generate tags and improve search results.
