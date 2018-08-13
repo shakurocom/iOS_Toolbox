@@ -10,7 +10,7 @@ Import module:
 import Shakuro_iOS_Toolbox
 ```
 
-KeychainWrapper work with `Codable` objects:
+KeychainWrapper works with `Codable` objects:
 
 ```swift
 struct UserCredentials: Codable {
@@ -28,7 +28,7 @@ Save data into Keychain:
 
 ```swift
 func saveItemToKeychain() {
-    let credentials = UserCredentials(username: "Vasya", password: "123")
+    let credentials = UserCredentials(username: "myUsername", password: "myPassword")
     let item = KeychainWrapper.Item(
         serviceName: Constant.keychainServiceName,
         itemId: Constant.keychainItemId,

@@ -22,14 +22,14 @@ public class KeychainWrapper {
         case searchKeychainError(osStatus: OSStatus)
     }
 
-    public struct Item<T> {
+    public struct Item<T> where T: Codable {
         public let serviceName: String
         public let account: String
         public let itemName: String?
         public let accessGroup: String?
         public let secValue: T
 
-        public init(serviceName: String, account: String, itemName: String? = nil, accessGroup: String? = nil, secValue: T) {
+        public init(serviceName: String, account: String, secValue: T, itemName: String? = nil, accessGroup: String? = nil) {
             self.serviceName = serviceName
             self.account = account
             self.itemName = itemName
@@ -44,7 +44,7 @@ public class KeychainWrapper {
     /**
      - throws: KeychainWrapper.Error
      */
-    public static func saveKeychainItem<T>(_ item: KeychainWrapper.Item<T>) throws where T:Encodable {
+    public static func saveKeychainItem<T>(_ item: KeychainWrapper.Item<T>) throws where T: Encodable {
         if let secValueData = try? JSONEncoder().encode(item.secValue) {
             var searchQuery: [String: Any] = makeKeychainQuery(serviceName: item.serviceName, account: item.account, accessGroup: item.accessGroup)
             searchQuery[kSecReturnData as String] = kCFBooleanTrue
@@ -99,7 +99,7 @@ public class KeychainWrapper {
     /**
      - throws: KeychainWrapper.Error
      */
-    public static func keychainItem<T>(serviceName: String, account: String, accessGroup: String? = nil) throws -> KeychainWrapper.Item<T> where T:Decodable {
+    public static func keychainItem<T>(serviceName: String, account: String, accessGroup: String? = nil) throws -> KeychainWrapper.Item<T> where T: Decodable {
         var searchQuery: [String: Any] = makeKeychainQuery(serviceName: serviceName, account: account, accessGroup: accessGroup)
         searchQuery[kSecReturnData as String] = kCFBooleanTrue
         searchQuery[kSecReturnAttributes as String] = kCFBooleanTrue
@@ -126,7 +126,7 @@ public class KeychainWrapper {
         return KeychainWrapper.Item(serviceName: kServiceName, account: account, itemName: kItemName, secValue: kSecValue)
     }
 
-    public static func keychainItems<T>(serviceName: String, accessGroup: String? = nil) throws -> [KeychainWrapper.Item<T>] where T:Decodable {
+    public static func keychainItems<T>(serviceName: String, accessGroup: String? = nil) throws -> [KeychainWrapper.Item<T>] where T: Decodable {
         var searchQuery: [String: Any] = makeKeychainQuery(serviceName: serviceName, accessGroup: accessGroup)
         searchQuery[kSecMatchLimit as String] = kSecMatchLimitAll
         searchQuery[kSecReturnAttributes as String] = kCFBooleanTrue
