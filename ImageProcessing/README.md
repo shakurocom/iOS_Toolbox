@@ -2,11 +2,11 @@
 
 ## ImageProcessor
 
-Helper for working with CGImage and UIImage.
+A helper for working with `CGImage` and `UIImage`.
 
 ### Usage
 
-There is only one function at the moment - for creating CVPixelBuffer from CGImage:
+There is only one function at the moment - for creating `CVPixelBuffer` from `CGImage`:
 
 ```swift
 let uiImage = UIImage(named: "some-image.png")

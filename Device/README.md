@@ -2,7 +2,7 @@
 
 ## DeviceType
 
-Helper for detecting model of the device / simulator
+A helper for detecting model of the device/simulator.
 
 ### Usage
 
@@ -16,7 +16,7 @@ if DeviceType.current == .simulator {
 
 ## DeviceOrientationListener
 
-Utility object to use instead for UIDevice.current.orientation. Gives much better results, but uses CoreMotion.
+Utility object to use instead of `UIDevice.current.orientation`. Gives much better results, but uses CoreMotion.
 
 ### Usage
 

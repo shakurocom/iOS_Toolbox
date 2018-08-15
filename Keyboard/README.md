@@ -1,6 +1,6 @@
 # Shakuro iOS Toolbox / Keyboard
 
-Wrapper around keyboard notifications.
+A wrapper around keyboard notifications.
 
 ## Usage
 
@@ -50,6 +50,6 @@ if let strongSelf = self {
 
 // somewhere in your UIViewController
 private func controlWithKeyboardIsEditing() -> Bool {
-    return someTextField.isEditing   // come with expression, that suits your needs
+    return someTextField.isEditing   // or some other expression, that suits your needs
 }
 ```

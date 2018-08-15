@@ -1,6 +1,6 @@
 # Shakuro iOS Toolbox / VideoCamera
 
-Wrapper around AVFoundation's camera. Works with several data outputs, such as metadata, video data, still image capture.
+Wrapper around AVFoundation camera. Works with several data outputs, such as metadata, video data, still image capture.
 
 ## Usage
 
@@ -27,7 +27,7 @@ override func viewDidLoad() {
 }
 ```
 
-To display camera preview, one of the simplest ways is to prepare container view in storyboard a than add camera's preview to it:
+To display camera preview, one of the simplest ways is to prepare container view in storyboard and than add camera's preview to it:
 
 ```swift
 @IBOutlet private var cameraPreviewContainerView: UIView!

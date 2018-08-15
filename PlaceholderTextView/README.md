@@ -1,6 +1,6 @@
 # Shakuro iOS Toolbox / PlaceholderTextView
 
-UITextView subclass with a placeholder feature and ability to change own size depending on text contents. 
+A subclass of `UITextView` with a placeholder feature and ability to change own size depending on text contents. 
 
 ## Usage
 

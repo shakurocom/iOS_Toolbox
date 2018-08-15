@@ -1,6 +1,6 @@
 # Shakuro iOS Toolbox / Keychain
 
-Easy to use wrapper for adding, removing and reading `Codable` objects to/from Keychain.
+An easy to use wrapper for adding, removing and reading `Codable` objects to/from Keychain.
 
 ## Usage
 
