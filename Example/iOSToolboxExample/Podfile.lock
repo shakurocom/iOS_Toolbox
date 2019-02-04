@@ -1,0 +1,24 @@
+PODS:
+  - Alamofire (4.8.0)
+  - CommonCryptoModule (1.0.2)
+  - lottie-ios (2.5.2)
+
+DEPENDENCIES:
+  - Alamofire (= 4.8.0)
+  - CommonCryptoModule (= 1.0.2)
+  - lottie-ios (= 2.5.2)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - CommonCryptoModule
+    - lottie-ios
+
+SPEC CHECKSUMS:
+  Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
+  CommonCryptoModule: 63a68b57abed79655b3a01011419bf037a05b0a0
+  lottie-ios: 3fef45d3fabe63e3c7c2eb603dd64ddfffc73062
+
+PODFILE CHECKSUM: 3840b40449b2cdfb5cdd1de423b007267015f45c
+
+COCOAPODS: 1.5.3

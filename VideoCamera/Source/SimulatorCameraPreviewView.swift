@@ -18,7 +18,7 @@ internal class SimulatorCameraPreviewView: VideoCameraPreviewView {
     required init(frame: CGRect, flashColor: UIColor?, flashAnimationDuration aFlashAnimationDuration: CFTimeInterval?, image: CGImage) {
         imageLayer = CALayer()
         imageLayer.backgroundColor = UIColor.clear.cgColor
-        imageLayer.contentsGravity = kCAGravityResizeAspect
+        imageLayer.contentsGravity = CALayerContentsGravity.resizeAspect
         imageLayer.contents = image
 
         super.init(frame: frame, flashColor: flashColor, flashAnimationDuration: aFlashAnimationDuration)

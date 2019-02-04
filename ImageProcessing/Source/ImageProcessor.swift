@@ -9,14 +9,8 @@ import Accelerate
 import AVFoundation
 import UIKit
 
-public class ImageProcessorError: Error {
-    
-    public private(set) var localizedDescription: String
-
-    init(description: String) {
-        localizedDescription = description
-    }
-
+public enum ImageProcessorError: Error {
+    case cantCreateCVPixelBuffer(statusCode: CVReturn)        // probably out of memory situation
 }
 
 public class ImageProcessor {
@@ -34,7 +28,7 @@ public class ImageProcessor {
         let bufferAttributes = [
             kCVPixelBufferCGImageCompatibilityKey: NSNumber(value: false),
             kCVPixelBufferCGBitmapContextCompatibilityKey: NSNumber(value: false)
-        ] as CFDictionary
+            ] as CFDictionary
         let pixelBufferOut = UnsafeMutablePointer<CVPixelBuffer?>.allocate(capacity: 1)
         let createBufferStatus = CVPixelBufferCreate(kCFAllocatorDefault,
                                                      imageWidth,
@@ -43,7 +37,7 @@ public class ImageProcessor {
                                                      bufferAttributes,
                                                      pixelBufferOut)
         let pixelBuffer = pixelBufferOut.pointee
-        pixelBufferOut.deallocate(capacity: 1)
+        pixelBufferOut.deallocate()
         if createBufferStatus == kCVReturnSuccess, let actualPixelBuffer = pixelBuffer {
             CVPixelBufferLockBaseAddress(actualPixelBuffer, [])
             let pixelData = CVPixelBufferGetBaseAddress(actualPixelBuffer)
@@ -62,22 +56,22 @@ public class ImageProcessor {
             CVPixelBufferUnlockBaseAddress(actualPixelBuffer, [])
             result = actualPixelBuffer
         } else {
-            throw ImageProcessorError(description: "Can not create output CVPixelBuffer")
+            throw ImageProcessorError.cantCreateCVPixelBuffer(statusCode: createBufferStatus)
         }
 
         return result
     }
 
-    public static func uiImageOrientation(from: AVCaptureVideoOrientation) -> UIImageOrientation {
+    public static func uiImageOrientation(from: AVCaptureVideoOrientation) -> UIImage.Orientation {
         switch from {
         case .portrait:
-            return UIImageOrientation.up
+            return UIImage.Orientation.up
         case .portraitUpsideDown:
-            return UIImageOrientation.down
+            return UIImage.Orientation.down
         case .landscapeLeft:
-            return UIImageOrientation.left
+            return UIImage.Orientation.left
         case .landscapeRight:
-            return UIImageOrientation.right
+            return UIImage.Orientation.right
         }
     }
 

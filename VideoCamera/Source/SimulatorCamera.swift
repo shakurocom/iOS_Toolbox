@@ -35,20 +35,24 @@ internal class SimulatorCamera {
         delegate = configuration.cameraDelegate
         videoFeedbackOrientation = configuration.simulatedVideoFeedOrientation
         videoFeedbackInterval = configuration.simulatedVideoFeedFrameInterval
-        if let image = configuration.simulatedImage {
-            simulatedImage = image
-            cameraPreviewView = SimulatorCameraPreviewView(
-                frame: CGRect(x: 0, y: 0, width: 100.0, height: 100.0),
-                flashColor: configuration.flashColor,
-                flashAnimationDuration: configuration.flashAnimationDuration,
-                image: simulatedImage)
-            videoFeedbackQueue = DispatchQueue(label: "com.shakuro.simulatorcamera.videofeedbackqueue")
-            videoFeedbackTimer = nil
-            videoFeedbackPixelBuffer = nil
-            videoFeedbackHandler = configuration.simulatedVideoFeedDelegate
+        if let providedImage = configuration.simulatedImage {
+            simulatedImage = providedImage
         } else {
-            throw VideoCameraError.invalidConfiguration(message: "simulated image is not provided")
+            if let image = SimulatorCamera.defaultSimulatorImage() {
+                simulatedImage = image
+            } else {
+                throw VideoCameraError.invalidConfiguration(message: "Simulated image is not provided & can't create default image.")
+            }
         }
+        cameraPreviewView = SimulatorCameraPreviewView(
+            frame: CGRect(x: 0, y: 0, width: 100.0, height: 100.0),
+            flashColor: configuration.flashColor,
+            flashAnimationDuration: configuration.flashAnimationDuration,
+            image: simulatedImage)
+        videoFeedbackQueue = DispatchQueue(label: "com.shakuro.simulatorcamera.videofeedbackqueue")
+        videoFeedbackTimer = nil
+        videoFeedbackPixelBuffer = nil
+        videoFeedbackHandler = configuration.simulatedVideoFeedDelegate
         photoCaptureFallbackBlock = configuration.photoCaptureSimulatorFallbackBlock
 
         // general initialization is done - do additional stuff
@@ -64,6 +68,8 @@ internal class SimulatorCamera {
     }
 
 }
+
+// MARK: - VideoCamera
 
 extension SimulatorCamera: VideoCamera {
 
@@ -216,7 +222,7 @@ extension SimulatorCamera: VideoCamera {
 
     func capturePhoto(completionBlock: @escaping (Data?, Error?) -> Void) {
         let image = UIImage(cgImage: simulatedImage)
-        if let imageData = UIImageJPEGRepresentation(image, 1.0) {
+        if let imageData = image.jpegData(compressionQuality: 1) {
             completionBlock(imageData, nil)
         } else {
             completionBlock(nil, VideoCameraError.cantFlattenCapturedPhotoToData)
@@ -234,6 +240,33 @@ extension SimulatorCamera: VideoCamera {
 
     func transformedMetadataObject(_ metadataObject: AVMetadataObject) -> AVMetadataObject? {
         return metadataObject
+    }
+
+}
+
+// MARK: - Private
+
+private extension SimulatorCamera {
+
+    private static func defaultSimulatorImage() -> CGImage? {
+        let imageSize = CGSize(width: 200, height: 200)
+        let imageRect = CGRect(x: 0, y: 0, width: imageSize.width, height: imageSize.height)
+        UIGraphicsBeginImageContextWithOptions(imageSize, false, 0)
+        UIColor.black.setFill()
+        UIRectFill(imageRect)
+        let font = UIFont.systemFont(ofSize: 16.0)
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .center
+        let attributes: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.font: font,
+            NSAttributedString.Key.paragraphStyle: paragraphStyle,
+            NSAttributedString.Key.foregroundColor: UIColor.green
+        ]
+        let string: NSString = "iOS Toolbox\nsimulator camera"
+        string.draw(in: imageRect.insetBy(dx: 0, dy: 60), withAttributes: attributes)
+        let uiImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return uiImage?.cgImage
     }
 
 }

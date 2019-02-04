@@ -59,5 +59,5 @@ internal class DeviceCameraPreviewView: VideoCameraPreviewView {
     internal func layerRectConverted(fromMetadataOutputRect rectInMetadataOutputCoordinates: CGRect) -> CGRect {
         return previewLayer.layerRectConverted(fromMetadataOutputRect: rectInMetadataOutputCoordinates)
     }
-    
+
 }

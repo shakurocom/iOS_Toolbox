@@ -21,7 +21,7 @@ public class VideoCameraFactory {
             do {
                 camera = try SimulatorCamera(configuration: configuration)
             } catch let error as VideoCameraError {
-                fatalError("VideoCamera: " + error.errorDescription())
+                fatalError("VideoCamera: " + error.localizedDescription)
             } catch let error {
                 fatalError("VideoCamera: " + error.localizedDescription)
             }

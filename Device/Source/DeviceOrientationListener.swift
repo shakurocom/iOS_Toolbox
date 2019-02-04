@@ -9,7 +9,7 @@ import CoreMotion
 
 public class DeviceOrientationListener {
 
-    private static let accelerationThreshold = 0.75;
+    private static let accelerationThreshold = 0.75
 
     private let isSimulatorMode: Bool
     private let motionManager: CMMotionManager?
@@ -62,12 +62,12 @@ public class DeviceOrientationListener {
             }
             if acceleration.x >= DeviceOrientationListener.accelerationThreshold {
                 actualSelf._currentOrientation = UIDeviceOrientation.landscapeRight
-            } else if (acceleration.x <= -DeviceOrientationListener.accelerationThreshold) {
-                actualSelf._currentOrientation = UIDeviceOrientation.landscapeLeft;
-            } else if (acceleration.y <= -DeviceOrientationListener.accelerationThreshold) {
-                actualSelf._currentOrientation = UIDeviceOrientation.portrait;
-            } else if (acceleration.y >= DeviceOrientationListener.accelerationThreshold) {
-                actualSelf._currentOrientation = UIDeviceOrientation.portraitUpsideDown;
+            } else if acceleration.x <= -DeviceOrientationListener.accelerationThreshold {
+                actualSelf._currentOrientation = UIDeviceOrientation.landscapeLeft
+            } else if acceleration.y <= -DeviceOrientationListener.accelerationThreshold {
+                actualSelf._currentOrientation = UIDeviceOrientation.portrait
+            } else if acceleration.y >= DeviceOrientationListener.accelerationThreshold {
+                actualSelf._currentOrientation = UIDeviceOrientation.portraitUpsideDown
             }
         })
     }
