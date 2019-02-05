@@ -18,11 +18,14 @@ public struct VideoCameraConfiguration {
     public weak var cameraDelegate: VideoCameraDelegate?
 
     // MARK: Simulator-only
+    /**
+     If `nil` default image will be created.
+     */
     public var simulatedImage: CGImage?
     public var simulatedVideoFeedOrientation: AVCaptureVideoOrientation = AVCaptureVideoOrientation.portrait
     public var simulatedVideoFeedFrameInterval: DispatchTimeInterval = .milliseconds(1000 / 30) // 30 FPS
     public weak var simulatedVideoFeedDelegate: VideoCameraSimulatedVideoDataOutputHandler?
-    public var photoCaptureSimulatorFallbackBlock: ((_ photo: CGImage) -> Void)? = nil // this block will be used on simulator, when you call `func capturePhoto(delegate:)`
+    public var photoCaptureSimulatorFallbackBlock: ((_ photo: CGImage) -> Void)? // this block will be used on simulator, when you call `func capturePhoto(delegate:)`
 
     // MARK: Device-only
 
@@ -79,7 +82,7 @@ public struct VideoCameraConfiguration {
      */
     public var videoFeedSettings: [String: Any] = [kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32BGRA]
 
-    public weak var videoFeedDelegate: AVCaptureVideoDataOutputSampleBufferDelegate? = nil
+    public weak var videoFeedDelegate: AVCaptureVideoDataOutputSampleBufferDelegate?
 
     /**
      Whether metadata feed is enabled.
@@ -89,7 +92,7 @@ public struct VideoCameraConfiguration {
 
     public var metadataObjectTypes: [AVMetadataObject.ObjectType] = []
 
-    public var metadataFeedDelegate: AVCaptureMetadataOutputObjectsDelegate? = nil
+    public weak var metadataFeedDelegate: AVCaptureMetadataOutputObjectsDelegate?
 
     public init() {}
 

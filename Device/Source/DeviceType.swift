@@ -10,7 +10,8 @@ import Foundation
 import UIKit
 
 /// Enum representing the different types of iOS devices available
-public enum DeviceType: String, EnumProtocol {
+public enum DeviceType: CaseIterable {
+
     case iPhone2G
 
     case iPhone3G
@@ -39,6 +40,10 @@ public enum DeviceType: String, EnumProtocol {
 
     case iPhoneX
 
+    case iPhoneXS
+    case iPhoneXSMax
+    case iPhoneXR
+
     case iPodTouch1G
     case iPodTouch2G
     case iPodTouch3G
@@ -59,10 +64,12 @@ public enum DeviceType: String, EnumProtocol {
     case iPadAir2
 
     case iPadPro9Inch
+    case iPadPro10p5Inch
     case iPadPro12Inch
 
     case simulator
     case notAvailable
+
 }
 
 public extension DeviceType {
@@ -123,6 +130,9 @@ public extension DeviceType {
         case .iPhone8: return "iPhone 8"
         case .iPhone8Plus: return "iPhone 8 Plus"
         case .iPhoneX: return "iPhone X"
+        case .iPhoneXS: return "iPhone XS"
+        case .iPhoneXSMax: return "iPhone XS Max"
+        case .iPhoneXR: return "iPhone XR"
         case .iPodTouch1G: return "iPod Touch 1G"
         case .iPodTouch2G: return "iPod Touch 2G"
         case .iPodTouch3G: return "iPod Touch 3G"
@@ -140,6 +150,7 @@ public extension DeviceType {
         case .iPadAir: return "iPad Air"
         case .iPadAir2: return "iPad Air 2"
         case .iPadPro9Inch: return "iPad Pro 9 Inch"
+        case .iPadPro10p5Inch: return "iPad Pro 10.5 Inch"
         case .iPadPro12Inch: return "iPad Pro 12 Inch"
         case .simulator: return "Simulator"
         case .notAvailable: return "Not Available"
@@ -169,6 +180,9 @@ public extension DeviceType {
         case .iPhone8: return ["iPhone10,1", "iPhone10,4"]
         case .iPhone8Plus: return ["iPhone10,2", "iPhone10,5"]
         case .iPhoneX: return ["iPhone10,3", "iPhone10,6"]
+        case .iPhoneXS: return ["iPhone11,2"]
+        case .iPhoneXSMax: return ["iPhone11,4", "iPhone11,6"]
+        case .iPhoneXR: return ["iPhone11,8"]
 
         case .iPodTouch1G: return ["iPod1,1"]
         case .iPodTouch2G: return ["iPod2,1"]
@@ -188,7 +202,8 @@ public extension DeviceType {
         case .iPadAir: return ["iPad4,1", "iPad4,2", "iPad4,3"]
         case .iPadAir2: return ["iPad5,3", "iPad5,4"]
         case .iPadPro9Inch: return ["iPad6,3", "iPad6,4"]
-        case .iPadPro12Inch: return ["iPad6,7", "iPad6,8"]
+        case .iPadPro10p5Inch: return ["iPad7,3", "iPad7,4"]
+        case .iPadPro12Inch: return ["iPad6,7", "iPad6,8", "iPad7,1", "iPad7,2"]
         }
     }
 
@@ -197,50 +212,18 @@ public extension DeviceType {
      - returns: The device type based on the provided identifier
      */
     private init(identifier: String) {
-        var value: DeviceType? = nil
-        for device in DeviceType.all {
-            for deviceId in device.identifiers {
-                if identifier == deviceId {
-                    value = device
-                    break
-                }
+        var value: DeviceType?
+        for device in DeviceType.allCases {
+            for deviceId in device.identifiers where identifier == deviceId {
+                value = device
+                break
             }
         }
-        if let nonNilValue = value {
-            self = nonNilValue
+        if let realValue = value {
+            self = realValue
         } else {
             self = .notAvailable
         }
     }
-}
 
-// MARK: - EnumProtocol
-
-public protocol EnumProtocol: Hashable {
-
-    /// - returns: All Enum Values
-    static var all: [Self] { get }
-
-}
-
-public extension EnumProtocol {
-
-    public static var all: [Self] {
-        typealias Type = Self
-        let cases = AnySequence({ () -> AnyIterator<Type> in
-            var raw = 0
-            return AnyIterator({
-                let current: Self = withUnsafePointer(to: &raw) { $0.withMemoryRebound(to: Type.self, capacity: 1) { $0.pointee } }
-                let result: Self?
-                if current.hashValue == raw {
-                    raw += 1
-                    result = current
-                } else {
-                    result = nil
-                }
-                return result
-            })
-        })
-        return Array(cases)
-    }
 }

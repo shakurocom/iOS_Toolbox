@@ -293,6 +293,7 @@ extension DeviceCamera: AVCapturePhotoCaptureDelegate {
         })
     }
 
+    @available(iOS, introduced: 10.0, deprecated: 11.0)
     func photoOutput(_ output: AVCapturePhotoOutput,
                      didFinishProcessingPhoto photoSampleBuffer: CMSampleBuffer?,
                      previewPhoto previewPhotoSampleBuffer: CMSampleBuffer?,
@@ -321,6 +322,7 @@ extension DeviceCamera: AVCapturePhotoCaptureDelegate {
         })
     }
 
+    @available(iOS, introduced: 10.0, deprecated: 11.0)
     func photoOutput(_ output: AVCapturePhotoOutput,
                      didFinishProcessingRawPhoto rawSampleBuffer: CMSampleBuffer?,
                      previewPhoto previewPhotoSampleBuffer: CMSampleBuffer?,
@@ -502,8 +504,8 @@ extension DeviceCamera: VideoCamera {
             }
             let modes: [AVCaptureDevice.TorchMode] = [.on, .auto, .off]
             if let currentModeIndex = modes.index(of: device.torchMode) {
-                for i in 1...2 {
-                    let nextMode = modes[(currentModeIndex + i) % modes.count]
+                for index in 1...2 {
+                    let nextMode = modes[(currentModeIndex + index) % modes.count]
                     if device.isTorchModeSupported(nextMode) {
                         self.torchMode = nextMode
                         break
