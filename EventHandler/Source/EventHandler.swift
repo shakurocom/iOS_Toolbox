@@ -5,14 +5,14 @@
 
 import Foundation
 
-internal typealias EventHandlerToken = UInt
+public typealias EventHandlerToken = UInt
 
 /**
  A helper structure if you need old + new values in your notification.
  */
-internal struct EventHandlerValueChange<T> {
-    internal let oldValue: T
-    internal let newValue: T
+public struct EventHandlerValueChange<T> {
+    public let oldValue: T
+    public let newValue: T
 }
 
 /**
@@ -24,9 +24,9 @@ internal struct EventHandlerValueChange<T> {
  - warning:
  Number of tokens is limited by `UInt.max()`
  */
-internal class EventHandler<T> {
+public class EventHandler<T> {
 
-    typealias HandlerType = (_ arg1: T) -> Void
+    public typealias HandlerType = (_ arg1: T) -> Void
 
     private struct HandlerData {
         internal let queue: DispatchQueue?
@@ -37,7 +37,7 @@ internal class EventHandler<T> {
     private var tokenGenerator: EventHandlerToken = 0
     private let accessLock: NSLock = NSLock()
 
-    init(name: String? = nil) {
+    public init(name: String? = nil) {
         if let realName = name {
             accessLock.name = realName + ".accessLock"
         } else {
@@ -51,7 +51,7 @@ internal class EventHandler<T> {
      - parameter queue: `handler` will be run on this queue. If `nil`, event invoker's queue will be used directly.
      - parameter handler: block to be called on each invoked event.
      */
-    internal func add(queue: DispatchQueue? = nil, handler: @escaping HandlerType) -> EventHandlerToken {
+    public func add(queue: DispatchQueue? = nil, handler: @escaping HandlerType) -> EventHandlerToken {
         let token: EventHandlerToken = accessLock.execute({
             tokenGenerator += 1
             handlers[tokenGenerator] = HandlerData(queue: queue, handler: handler)
@@ -64,7 +64,7 @@ internal class EventHandler<T> {
      Releases handler, associated with provided token.
      Invalid tokens will be ignored.
      */
-    internal func removeHandler(token: EventHandlerToken) {
+    public func removeHandler(token: EventHandlerToken) {
         _ = accessLock.execute({
             handlers.removeValue(forKey: token)
         })
@@ -73,7 +73,7 @@ internal class EventHandler<T> {
     /**
      This must be called by **OWNER only!**
      */
-    internal func invoke(_ arg: T) {
+    public func invoke(_ arg: T) {
         for (_, value) in handlers {
             if let realQueue = value.queue {
                 realQueue.async(execute: { value.handler(arg) })
