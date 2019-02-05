@@ -65,7 +65,7 @@ internal class EventHandler<T> {
      Invalid tokens will be ignored.
      */
     internal func removeHandler(token: EventHandlerToken) {
-        accessLock.execute({
+        _ = accessLock.execute({
             handlers.removeValue(forKey: token)
         })
     }
