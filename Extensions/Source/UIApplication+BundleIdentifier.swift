@@ -8,7 +8,7 @@ import UIKit
 
 extension UIApplication {
 
-    static let bundleIdentifier: String = {
+    public static let bundleIdentifier: String = {
         guard let bundleIdentifier = Bundle.main.bundleIdentifier else {
             fatalError("\(String(describing: self)) - \(#function): can't read bundle identifier from bundle: \(Bundle.main).")
         }

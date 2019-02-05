@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
     s.name             = 'Shakuro.iOS_Toolbox'
-    s.version          = '0.9.1'
+    s.version          = '0.9.2'
     s.summary          = 'A bunch of components for iOS'
     s.homepage         = 'https://github.com/shakurocom/iOS_Toolbox'
     s.license          = { :type => 'MIT', :file => 'LICENSE' }
@@ -88,7 +88,7 @@ Pod::Spec.new do |s|
 
     s.subspec 'PlaceholderTextView' do |sp|
 
-        sp.source_files = 'PlaceholderTextView/Source/Classes/**/*'
+        sp.source_files = 'PlaceholderTextView/Source/**/*'
         sp.frameworks = 'UIKit'
 
     end
