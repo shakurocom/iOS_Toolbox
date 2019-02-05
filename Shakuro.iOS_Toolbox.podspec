@@ -54,7 +54,7 @@ Pod::Spec.new do |s|
 
         sp.source_files = 'HTTPClient/Source/**/*'
         sp.frameworks = 'Foundation'
-        sp.dependency 'Alamofire', '4.7.2'
+        sp.dependency 'Alamofire', '4.7.3'
 
     end
 
