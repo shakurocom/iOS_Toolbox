@@ -20,12 +20,22 @@ public class KeychainWrapper {
         case searchKeychainError(osStatus: OSStatus)
     }
 
-    public struct Item<T> where T: Codable {
+    public struct Item<T: Codable> {
+
         public let serviceName: String
         public let account: String
         public let itemName: String?
         public let accessGroup: String?
         public let secValue: T
+
+        public init(serviceName: String, account: String, itemName: String?, accessGroup: String?, secValue: T) {
+            self.serviceName = serviceName
+            self.account = account
+            self.itemName = itemName
+            self.accessGroup = accessGroup
+            self.secValue =  secValue
+        }
+
     }
 
     // MARK: - Public
