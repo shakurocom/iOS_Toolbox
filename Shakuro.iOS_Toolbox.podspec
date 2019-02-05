@@ -81,7 +81,7 @@ Pod::Spec.new do |s|
 
     s.subspec 'Labels' do |sp|
 
-        sp.source_files = 'Labels/Source/Classes/**/*'
+        sp.source_files = 'Labels/Source/**/*'
         sp.frameworks = 'UIKit'
 
     end
@@ -95,21 +95,21 @@ Pod::Spec.new do |s|
 
     s.subspec 'PullToRefresh' do |sp|
 
-        sp.source_files = 'PullToRefresh/Source/Classes/**/*'
+        sp.source_files = 'PullToRefresh/Source/**/*'
         sp.frameworks = 'UIKit'
 
     end
 
     s.subspec 'Settings' do |sp|
 
-        sp.source_files = 'Settings/Source/Classes/**/*'
+        sp.source_files = 'Settings/Source/**/*'
         sp.frameworks = 'Foundation'
 
     end
 
     s.subspec 'TaskManager' do |sp|
 
-        sp.source_files = 'TaskManager/Source/Classes/**/*'
+        sp.source_files = 'TaskManager/Source/**/*'
         sp.frameworks = 'Foundation'
 
     end
