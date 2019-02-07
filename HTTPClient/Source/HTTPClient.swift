@@ -153,7 +153,7 @@ open class HTTPClient {
 
     // MARK: - Public
 
-    public func defaultHeaders() -> [String: String] {
+    open func defaultHeaders() -> [String: String] {
         return [:]
     }
 
