@@ -12,13 +12,17 @@ public enum HTTPClientConstant {
 
 open class HTTPClient {
 
-    public enum RequestMethod {
+    public enum RequestMethod: CustomStringConvertible {
 
         case GET
         case PATCH
         case POST
         case PUT
         case DELETE
+
+        public var description: String {
+            return alamofireMethod().rawValue
+        }
 
         internal func alamofireMethod() -> Alamofire.HTTPMethod {
             switch self {
@@ -32,11 +36,19 @@ open class HTTPClient {
 
     }
 
-    public enum ParameterEncoding {
+    public enum ParameterEncoding: CustomStringConvertible {
 
         case httpBody // formData; URLEncoding with destination of httpBody
         case urlQuery(arrayBrakets: Bool)
         case json
+
+        public var description: String {
+            switch self {
+            case .httpBody: return "http body"
+            case .json: return "JSON body"
+            case .urlQuery(let arrayBrakets): return "URL query " + (arrayBrakets ? "with" : "without") + " brakets"
+            }
+        }
 
         internal func alamofireEncoding() -> Alamofire.ParameterEncoding {
             switch self {
