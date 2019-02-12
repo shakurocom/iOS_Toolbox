@@ -334,7 +334,6 @@ internal class ExampleTaskManagerViewController: UIViewController {
         let randomOrgClient = HTTPClient(
             name: "RandomOrgClient",
             acceptableContentTypes: ["text/plain"])
-        randomOrgClient.isDebugLogEnabled = true
         taskManager = ExampleTaskManager(
             name: "com.shakuro.iOSToolboxExample.ExampleTaskManager",
             qualityOfService: QualityOfService.utility,
