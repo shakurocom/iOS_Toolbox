@@ -11,8 +11,15 @@ public typealias EventHandlerToken = UInt
  A helper structure if you need old + new values in your notification.
  */
 public struct EventHandlerValueChange<T> {
+
     public let oldValue: T
     public let newValue: T
+
+    public init(oldValue: T, newValue: T) {
+        self.oldValue = oldValue
+        self.newValue = newValue
+    }
+
 }
 
 /**
