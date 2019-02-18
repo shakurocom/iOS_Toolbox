@@ -75,25 +75,29 @@ public class PullToRefreshView: UIView {
      Default value is '0.25 s'.
      */
     public var animationDuration: TimeInterval = 0.25
+
     /**
      This handler will be called, when control will enter 'refreshing' state.
      */
     public var eventHandler: (() -> Void)?
+
     /**
      For smooth transition between 'refreshing' and 'idle' state it is better to break current touch. Otherwise content offset will be abruptly changed to 0 and than back to user's drag position (because we are changing 'UIScrollView.contentInsets').
      Default value is 'true'.
      */
     public var canCancelTouches: Bool = true
+
     /**
      If size of content of UIScrollView is equal or greater than size of UIScrollView itself AND current offset is 0, than programmatic triggering of refreshing animation (via 'trigger()' or 'beginRefreshAnimation()') will be invisible for user - content offset will not be changed. If this flag is 'true' than content offset will be animated to reveal animating refresh control to user.
      It is recommended to enable this option, if size of initial/empty content of UIScrollView is big.
-     Default value is 'false'.
+     Default value is `false`.
      */
     public var adjustsOffsetToVisible: Bool = false
+
     /**
      Setting new value to this property will reset state of the control to 'idle'.
      If control is disabled, public methods will do nothing and control will not respond to changes in scroll view.
-     Default value is 'true'.
+     Default value is `true`.
      */
     public var isEnabled: Bool = true {
         didSet {
@@ -102,6 +106,16 @@ public class PullToRefreshView: UIView {
             }
         }
     }
+
+    /**
+     Determines how bounces during deceleration are processed.
+     `true` - bounce will be handled just as if user performed similar-to-bounce pull.
+            If bounce is big enough, refresh will be triggered.
+     `false` - only idle state will be processed without moving to `readyToTrigger` state.
+            Refresh won't be triggered regardles of bounce length.
+     Default value is `false`.
+     */
+    public var allowTriggerWithoutDragging: Bool = false
 
     private var observerContext: Int = 0
     private var observablePaths: [ObservableKeyPath] = []
@@ -267,14 +281,15 @@ public class PullToRefreshView: UIView {
         guard isEnabled,
             !ignoreContentOffsetChanges,
             (newValue != oldValue) || forced,
-            let scrollView = self.superview as? UIScrollView else {
+            let scrollView = self.superview as? UIScrollView
+            else {
                 return
         }
         let newOffset = newValue
         let newPullLength = -newOffset.y - originalContentInset.top
         switch state {
         case .idle:
-            if newPullLength > length {
+            if newPullLength > length && (scrollView.isTracking || allowTriggerWithoutDragging) {
                 setPullLength(newPullLength, report: false)
                 setState(.readyToTrigger, report: true)
             } else {
