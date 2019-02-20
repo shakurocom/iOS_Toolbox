@@ -5,7 +5,29 @@
 
 import Foundation
 
-public typealias EventHandlerToken = UInt
+/**
+ Token for observation. You should keep it, otherwise observation will be invalidated.
+ */
+public class EventHandlerToken {
+
+    private weak var handler: EventHandlerProtocol?
+    internal let token: UInt
+
+    internal init(token: UInt, handler: EventHandlerProtocol) {
+        self.handler = handler
+        self.token = token
+    }
+
+    deinit {
+        invalidate()
+    }
+
+    public func invalidate() {
+        handler?.removeToken(token)
+        handler = nil
+    }
+
+}
 
 /**
  A helper structure if you need old + new values in your notification.
@@ -22,8 +44,11 @@ public struct EventHandlerValueChange<T> {
 
 }
 
-/**
+internal protocol EventHandlerProtocol: class {
+    func removeToken(_ token: UInt)
+}
 
+/**
  Typed alternative for Foundation.Notification
  'add(handler:)' & 'removeHandler(token:)' intended to be called in pair.
  Please keep token to be able to remove associated handler later.
@@ -31,7 +56,7 @@ public struct EventHandlerValueChange<T> {
  - warning:
  Number of tokens is limited by `UInt.max()`
  */
-public class EventHandler<T> {
+public class EventHandler<T>: EventHandlerProtocol {
 
     public typealias HandlerType = (_ arg1: T) -> Void
 
@@ -40,8 +65,8 @@ public class EventHandler<T> {
         internal let handler: HandlerType
     }
 
-    private var handlers: [EventHandlerToken: HandlerData] = [:]
-    private var tokenGenerator: EventHandlerToken = 0
+    private var handlers: [UInt: HandlerData] = [:]
+    private var tokenGenerator: UInt = 0
     private let accessLock: NSLock = NSLock()
 
     public init(name: String? = nil) {
@@ -59,22 +84,13 @@ public class EventHandler<T> {
      - parameter handler: block to be called on each invoked event.
      */
     public func add(queue: DispatchQueue? = nil, handler: @escaping HandlerType) -> EventHandlerToken {
-        let token: EventHandlerToken = accessLock.execute({
+        let token = accessLock.execute({ () -> EventHandlerToken in
             tokenGenerator += 1
-            handlers[tokenGenerator] = HandlerData(queue: queue, handler: handler)
-            return tokenGenerator
+            let token = EventHandlerToken(token: tokenGenerator, handler: self)
+            handlers[token.token] = HandlerData(queue: queue, handler: handler)
+            return token
         })
         return token
-    }
-
-    /**
-     Releases handler, associated with provided token.
-     Invalid tokens will be ignored.
-     */
-    public func removeHandler(token: EventHandlerToken) {
-        _ = accessLock.execute({
-            handlers.removeValue(forKey: token)
-        })
     }
 
     /**
@@ -88,6 +104,12 @@ public class EventHandler<T> {
                 value.handler(arg)
             }
         }
+    }
+
+    internal func removeToken(_ token: UInt) {
+        _ = accessLock.execute({
+            handlers.removeValue(forKey: token)
+        })
     }
 
 }

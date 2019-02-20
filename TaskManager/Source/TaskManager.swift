@@ -58,11 +58,11 @@ open class TaskManager {
      */
     final public func performOperation<ResultType, OptionsType>(operationType: BaseOperation<ResultType, OptionsType>.Type,
                                                                 options: OptionsType) -> Task<ResultType> {
-        let resultOperation = accessLock.execute({ () -> OperationWrapper<ResultType> in
+        let wrapper = accessLock.execute({ () -> OperationWrapper<ResultType> in
             let group = OperationGroup(mainOperationType: operationType, options: options)
             return performGroupNoLock(group, retryHandler: nil)
         })
-        return Task(operationWrapper: resultOperation)
+        return Task(operationWrapper: wrapper)
     }
 
     /**
@@ -74,10 +74,10 @@ open class TaskManager {
      */
     final public func performGroup<ResultType, OptionsType>(_ group: OperationGroup<ResultType, OptionsType>,
                                                             retryHandler: RetryHandler<ResultType>?) -> Task<ResultType> {
-        let resultOperation = accessLock.execute({ () -> OperationWrapper<ResultType> in
+        let wrapper = accessLock.execute({ () -> OperationWrapper<ResultType> in
             return performGroupNoLock(group, retryHandler: retryHandler)
         })
-        return Task(operationWrapper: resultOperation)
+        return Task(operationWrapper: wrapper)
     }
 
     /**
