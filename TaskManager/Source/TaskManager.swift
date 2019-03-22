@@ -90,6 +90,8 @@ open class TaskManager {
      - returns: This method must return operation that will **actually** be added to queue.
      To enforce uniqueness of an operation return operation, that is already in queue.
 
+     - warning: do not add new dependencies to operation that is already in queue.
+
      ```
      // Example: 'sign in' operation is unique and will cancel all previous operations:
 
