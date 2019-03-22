@@ -7,6 +7,7 @@ import Foundation
 
 public protocol ExecuteSyncProtocol {
     func execute<ResultType>(_ closure: () -> ResultType) -> ResultType
+    func execute<ResultType>(_ closure: () throws -> ResultType) throws -> ResultType
 }
 
 extension NSLock: ExecuteSyncProtocol {
@@ -19,6 +20,19 @@ extension NSLock: ExecuteSyncProtocol {
         return result
     }
 
+    public func execute<ResultType>(_ closure: () throws -> ResultType) throws -> ResultType {
+        let result: ResultType
+        lock()
+        do {
+            result = try closure()
+            unlock()
+            return result
+        } catch let error {
+            unlock()
+            throw error
+        }
+    }
+
 }
 
 extension NSRecursiveLock: ExecuteSyncProtocol {
@@ -29,6 +43,19 @@ extension NSRecursiveLock: ExecuteSyncProtocol {
         result = closure()
         unlock()
         return result
+    }
+
+    public func execute<ResultType>(_ closure: () throws -> ResultType) throws -> ResultType {
+        let result: ResultType
+        lock()
+        do {
+            result = try closure()
+            unlock()
+            return result
+        } catch let error {
+            unlock()
+            throw error
+        }
     }
 
 }
