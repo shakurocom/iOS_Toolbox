@@ -95,6 +95,7 @@
 		2FF58C2E21D7548E003C534E /* RetryTaskOperationWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF58C2D21D7548E003C534E /* RetryTaskOperationWrapper.swift */; };
 		2FFD4C952253908500B07EB6 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 2FFD4C942253908500B07EB6 /* README.md */; };
 		2FFD4C972253908E00B07EB6 /* Shakuro.iOS_Toolbox.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 2FFD4C962253908E00B07EB6 /* Shakuro.iOS_Toolbox.podspec */; };
+		2FFD4C9B22539BFE00B07EB6 /* AsyncResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFD4C9A22539BFE00B07EB6 /* AsyncResult.swift */; };
 		5F2BE42F76A6C745178C14A5 /* Pods_iOSToolboxExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 009702E9AD272B72DEC6FC66 /* Pods_iOSToolboxExample.framework */; };
 /* End PBXBuildFile section */
 
@@ -204,6 +205,7 @@
 		2FF58C2D21D7548E003C534E /* RetryTaskOperationWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryTaskOperationWrapper.swift; sourceTree = "<group>"; };
 		2FFD4C942253908500B07EB6 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../README.md; sourceTree = "<group>"; };
 		2FFD4C962253908E00B07EB6 /* Shakuro.iOS_Toolbox.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Shakuro.iOS_Toolbox.podspec; path = ../../Shakuro.iOS_Toolbox.podspec; sourceTree = "<group>"; };
+		2FFD4C9A22539BFE00B07EB6 /* AsyncResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncResult.swift; sourceTree = "<group>"; };
 		8460D0405FC3E3B4F135CBAF /* Pods-iOSToolboxExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSToolboxExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iOSToolboxExample/Pods-iOSToolboxExample.debug.xcconfig"; sourceTree = "<group>"; };
 		BC61A924359D6E16CFD7D6E6 /* Pods-iOSToolboxExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSToolboxExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-iOSToolboxExample/Pods-iOSToolboxExample.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -527,6 +529,7 @@
 		2FF279A41FDE852D00F0F769 /* Toolbox */ = {
 			isa = PBXGroup;
 			children = (
+				2FFD4C9822539BFE00B07EB6 /* CommonTypes */,
 				2FF279A51FDE855B00F0F769 /* Device */,
 				2F76AB33214814AF0094A7B1 /* EMail */,
 				2F03DBAC22097F4F006E8404 /* EventHandler */,
@@ -720,6 +723,23 @@
 				2FFD4C962253908E00B07EB6 /* Shakuro.iOS_Toolbox.podspec */,
 			);
 			name = configs;
+			sourceTree = "<group>";
+		};
+		2FFD4C9822539BFE00B07EB6 /* CommonTypes */ = {
+			isa = PBXGroup;
+			children = (
+				2FFD4C9922539BFE00B07EB6 /* Source */,
+			);
+			name = CommonTypes;
+			path = ../../../CommonTypes;
+			sourceTree = "<group>";
+		};
+		2FFD4C9922539BFE00B07EB6 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				2FFD4C9A22539BFE00B07EB6 /* AsyncResult.swift */,
+			);
+			path = Source;
 			sourceTree = "<group>";
 		};
 		648C2D4DF12EAC81F72FC144 /* Pods */ = {
@@ -999,6 +1019,7 @@
 				2F10B17221C0FA0D00701871 /* ExampleSettingsViewController.swift in Sources */,
 				2FF279A31FDE84AF00F0F769 /* ExampleDeviceTypeViewController.swift in Sources */,
 				2FF279CB1FDEB45100F0F769 /* PlaceholderTextView.swift in Sources */,
+				2FFD4C9B22539BFE00B07EB6 /* AsyncResult.swift in Sources */,
 				2F2C33E21FE173A900976FA2 /* ExampleKeyboardHandlerViewController.swift in Sources */,
 				2FF2894B1FDEB46C00F0F769 /* VideoCameraFactory.swift in Sources */,
 			);
