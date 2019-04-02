@@ -65,12 +65,6 @@ open class HTTPClient {
 
     }
 
-    public enum Response<ResultType> {
-        case success(networkResult: ResultType)
-        case cancelled
-        case failure(networkError: Error)
-    }
-
     /**
      Essentially this condensed `SendRequestOptions` (after authorizer and stuff)
      */
@@ -108,8 +102,7 @@ open class HTTPClient {
         public var headers: [String: String] = [:]
         public var authCredential: URLCredential?
         public var timeoutInterval: TimeInterval = HTTPClientConstant.defaultTimeoutInterval
-        public var completionHandler: (_ response: HTTPClient.Response<ParserType.ResultType>, _ session: HTTPClientUserSession?) -> Void
-            = { (_, _) in }
+        public var completionHandler: (_ response: AsyncResult<ParserType.ResultType>, _ session: HTTPClientUserSession?) -> Void = { (_, _) in }
 
         public init(method aMethod: HTTPClient.RequestMethod,
                     endpoint aEndpoint: HTTPClientAPIEndPoint,
@@ -266,7 +259,7 @@ open class HTTPClient {
     private static func applyParser<ParserType: HTTPClientParserProtocol>(response: DefaultDataResponse,
                                                                           parser: ParserType.Type,
                                                                           requestOptions: HTTPClient.RequestOptions<ParserType>,
-                                                                          logger: HTTPClientLogger) -> HTTPClient.Response<ParserType.ResultType> {
+                                                                          logger: HTTPClientLogger) -> AsyncResult<ParserType.ResultType> {
         if let nsError = response.error as NSError?, nsError.domain == NSURLErrorDomain, nsError.code == NSURLErrorCancelled {
             return .cancelled
         }
@@ -280,24 +273,24 @@ open class HTTPClient {
 
         let parserError = parser.parseError(serializedResponseValue, response: response.response, responseData: response.data)
         if let realParserError = parserError {
-            return .failure(networkError: realParserError)
+            return .failure(error: realParserError)
         }
 
         if let networkError = response.error {
-            return .failure(networkError: networkError)
+            return .failure(error: networkError)
         }
 
         guard let responseValue = serializedResponseValue else {
             logger.logParserError(responseData: response.data, requestOptions: requestOptions)
-            return .failure(networkError: HTTPClientError.serializationError)
+            return .failure(error: HTTPClientError.serializationError)
         }
 
         guard let parsedObject = parser.parseObject(responseValue, response: response.response) else {
             logger.logParserError(responseData: response.data, requestOptions: requestOptions)
-            return .failure(networkError: HTTPClientError.parseError)
+            return .failure(error: HTTPClientError.parseError)
         }
 
-        return.success(networkResult: parsedObject)
+        return.success(result: parsedObject)
     }
 
 }

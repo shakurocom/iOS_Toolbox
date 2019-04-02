@@ -110,7 +110,7 @@ internal class ExampleHTTPClientViewController: UIViewController {
             "format": "plain",
             "rnd": "new"
         ]
-        requestOptions.completionHandler = { (parsedResponse: HTTPClient.Response<String>, _) in
+        requestOptions.completionHandler = { (parsedResponse, _) in
             DispatchQueue.main.async(execute: {
                 let stringsValue: String
                 switch parsedResponse {
