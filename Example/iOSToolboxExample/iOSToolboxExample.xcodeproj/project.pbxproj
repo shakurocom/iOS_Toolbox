@@ -93,6 +93,8 @@
 		2FF289501FDECC6E00F0F769 /* IMG_0010.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 2FF2894F1FDECC6D00F0F769 /* IMG_0010.JPG */; };
 		2FF58C2C21D7545D003C534E /* TaskOperationWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF58C2B21D7545D003C534E /* TaskOperationWrapper.swift */; };
 		2FF58C2E21D7548E003C534E /* RetryTaskOperationWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF58C2D21D7548E003C534E /* RetryTaskOperationWrapper.swift */; };
+		2FFD4C952253908500B07EB6 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 2FFD4C942253908500B07EB6 /* README.md */; };
+		2FFD4C972253908E00B07EB6 /* Shakuro.iOS_Toolbox.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 2FFD4C962253908E00B07EB6 /* Shakuro.iOS_Toolbox.podspec */; };
 		5F2BE42F76A6C745178C14A5 /* Pods_iOSToolboxExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 009702E9AD272B72DEC6FC66 /* Pods_iOSToolboxExample.framework */; };
 /* End PBXBuildFile section */
 
@@ -200,6 +202,8 @@
 		2FF2894F1FDECC6D00F0F769 /* IMG_0010.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_0010.JPG; sourceTree = "<group>"; };
 		2FF58C2B21D7545D003C534E /* TaskOperationWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskOperationWrapper.swift; sourceTree = "<group>"; };
 		2FF58C2D21D7548E003C534E /* RetryTaskOperationWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryTaskOperationWrapper.swift; sourceTree = "<group>"; };
+		2FFD4C942253908500B07EB6 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../README.md; sourceTree = "<group>"; };
+		2FFD4C962253908E00B07EB6 /* Shakuro.iOS_Toolbox.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Shakuro.iOS_Toolbox.podspec; path = ../../Shakuro.iOS_Toolbox.podspec; sourceTree = "<group>"; };
 		8460D0405FC3E3B4F135CBAF /* Pods-iOSToolboxExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSToolboxExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iOSToolboxExample/Pods-iOSToolboxExample.debug.xcconfig"; sourceTree = "<group>"; };
 		BC61A924359D6E16CFD7D6E6 /* Pods-iOSToolboxExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSToolboxExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-iOSToolboxExample/Pods-iOSToolboxExample.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -455,6 +459,7 @@
 				2FF279A41FDE852D00F0F769 /* Toolbox */,
 				2FF279871FDE723800F0F769 /* iOSToolboxExample */,
 				2F68970A20357C6A00E17BB3 /* iOSToolboxTests */,
+				2FFD4C912253903500B07EB6 /* configs */,
 				2FF279861FDE723800F0F769 /* Products */,
 				01BE39BBA02EC01C09E54379 /* Frameworks */,
 				648C2D4DF12EAC81F72FC144 /* Pods */,
@@ -708,6 +713,15 @@
 			path = OperationGroup;
 			sourceTree = "<group>";
 		};
+		2FFD4C912253903500B07EB6 /* configs */ = {
+			isa = PBXGroup;
+			children = (
+				2FFD4C942253908500B07EB6 /* README.md */,
+				2FFD4C962253908E00B07EB6 /* Shakuro.iOS_Toolbox.podspec */,
+			);
+			name = configs;
+			sourceTree = "<group>";
+		};
 		648C2D4DF12EAC81F72FC144 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -814,8 +828,10 @@
 				2FF289501FDECC6E00F0F769 /* IMG_0010.JPG in Resources */,
 				2FF279B31FDE925A00F0F769 /* Main.storyboard in Resources */,
 				2FF279B41FDE925A00F0F769 /* LaunchScreen.storyboard in Resources */,
+				2FFD4C972253908E00B07EB6 /* Shakuro.iOS_Toolbox.podspec in Resources */,
 				2FF279901FDE723800F0F769 /* Assets.xcassets in Resources */,
 				2F6DCB65205815F400B5E128 /* animation-refreshing-shakuro_logo.json in Resources */,
+				2FFD4C952253908500B07EB6 /* README.md in Resources */,
 				2F6DCB63205815EC00B5E128 /* animation-pulling-shakuro_logo.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
