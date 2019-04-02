@@ -4,7 +4,7 @@
 
 Pod::Spec.new do |s|
     s.name             = 'Shakuro.iOS_Toolbox'
-    s.version          = '0.9.16'
+    s.version          = '0.10'
     s.summary          = 'A bunch of components for iOS'
     s.homepage         = 'https://github.com/shakurocom/iOS_Toolbox'
     s.license          = { :type => 'MIT', :file => 'LICENSE' }
@@ -16,6 +16,13 @@ Pod::Spec.new do |s|
     s.ios.deployment_target = '10.0'
 
     # --- subspecs ---
+
+    s.subspec 'CommonTypes' do |sp|
+
+        sp.source_files = 'CommonTypes/Source/**/*'
+        sp.frameworks = 'Foundation'
+
+    end
 
     s.subspec 'Device' do |sp|
 
@@ -48,6 +55,7 @@ Pod::Spec.new do |s|
 
     s.subspec 'HTTPClient' do |sp|
 
+        sp.dependency 'Shakuro.iOS_Toolbox/CommonTypes'
         sp.source_files = 'HTTPClient/Source/**/*'
         sp.frameworks = 'Foundation'
         sp.dependency 'Alamofire', '4.7.3'
@@ -105,6 +113,7 @@ Pod::Spec.new do |s|
 
     s.subspec 'TaskManager' do |sp|
 
+        sp.dependency 'Shakuro.iOS_Toolbox/CommonTypes'
         sp.source_files = 'TaskManager/Source/**/*'
         sp.frameworks = 'Foundation'
 
@@ -112,8 +121,8 @@ Pod::Spec.new do |s|
 
     s.subspec 'VideoCamera' do |sp|
 
-        sp.dependency  'Shakuro.iOS_Toolbox/ImageProcessing'
-        sp.dependency  'Shakuro.iOS_Toolbox/Device'
+        sp.dependency 'Shakuro.iOS_Toolbox/ImageProcessing'
+        sp.dependency 'Shakuro.iOS_Toolbox/Device'
         sp.source_files = 'VideoCamera/Source/**/*'
         sp.frameworks = 'Accelerate', 'AVFoundation', 'UIKit'
 
