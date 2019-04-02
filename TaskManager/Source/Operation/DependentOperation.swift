@@ -5,20 +5,11 @@
 
 import Foundation
 
-/**
- Result of the operation for purposes of resolving dependencies.
- */
-internal enum DependencyResult {
-    case success
-    case cancelled
-    case failure(error: Error)
-}
-
 internal protocol DependencyProtocol: class {
     /**
      See `DependencyResult` for description.
      */
-    func dependencyResult() -> DependencyResult?
+    func dependencyResult() -> AsyncResult<Void>?
 }
 
 public protocol DependentOperation {
