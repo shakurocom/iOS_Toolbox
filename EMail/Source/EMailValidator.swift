@@ -23,6 +23,8 @@ public class EMailValidator {
 
     private let predicate: NSPredicate = EMailValidator.predicate()
 
+    public init() { }
+
     public func validate(emailString: String) -> Bool {
         return predicate.evaluate(with: emailString)
     }
