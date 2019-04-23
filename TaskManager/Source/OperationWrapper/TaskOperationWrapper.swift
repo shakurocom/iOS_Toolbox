@@ -26,7 +26,7 @@ internal class TaskOperationWrapper<ResultType>: OperationWrapper<ResultType> {
         return mainOperation.cancel()
     }
 
-    internal override func onComplete(queue: DispatchQueue?, closure: @escaping (AsyncResult<ResultType>) -> Void) {
+    internal override func onComplete(queue: DispatchQueue?, closure: @escaping (CancellableAsyncResult<ResultType>) -> Void) {
         mainOperation.onComplete(queue: queue, closure: closure)
     }
 

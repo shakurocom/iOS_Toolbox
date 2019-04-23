@@ -9,7 +9,7 @@ internal protocol DependencyProtocol: class {
     /**
      See `DependencyResult` for description.
      */
-    func dependencyResult() -> AsyncResult<Void>?
+    func dependencyResult() -> CancellableAsyncResult<Void>?
 }
 
 public protocol DependentOperation {

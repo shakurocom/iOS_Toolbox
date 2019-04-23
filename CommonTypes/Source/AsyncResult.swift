@@ -8,10 +8,24 @@ import Foundation
 public enum AsyncResult<ResultType> {
 
     case success(result: ResultType)
-    case cancelled
     case failure(error: Error)
 
     public func voidTyped() -> AsyncResult<Void> {
+        switch self {
+        case .success: return .success(result: ())
+        case .failure(let error): return .failure(error: error)
+        }
+    }
+
+}
+
+public enum CancellableAsyncResult<ResultType> {
+
+    case success(result: ResultType)
+    case cancelled
+    case failure(error: Error)
+
+    public func voidTyped() -> CancellableAsyncResult<Void> {
         switch self {
         case .success: return .success(result: ())
         case .cancelled: return .cancelled

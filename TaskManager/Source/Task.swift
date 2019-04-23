@@ -44,8 +44,8 @@ public final class Task<ResultType> {
      - parameter closure: completion block. Will be executed asynchroniously on a specified queue.
      */
     public func onComplete(queue: DispatchQueue? = nil,
-                           closure: @escaping (_ task: Task<ResultType>, _ result: AsyncResult<ResultType>) -> Void) {
-        operationWrapper.onComplete(queue: queue, closure: { (result: AsyncResult<ResultType>) in
+                           closure: @escaping (_ task: Task<ResultType>, _ result: CancellableAsyncResult<ResultType>) -> Void) {
+        operationWrapper.onComplete(queue: queue, closure: { (result: CancellableAsyncResult<ResultType>) in
             closure(self, result)
         })
     }

@@ -102,7 +102,8 @@ open class HTTPClient {
         public var headers: [String: String] = [:]
         public var authCredential: URLCredential?
         public var timeoutInterval: TimeInterval = HTTPClientConstant.defaultTimeoutInterval
-        public var completionHandler: (_ response: AsyncResult<ParserType.ResultType>, _ session: HTTPClientUserSession?) -> Void = { (_, _) in }
+        public var completionHandler: (_ response: CancellableAsyncResult<ParserType.ResultType>, _ session: HTTPClientUserSession?) -> Void
+            = { (_, _) in }
 
         public init(method aMethod: HTTPClient.RequestMethod,
                     endpoint aEndpoint: HTTPClientAPIEndPoint,
@@ -259,7 +260,7 @@ open class HTTPClient {
     private static func applyParser<ParserType: HTTPClientParserProtocol>(response: DefaultDataResponse,
                                                                           parser: ParserType.Type,
                                                                           requestOptions: HTTPClient.RequestOptions<ParserType>,
-                                                                          logger: HTTPClientLogger) -> AsyncResult<ParserType.ResultType> {
+                                                                          logger: HTTPClientLogger) -> CancellableAsyncResult<ParserType.ResultType> {
         if let nsError = response.error as NSError?, nsError.domain == NSURLErrorDomain, nsError.code == NSURLErrorCancelled {
             return .cancelled
         }
