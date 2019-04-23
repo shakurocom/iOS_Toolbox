@@ -17,15 +17,15 @@ public protocol RawCodable {
 
 public extension RawCodable where Self: RawRepresentable {
 
-    public func encode() -> Any? {
+    func encode() -> Any? {
         return rawValue
     }
 
-    public static func encodedType() -> Any.Type {
+    static func encodedType() -> Any.Type {
         return RawValue.self
     }
 
-    public static func decode(_ encodedValue: Any) -> Self? {
+    static func decode(_ encodedValue: Any) -> Self? {
         if let realRawValue = encodedValue as? RawValue {
             return Self.init(rawValue: realRawValue)
         } else {

@@ -53,6 +53,8 @@ internal class ExampleDeviceOrientationListenerViewController: UIViewController 
             case .landscapeRight: orientationString = "Landscape Right"
             case .faceUp: orientationString = "Face Up"
             case .faceDown: orientationString = "Face Down"
+            @unknown default:
+                fatalError()
             }
             orientationLabel.text = orientationString
         }

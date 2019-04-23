@@ -18,7 +18,7 @@ private class TestOperation: BaseOperation<Int, TestOperationOptions> {
 
     open override func main() {
         Thread.sleep(forTimeInterval: TaskManagerTests.operationLength)
-        finish(result: TaskResult.success(result: 0))
+        finish(result: .success(result: 0))
     }
 
     open override var operationType: Int {

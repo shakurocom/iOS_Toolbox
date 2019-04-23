@@ -23,7 +23,7 @@ internal struct Example {
 
 internal extension Example {
 
-    internal static func all() -> [Example] {
+    static func all() -> [Example] {
         return [
             Example(title: "DeviceType", viewControllerType: ExampleDeviceTypeViewController.self),
             Example(title: "DeviceOrientationListener", viewControllerType: ExampleDeviceOrientationListenerViewController.self),
