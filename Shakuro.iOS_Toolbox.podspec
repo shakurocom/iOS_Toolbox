@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
     s.authors          = {'Sanakabarabaka' => 'slaschuk@shakuro.com',
                             'wwwpix' => 'spopov@shakuro.com'}
     s.source           = { :git => 'https://github.com/shakurocom/iOS_Toolbox.git', :tag => s.version }
-    s.swift_version    = '4.2'
+    s.swift_version    = '5.0'
 
     s.ios.deployment_target = '10.0'
 
