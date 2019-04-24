@@ -6,14 +6,6 @@
 import Foundation
 
 /**
- Result of an operation (task).
- */
-public enum TaskResult<ResultType> {
-    case success(result: ResultType)
-    case failure(error: Error)
-}
-
-/**
  A 'token' for a paticular task. You are not required to strongly hold this.
  */
 public final class Task<ResultType> {

@@ -23,10 +23,6 @@ internal class ExampleTaskManager: TaskManager {
         super.init(name: aName, qualityOfService: qualityOfService, maxConcurrentOperationCount: maxConcurrentOperationCount)
     }
 
-    public required init(name aName: String, qualityOfService: QualityOfService, maxConcurrentOperationCount: Int) {
-        fatalError("init(name:qualityOfService:maxConcurrentOperationCount:) has not been implemented")
-    }
-
     override func willPerformOperation(newOperation: TaskManager.OperationInQueue,
                                        enqueuedOperations: [TaskManager.OperationInQueue]) -> TaskManager.OperationInQueue {
         let result: TaskManager.OperationInQueue

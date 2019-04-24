@@ -4,7 +4,7 @@
 
 Pod::Spec.new do |s|
     s.name             = 'Shakuro.iOS_Toolbox'
-    s.version          = '0.11.1'
+    s.version          = '0.11.2'
     s.summary          = 'A bunch of components for iOS'
     s.homepage         = 'https://github.com/shakurocom/iOS_Toolbox'
     s.license          = { :type => 'MIT', :file => 'LICENSE' }
