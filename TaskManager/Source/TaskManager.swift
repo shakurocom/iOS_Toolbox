@@ -34,7 +34,7 @@ open class TaskManager {
      - parameter qualityOfService: QoS for internal queue.
      - parameter maxConcurrentOperationCount: maximum number of operations allowed to execute in parallel.
      */
-    public required init(name aName: String, qualityOfService: QualityOfService, maxConcurrentOperationCount: Int) {
+    public init(name aName: String, qualityOfService: QualityOfService, maxConcurrentOperationCount: Int) {
         name = aName
         accessLock = NSRecursiveLock()
         accessLock.name = "\(aName).accessLock"
