@@ -35,6 +35,7 @@ extension ExampleSelectorViewController: UITableViewDataSource, UITableViewDeleg
         let cell = tableView.dequeueReusableCell(withIdentifier: "kExampleCellID", for: indexPath)
         let example = examples[indexPath.row]
         cell.textLabel?.text = example.title
+        cell.separatorInset = UIEdgeInsets(top: 0, left: CGFloat.random(in: CGFloat(10.0)...CGFloat(200.0)), bottom: 0, right: 0)
         return cell
     }
 
