@@ -201,7 +201,7 @@ open class HTTPClient {
         return request
     }
 
-    public func uploadData<ParserType: HTTPClientParserProtocol>(_ data: Data, options: RequestOptions<ParserType>) -> HTTPClientRequest {
+    public func upload<ParserType: HTTPClientParserProtocol>(data: Data, options: RequestOptions<ParserType>) -> HTTPClientRequest {
         let requestPrefab = formRequest(options: options)
         var request = manager.upload(data, with: requestPrefab)
         if let credential = options.authCredential {
@@ -220,6 +220,46 @@ open class HTTPClient {
                 options.completionHandler(parsedResult, options.userSession)
             })
         return request
+    }
+
+    /**
+     Uploads multi part form data.
+     - parameter multipartFormData: The closure used to append body parts to the `MultipartFormData`.
+     - parameter encodingCompletion: The closure called when the `MultipartFormData` encoding is complete.
+     */
+    public func upload<ParserType: HTTPClientParserProtocol>(multipartFormData: @escaping (MultipartFormData) -> Void,
+                                                             options: RequestOptions<ParserType>,
+                                                             encodingCompletion: ((SessionManager.MultipartFormDataEncodingResult) -> Void)?) {
+        let requestPrefab = formRequest(options: options)
+        let completion = { [weak self] (encodingResult: SessionManager.MultipartFormDataEncodingResult) -> Void in
+            guard let strongSelf = self else {
+                encodingCompletion?(.failure(HTTPClientError.httpClientDeallocated))
+                return
+            }
+            switch encodingResult {
+            case .success(var request, let streamingFromDisk, let streamFileURL):
+                if let credential = options.authCredential {
+                    request = request.authenticate(usingCredential: credential)
+                }
+                // TODO: improve logging?
+                let currentLogger = strongSelf.logger
+                currentLogger.logRequest(requestOptions: options, resolvedHeaders: requestPrefab.headers)
+                request.validate(statusCode: strongSelf.acceptableStatusCodes)
+                    .validate(contentType: strongSelf.acceptableContentTypes)
+                    .response(queue: strongSelf.callbackQueue, completionHandler: { (response: DefaultDataResponse) in
+                        currentLogger.logResponse(endpoint: options.endpoint, response: response, parser: options.parser)
+                        let parsedResult = HTTPClient.applyParser(response: response,
+                                                                  parser: options.parser,
+                                                                  requestOptions: options,
+                                                                  logger: currentLogger)
+                        options.completionHandler(parsedResult, options.userSession)
+                    })
+                encodingCompletion?(.success(request: request, streamingFromDisk: streamingFromDisk, streamFileURL: streamFileURL))
+            case .failure(let error):
+                encodingCompletion?(.failure(error))
+            }
+        }
+        manager.upload(multipartFormData: multipartFormData, with: requestPrefab, encodingCompletion: completion)
     }
 
     // MARK: - Private
@@ -283,12 +323,12 @@ open class HTTPClient {
 
         guard let responseValue = serializedResponseValue else {
             logger.logParserError(responseData: response.data, requestOptions: requestOptions)
-            return .failure(error: HTTPClientError.serializationError)
+            return .failure(error: HTTPClientError.cantSerializeResponseData)
         }
 
         guard let parsedObject = parser.parseObject(responseValue, response: response.response) else {
             logger.logParserError(responseData: response.data, requestOptions: requestOptions)
-            return .failure(error: HTTPClientError.parseError)
+            return .failure(error: HTTPClientError.cantParseSerializedResponse)
         }
 
         return.success(result: parsedObject)

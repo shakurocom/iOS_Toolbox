@@ -6,6 +6,7 @@
 import Foundation
 
 public enum HTTPClientError: Swift.Error {
-    case serializationError
-    case parseError
+    case cantSerializeResponseData
+    case cantParseSerializedResponse
+    case httpClientDeallocated
 }
