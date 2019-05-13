@@ -264,20 +264,20 @@ open class BaseOperation<ResultType, OptionsType>: TaskOperation<ResultType>, De
         switch state {
         case .idle:
             if case State.executing = newState {
-                willChangeValue(forKey: #keyPath(Operation.isExecuting))
+                willChangeValue(forKey: "isExecuting")
                 state = newState
-                didChangeValue(forKey: #keyPath(Operation.isExecuting))
+                didChangeValue(forKey: "isExecuting")
             } else {
                 assertionFailure("BaseOperation: invalid state change from '\(state)' to '\(newState)'")
             }
 
         case .executing:
             if case State.finished = newState {
-                willChangeValue(forKey: #keyPath(Operation.isExecuting))
-                willChangeValue(forKey: #keyPath(Operation.isFinished))
+                willChangeValue(forKey: "isExecuting")
+                willChangeValue(forKey: "isFinished")
                 state = newState
-                didChangeValue(forKey: #keyPath(Operation.isExecuting))
-                didChangeValue(forKey: #keyPath(Operation.isFinished))
+                didChangeValue(forKey: "isExecuting")
+                didChangeValue(forKey: "isFinished")
             } else {
                 assertionFailure("BaseOperation: invalid state change from '\(state)' to '\(newState)'")
             }
