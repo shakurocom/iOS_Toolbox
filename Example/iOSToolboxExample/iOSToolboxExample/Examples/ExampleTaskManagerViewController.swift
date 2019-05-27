@@ -79,6 +79,8 @@ extension ExampleTaskManager {
 
     internal func doAlwaysFailInTheEndOperation(retryHandler: RetryHandler<Int>?) -> Task<Int> {
         let group = OperationGroup(mainOperationType: AlwaysFailInTheEndOperation.self, options: ExampleOperationOptions())
+        group.addSecondaryOperation(operationType: AlwaysFailInTheEndOperation.self, options: ExampleOperationOptions())
+        group.addSecondaryOperation(operationType: AlwaysFailInTheEndOperation.self, options: ExampleOperationOptions())
         return performGroup(group, retryHandler: retryHandler)
     }
 
@@ -334,7 +336,6 @@ internal class ExampleTaskManagerViewController: UIViewController {
         let randomOrgClient = HTTPClient(
             name: "RandomOrgClient",
             acceptableContentTypes: ["text/plain"])
-        randomOrgClient.isDebugLogEnabled = true
         taskManager = ExampleTaskManager(
             name: "com.shakuro.iOSToolboxExample.ExampleTaskManager",
             qualityOfService: QualityOfService.utility,

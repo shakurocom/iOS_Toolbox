@@ -68,7 +68,7 @@ open class TaskManager {
     /**
      Main method of task manager.
      It will instantiate operations from group, pass them to `willPerformOperation()` (to resolve dependencies), and then add them to the internal queue.
-     - parameter group: group of operations to be run.
+     - parameter group: group of operations to be run. Secondary operation added to the queue before main operation.
      - parameter retryHandler: bunch of blocks to handle retry logic.
      - returns: opaque token `Task` for created operations. Use it to add completion blocks or cancel underlying operations.
      */
@@ -189,8 +189,8 @@ private extension TaskManager {
      Instantiate and add to queue all operations from given `OperationSequence`.
      */
     private func instantiateOperationGroupNoLock<R, O>(_ group: OperationGroup<R, O>) -> OperationGroupResult<R, O> {
-        let mainOperation = instantiateTypedOperationNoLock(operation: group.mainOperationPrototype)
         let secondaryOperations = group.secondaryOperationPrototypes.map({ instantiateOperationNoLock(operation: $0) })
+        let mainOperation = instantiateTypedOperationNoLock(operation: group.mainOperationPrototype)
         return OperationGroupResult(mainOperation: mainOperation, secondaryOperations: secondaryOperations)
     }
 

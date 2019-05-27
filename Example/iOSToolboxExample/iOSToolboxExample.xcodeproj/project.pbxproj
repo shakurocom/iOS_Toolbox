@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2F03DBAF22097F4F006E8404 /* EventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F03DBAE22097F4F006E8404 /* EventHandler.swift */; };
+		2F03DBB922097F65006E8404 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F03DBB222097F64006E8404 /* HTTPClient.swift */; };
+		2F03DBBA22097F65006E8404 /* HTTPClientAPIEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F03DBB322097F64006E8404 /* HTTPClientAPIEndPoint.swift */; };
+		2F03DBBB22097F65006E8404 /* HTTPClientError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F03DBB422097F64006E8404 /* HTTPClientError.swift */; };
+		2F03DBBC22097F65006E8404 /* HTTPClientLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F03DBB522097F64006E8404 /* HTTPClientLogger.swift */; };
+		2F03DBBD22097F65006E8404 /* HTTPClientParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F03DBB622097F64006E8404 /* HTTPClientParser.swift */; };
+		2F03DBBE22097F65006E8404 /* HTTPClientRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F03DBB722097F64006E8404 /* HTTPClientRequest.swift */; };
+		2F03DBBF22097F65006E8404 /* HTTPClientUserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F03DBB822097F64006E8404 /* HTTPClientUserSession.swift */; };
 		2F0516BC2077B1CA00ECB7FF /* ExamplePullToRefreshContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5CED78205818C800BD508A /* ExamplePullToRefreshContentView.swift */; };
 		2F0CC9B3204931E900A896B2 /* TaskManagerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0CC9B2204931E900A896B2 /* TaskManagerError.swift */; };
 		2F10746721AD60ED002D07DB /* OperationWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F10746621AD60ED002D07DB /* OperationWrapper.swift */; };
@@ -29,19 +37,14 @@
 		2F4A2DF01FE3B8C6003B9F27 /* ImagePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4A2DEF1FE3B8C6003B9F27 /* ImagePreviewViewController.swift */; };
 		2F4FA518203DAECC003D57C0 /* ExampleHTTPClientViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4FA517203DAECC003D57C0 /* ExampleHTTPClientViewController.swift */; };
 		2F4FA519203DB276003D57C0 /* ExampleViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF279A01FDE83A100F0F769 /* ExampleViewControllerProtocol.swift */; };
-		2F4FA51B203DBDE5003D57C0 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4FA51A203DBDE5003D57C0 /* HTTPClient.swift */; };
 		2F50281D2048133A0088418A /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F50281C2048133A0088418A /* Task.swift */; };
 		2F5C2EE120317DC80031CD2D /* PullToRefreshView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5C2EDF20317DC80031CD2D /* PullToRefreshView.swift */; };
 		2F5C2EE320318B880031CD2D /* ExamplePullToRefreshViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5C2EE220318B880031CD2D /* ExamplePullToRefreshViewController.swift */; };
 		2F5CED7B20581A2900BD508A /* ExamplePullToRefreshShakuroLogoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5CED7A20581A2900BD508A /* ExamplePullToRefreshShakuroLogoViewController.swift */; };
-		2F6574F02044524600730ECD /* HTTPClientRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6574EF2044524600730ECD /* HTTPClientRequest.swift */; };
-		2F6574F8204452B300730ECD /* HTTPClientUserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6574F7204452B300730ECD /* HTTPClientUserSession.swift */; };
-		2F6574FA204452BD00730ECD /* HTTPClientParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6574F9204452BD00730ECD /* HTTPClientParser.swift */; };
 		2F68971920357CD100E17BB3 /* KeychainWrapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F68971720357CD100E17BB3 /* KeychainWrapperTests.swift */; };
 		2F6DCB602058155B00B5E128 /* ShakuroLogoPullToRefreshContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6DCB5F2058155B00B5E128 /* ShakuroLogoPullToRefreshContentView.swift */; };
 		2F6DCB63205815EC00B5E128 /* animation-pulling-shakuro_logo.json in Resources */ = {isa = PBXBuildFile; fileRef = 2F6DCB62205815EC00B5E128 /* animation-pulling-shakuro_logo.json */; };
 		2F6DCB65205815F400B5E128 /* animation-refreshing-shakuro_logo.json in Resources */ = {isa = PBXBuildFile; fileRef = 2F6DCB64205815F400B5E128 /* animation-refreshing-shakuro_logo.json */; };
-		2F6EE62820872966005B3939 /* HTTPClientError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6EE62720872965005B3939 /* HTTPClientError.swift */; };
 		2F73E5DF21B0123900B3F79F /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F73E5DE21B0123900B3F79F /* Settings.swift */; };
 		2F76AB38214814AF0094A7B1 /* EMailValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F76AB35214814AF0094A7B1 /* EMailValidator.swift */; };
 		2F76AB41214814C90094A7B1 /* EMailValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F76AB3F214814C90094A7B1 /* EMailValidatorTests.swift */; };
@@ -56,13 +59,11 @@
 		2FB05A49204EBA3D003B80CC /* TaskManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB05A48204EBA3D003B80CC /* TaskManagerTests.swift */; };
 		2FB494FF204577550068D380 /* TaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB494FE204577550068D380 /* TaskManager.swift */; };
 		2FB495012045A5460068D380 /* ExampleTaskManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB495002045A5460068D380 /* ExampleTaskManagerViewController.swift */; };
-		2FB57F612191E19800F146F5 /* EventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB57F602191E19700F146F5 /* EventHandler.swift */; };
 		2FB6FEDA21AC2AC4008D3FC0 /* TypedOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB6FED921AC2AC4008D3FC0 /* TypedOperation.swift */; };
 		2FB6FEDC21AC2B72008D3FC0 /* CancellableOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB6FEDB21AC2B72008D3FC0 /* CancellableOperation.swift */; };
 		2FC1B1DC2199CB18006401F9 /* Array+Chunks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC1B1DB2199CB18006401F9 /* Array+Chunks.swift */; };
 		2FC2268F2201E80F0057C63B /* NSNumberRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC2268E2201E80F0057C63B /* NSNumberRepresentable.swift */; };
 		2FE04E50208731C3003ECABE /* VideoCameraPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF2833D1FDEB46A00F0F769 /* VideoCameraPreviewView.swift */; };
-		2FE04E51208731D3003ECABE /* HTTPClientAPIEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFF10E8203DAD78004BA09B /* HTTPClientAPIEndPoint.swift */; };
 		2FEEDDAC1FE28F3A00C6BC0A /* ExamplePlaceholderTextViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEEDDAB1FE28F3A00C6BC0A /* ExamplePlaceholderTextViewViewController.swift */; };
 		2FF279891FDE723800F0F769 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF279881FDE723800F0F769 /* AppDelegate.swift */; };
 		2FF2798B1FDE723800F0F769 /* ExampleSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF2798A1FDE723800F0F769 /* ExampleSelectorViewController.swift */; };
@@ -107,6 +108,14 @@
 
 /* Begin PBXFileReference section */
 		009702E9AD272B72DEC6FC66 /* Pods_iOSToolboxExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOSToolboxExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2F03DBAE22097F4F006E8404 /* EventHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventHandler.swift; sourceTree = "<group>"; };
+		2F03DBB222097F64006E8404 /* HTTPClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
+		2F03DBB322097F64006E8404 /* HTTPClientAPIEndPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClientAPIEndPoint.swift; sourceTree = "<group>"; };
+		2F03DBB422097F64006E8404 /* HTTPClientError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClientError.swift; sourceTree = "<group>"; };
+		2F03DBB522097F64006E8404 /* HTTPClientLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClientLogger.swift; sourceTree = "<group>"; };
+		2F03DBB622097F64006E8404 /* HTTPClientParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClientParser.swift; sourceTree = "<group>"; };
+		2F03DBB722097F64006E8404 /* HTTPClientRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClientRequest.swift; sourceTree = "<group>"; };
+		2F03DBB822097F64006E8404 /* HTTPClientUserSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClientUserSession.swift; sourceTree = "<group>"; };
 		2F0CC9B2204931E900A896B2 /* TaskManagerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskManagerError.swift; sourceTree = "<group>"; };
 		2F10746621AD60ED002D07DB /* OperationWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationWrapper.swift; sourceTree = "<group>"; };
 		2F10746821AD7A91002D07DB /* RetryHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryHandler.swift; sourceTree = "<group>"; };
@@ -125,7 +134,6 @@
 		2F4A2DEC1FE3AE3A003B9F27 /* ExampleVideoCameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleVideoCameraViewController.swift; sourceTree = "<group>"; };
 		2F4A2DEF1FE3B8C6003B9F27 /* ImagePreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePreviewViewController.swift; sourceTree = "<group>"; };
 		2F4FA517203DAECC003D57C0 /* ExampleHTTPClientViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleHTTPClientViewController.swift; sourceTree = "<group>"; };
-		2F4FA51A203DBDE5003D57C0 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		2F4FA51C203DBFFB003D57C0 /* UIApplication+BundleIdentifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+BundleIdentifier.swift"; sourceTree = "<group>"; };
 		2F4FA51D203DBFFB003D57C0 /* String+Hash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Hash.swift"; sourceTree = "<group>"; };
 		2F50281C2048133A0088418A /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
@@ -133,16 +141,12 @@
 		2F5C2EE220318B880031CD2D /* ExamplePullToRefreshViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamplePullToRefreshViewController.swift; sourceTree = "<group>"; };
 		2F5CED78205818C800BD508A /* ExamplePullToRefreshContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExamplePullToRefreshContentView.swift; sourceTree = "<group>"; };
 		2F5CED7A20581A2900BD508A /* ExamplePullToRefreshShakuroLogoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamplePullToRefreshShakuroLogoViewController.swift; sourceTree = "<group>"; };
-		2F6574EF2044524600730ECD /* HTTPClientRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientRequest.swift; sourceTree = "<group>"; };
-		2F6574F7204452B300730ECD /* HTTPClientUserSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientUserSession.swift; sourceTree = "<group>"; };
-		2F6574F9204452BD00730ECD /* HTTPClientParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientParser.swift; sourceTree = "<group>"; };
 		2F68970920357C6A00E17BB3 /* iOSToolboxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOSToolboxTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F68970D20357C6B00E17BB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2F68971720357CD100E17BB3 /* KeychainWrapperTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainWrapperTests.swift; sourceTree = "<group>"; };
 		2F6DCB5F2058155B00B5E128 /* ShakuroLogoPullToRefreshContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShakuroLogoPullToRefreshContentView.swift; sourceTree = "<group>"; };
 		2F6DCB62205815EC00B5E128 /* animation-pulling-shakuro_logo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "animation-pulling-shakuro_logo.json"; sourceTree = "<group>"; };
 		2F6DCB64205815F400B5E128 /* animation-refreshing-shakuro_logo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "animation-refreshing-shakuro_logo.json"; sourceTree = "<group>"; };
-		2F6EE62720872965005B3939 /* HTTPClientError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClientError.swift; sourceTree = "<group>"; };
 		2F73E5DE21B0123900B3F79F /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		2F76AB35214814AF0094A7B1 /* EMailValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EMailValidator.swift; sourceTree = "<group>"; };
 		2F76AB3F214814C90094A7B1 /* EMailValidatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EMailValidatorTests.swift; sourceTree = "<group>"; };
@@ -156,7 +160,6 @@
 		2FB05A48204EBA3D003B80CC /* TaskManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskManagerTests.swift; sourceTree = "<group>"; };
 		2FB494FE204577550068D380 /* TaskManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskManager.swift; sourceTree = "<group>"; };
 		2FB495002045A5460068D380 /* ExampleTaskManagerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleTaskManagerViewController.swift; sourceTree = "<group>"; };
-		2FB57F602191E19700F146F5 /* EventHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventHandler.swift; sourceTree = "<group>"; };
 		2FB6FED921AC2AC4008D3FC0 /* TypedOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypedOperation.swift; sourceTree = "<group>"; };
 		2FB6FEDB21AC2B72008D3FC0 /* CancellableOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancellableOperation.swift; sourceTree = "<group>"; };
 		2FC1B1DB2199CB18006401F9 /* Array+Chunks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Chunks.swift"; sourceTree = "<group>"; };
@@ -197,7 +200,6 @@
 		2FF2894F1FDECC6D00F0F769 /* IMG_0010.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_0010.JPG; sourceTree = "<group>"; };
 		2FF58C2B21D7545D003C534E /* TaskOperationWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskOperationWrapper.swift; sourceTree = "<group>"; };
 		2FF58C2D21D7548E003C534E /* RetryTaskOperationWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryTaskOperationWrapper.swift; sourceTree = "<group>"; };
-		2FFF10E8203DAD78004BA09B /* HTTPClientAPIEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientAPIEndPoint.swift; sourceTree = "<group>"; };
 		8460D0405FC3E3B4F135CBAF /* Pods-iOSToolboxExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSToolboxExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iOSToolboxExample/Pods-iOSToolboxExample.debug.xcconfig"; sourceTree = "<group>"; };
 		BC61A924359D6E16CFD7D6E6 /* Pods-iOSToolboxExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSToolboxExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-iOSToolboxExample/Pods-iOSToolboxExample.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -229,6 +231,46 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		2F03DBAC22097F4F006E8404 /* EventHandler */ = {
+			isa = PBXGroup;
+			children = (
+				2F03DBAD22097F4F006E8404 /* Source */,
+			);
+			name = EventHandler;
+			path = ../../../EventHandler;
+			sourceTree = "<group>";
+		};
+		2F03DBAD22097F4F006E8404 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				2F03DBAE22097F4F006E8404 /* EventHandler.swift */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		2F03DBB022097F64006E8404 /* HTTPClient */ = {
+			isa = PBXGroup;
+			children = (
+				2F03DBB122097F64006E8404 /* Source */,
+			);
+			name = HTTPClient;
+			path = ../../../HTTPClient;
+			sourceTree = "<group>";
+		};
+		2F03DBB122097F64006E8404 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				2F03DBB222097F64006E8404 /* HTTPClient.swift */,
+				2F03DBB322097F64006E8404 /* HTTPClientAPIEndPoint.swift */,
+				2F03DBB422097F64006E8404 /* HTTPClientError.swift */,
+				2F03DBB522097F64006E8404 /* HTTPClientLogger.swift */,
+				2F03DBB622097F64006E8404 /* HTTPClientParser.swift */,
+				2F03DBB722097F64006E8404 /* HTTPClientRequest.swift */,
+				2F03DBB822097F64006E8404 /* HTTPClientUserSession.swift */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
 		2F2DBAB8205A81AC000AFC0F /* Labels */ = {
 			isa = PBXGroup;
 			children = (
@@ -242,28 +284,6 @@
 			isa = PBXGroup;
 			children = (
 				2F2DBABA205A8220000AFC0F /* InsetsLabel.swift */,
-			);
-			path = Source;
-			sourceTree = "<group>";
-		};
-		2F330BFA203D8EDB00E6A0EB /* HTTPClient */ = {
-			isa = PBXGroup;
-			children = (
-				2F330BFB203D8EDB00E6A0EB /* Source */,
-			);
-			name = HTTPClient;
-			path = ../../../HTTPClient;
-			sourceTree = "<group>";
-		};
-		2F330BFB203D8EDB00E6A0EB /* Source */ = {
-			isa = PBXGroup;
-			children = (
-				2F4FA51A203DBDE5003D57C0 /* HTTPClient.swift */,
-				2F6574F7204452B300730ECD /* HTTPClientUserSession.swift */,
-				2F6574EF2044524600730ECD /* HTTPClientRequest.swift */,
-				2FFF10E8203DAD78004BA09B /* HTTPClientAPIEndPoint.swift */,
-				2F6574F9204452BD00730ECD /* HTTPClientParser.swift */,
-				2F6EE62720872965005B3939 /* HTTPClientError.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -429,23 +449,6 @@
 			path = Source;
 			sourceTree = "<group>";
 		};
-		2FB57F5E2191E19700F146F5 /* HandlerArray */ = {
-			isa = PBXGroup;
-			children = (
-				2FB57F5F2191E19700F146F5 /* Source */,
-			);
-			name = HandlerArray;
-			path = ../../../HandlerArray;
-			sourceTree = "<group>";
-		};
-		2FB57F5F2191E19700F146F5 /* Source */ = {
-			isa = PBXGroup;
-			children = (
-				2FB57F602191E19700F146F5 /* EventHandler.swift */,
-			);
-			path = Source;
-			sourceTree = "<group>";
-		};
 		2FF2797C1FDE723800F0F769 = {
 			isa = PBXGroup;
 			children = (
@@ -521,9 +524,9 @@
 			children = (
 				2FF279A51FDE855B00F0F769 /* Device */,
 				2F76AB33214814AF0094A7B1 /* EMail */,
+				2F03DBAC22097F4F006E8404 /* EventHandler */,
 				2FF279AD1FDE858900F0F769 /* Extensions */,
-				2FB57F5E2191E19700F146F5 /* HandlerArray */,
-				2F330BFA203D8EDB00E6A0EB /* HTTPClient */,
+				2F03DBB022097F64006E8404 /* HTTPClient */,
 				2FF279BA1FDEB34800F0F769 /* ImageProcessing */,
 				2FF279C01FDEB43D00F0F769 /* Keyboard */,
 				2FF279C41FDEB44700F0F769 /* Keychain */,
@@ -908,13 +911,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				2FF279B81FDEA77B00F0F769 /* ExampleUIStoryboardExtensionsViewController.swift in Sources */,
-				2F6EE62820872966005B3939 /* HTTPClientError.swift in Sources */,
 				2F0516BC2077B1CA00ECB7FF /* ExamplePullToRefreshContentView.swift in Sources */,
+				2F03DBAF22097F4F006E8404 /* EventHandler.swift in Sources */,
 				2FF279BF1FDEB34800F0F769 /* ImageProcessor.swift in Sources */,
 				2F73E5DF21B0123900B3F79F /* Settings.swift in Sources */,
 				2FF289461FDEB46C00F0F769 /* SimulatorCamera.swift in Sources */,
+				2F03DBBE22097F65006E8404 /* HTTPClientRequest.swift in Sources */,
 				2F10746721AD60ED002D07DB /* OperationWrapper.swift in Sources */,
-				2F6574F8204452B300730ECD /* HTTPClientUserSession.swift in Sources */,
 				2FF279AB1FDE855B00F0F769 /* DeviceOrientationListener.swift in Sources */,
 				2F5C2EE120317DC80031CD2D /* PullToRefreshView.swift in Sources */,
 				2F2C8BFE21AE7B7A00413ED3 /* OperationGroupResult.swift in Sources */,
@@ -923,15 +926,20 @@
 				2FF58C2C21D7545D003C534E /* TaskOperationWrapper.swift in Sources */,
 				2F0CC9B3204931E900A896B2 /* TaskManagerError.swift in Sources */,
 				2FF279C31FDEB43D00F0F769 /* KeyboardHandler.swift in Sources */,
+				2F03DBBD22097F65006E8404 /* HTTPClientParser.swift in Sources */,
 				2F3EAD1320A47F8900FABC4E /* Lock+Execute.swift in Sources */,
 				2FF2798B1FDE723800F0F769 /* ExampleSelectorViewController.swift in Sources */,
+				2F03DBBB22097F65006E8404 /* HTTPClientError.swift in Sources */,
 				2FF289481FDEB46C00F0F769 /* VideoCamera.swift in Sources */,
 				2FF2894E1FDEB6FB00F0F769 /* ExampleImageProcessorViewController.swift in Sources */,
 				2FF289491FDEB46C00F0F769 /* VideoCameraConfiguration.swift in Sources */,
+				2F03DBB922097F65006E8404 /* HTTPClient.swift in Sources */,
 				2F17E2CB20872CB900DF2FC5 /* UIApplication+BundleIdentifier.swift in Sources */,
 				2FF289451FDEB46C00F0F769 /* DeviceCameraPreviewView.swift in Sources */,
 				2FC1B1DC2199CB18006401F9 /* Array+Chunks.swift in Sources */,
+				2F03DBBA22097F65006E8404 /* HTTPClientAPIEndPoint.swift in Sources */,
 				2FF279AC1FDE855B00F0F769 /* DeviceType.swift in Sources */,
+				2F03DBBF22097F65006E8404 /* HTTPClientUserSession.swift in Sources */,
 				2F76AB432148170E0094A7B1 /* ExampleEMailValidatorViewController.swift in Sources */,
 				2FF58C2E21D7548E003C534E /* RetryTaskOperationWrapper.swift in Sources */,
 				2F32FBD02087315B00D61F25 /* ExampleStoryboardName.swift in Sources */,
@@ -941,13 +949,11 @@
 				2F2DBABD205A87D4000AFC0F /* ExampleLabelsViewController.swift in Sources */,
 				2FF2894A1FDEB46C00F0F769 /* VideoCameraError.swift in Sources */,
 				2F86E3A8204814C50045070C /* OperationCallback.swift in Sources */,
-				2F4FA51B203DBDE5003D57C0 /* HTTPClient.swift in Sources */,
-				2FE04E51208731D3003ECABE /* HTTPClientAPIEndPoint.swift in Sources */,
 				2F5CED7B20581A2900BD508A /* ExamplePullToRefreshShakuroLogoViewController.swift in Sources */,
 				2F2C33E41FE177C500976FA2 /* ExampleKeychainWrapperViewController.swift in Sources */,
 				2FB05A30204E9430003B80CC /* TaskOperation.swift in Sources */,
-				2F6574F02044524600730ECD /* HTTPClientRequest.swift in Sources */,
 				2FE04E50208731C3003ECABE /* VideoCameraPreviewView.swift in Sources */,
+				2F03DBBC22097F65006E8404 /* HTTPClientLogger.swift in Sources */,
 				2FF279891FDE723800F0F769 /* AppDelegate.swift in Sources */,
 				2F32FBCF208730BF00D61F25 /* String+Hash.swift in Sources */,
 				2F4FA519203DB276003D57C0 /* ExampleViewControllerProtocol.swift in Sources */,
@@ -969,7 +975,6 @@
 				2F86E3AA204815940045070C /* BaseOperation.swift in Sources */,
 				2FF279B01FDE858900F0F769 /* UIStoryboard+Instantiate.swift in Sources */,
 				2F11C93C2201817F0003B754 /* RawCodable.swift in Sources */,
-				2F6574FA204452BD00730ECD /* HTTPClientParser.swift in Sources */,
 				2FF279C71FDEB44700F0F769 /* KeychainWrapper.swift in Sources */,
 				2FB05A2C204E8F16003B80CC /* OperationPriority.swift in Sources */,
 				2FB495012045A5460068D380 /* ExampleTaskManagerViewController.swift in Sources */,
@@ -980,7 +985,6 @@
 				2FF279CB1FDEB45100F0F769 /* PlaceholderTextView.swift in Sources */,
 				2F2C33E21FE173A900976FA2 /* ExampleKeyboardHandlerViewController.swift in Sources */,
 				2FF2894B1FDEB46C00F0F769 /* VideoCameraFactory.swift in Sources */,
-				2FB57F612191E19800F146F5 /* EventHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

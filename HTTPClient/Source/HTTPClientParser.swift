@@ -4,12 +4,13 @@
 //
 
 import Foundation
-//TODO: make class functions
+
 public protocol HTTPClientResponseSerializerProtocol {
 
     associatedtype ResponseValueType
 
     static func serializeResponseData(_ responseData: Data) -> ResponseValueType?
+    static func generateResponseDataDebugDescription(_ responseData: Data) -> String?
 
 }
 

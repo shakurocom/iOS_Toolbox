@@ -11,9 +11,9 @@ public final class RetryHandler<ResultType> {
     let willRetry: ((_ attempt: Int, _ previousResult: TaskResult<ResultType>) -> Void)?
     let didRetry: ((_ attempt: Int, _ previousResult: TaskResult<ResultType>) -> Void)?
 
-    init(retryCondition: @escaping (_ attempt: Int, _ previousResult: TaskResult<ResultType>) -> Bool,
-         willRetry: ((_ attempt: Int, _ previousResult: TaskResult<ResultType>) -> Void)? = nil,
-         didRetry: ((_ attempt: Int, _ previousResult: TaskResult<ResultType>) -> Void)? = nil) {
+    public init(retryCondition: @escaping (_ attempt: Int, _ previousResult: TaskResult<ResultType>) -> Bool,
+                willRetry: ((_ attempt: Int, _ previousResult: TaskResult<ResultType>) -> Void)? = nil,
+                didRetry: ((_ attempt: Int, _ previousResult: TaskResult<ResultType>) -> Void)? = nil) {
         self.retryCondition = retryCondition
         self.willRetry = willRetry
         self.didRetry = didRetry

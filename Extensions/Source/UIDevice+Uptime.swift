@@ -4,7 +4,6 @@
 
 import UIKit
 
-//TODO: add to toolbox
 extension UIDevice {
 
     internal static func uptime() -> TimeInterval {

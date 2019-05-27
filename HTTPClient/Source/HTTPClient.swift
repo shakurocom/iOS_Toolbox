@@ -1,30 +1,33 @@
 //
-// Copyright (c) 2018 Shakuro (https://shakuro.com/)
+// Copyright (c) 2018-2019 Shakuro (https://shakuro.com/)
 // Sergey Laschuk
 //
 
-import Foundation
 import Alamofire
-//TODO: add default (for any request) headers (overrideable)
-//TODO: add logger object through protocol
-//TODO: PATCH
-//TODO: use alamofire directly
+import Foundation
+
 public enum HTTPClientConstant {
     public static let defaultTimeoutInterval: TimeInterval = 60.0
 }
 
-final public class HTTPClient {
+open class HTTPClient {
 
-    public enum RequestMethod: String {
+    public enum RequestMethod: CustomStringConvertible {
 
         case GET
+        case PATCH
         case POST
         case PUT
         case DELETE
 
+        public var description: String {
+            return alamofireMethod().rawValue
+        }
+
         internal func alamofireMethod() -> Alamofire.HTTPMethod {
             switch self {
             case .GET: return Alamofire.HTTPMethod.get
+            case .PATCH: return Alamofire.HTTPMethod.patch
             case .POST: return Alamofire.HTTPMethod.post
             case .PUT: return Alamofire.HTTPMethod.put
             case .DELETE: return Alamofire.HTTPMethod.delete
@@ -33,15 +36,30 @@ final public class HTTPClient {
 
     }
 
-    public enum ParameterEncoding {
+    public enum ParameterEncoding: CustomStringConvertible {
 
-        case URLQuery
-        case JSON
+        case httpBody // formData; URLEncoding with destination of httpBody
+        case urlQuery(arrayBrakets: Bool)
+        case json
+
+        public var description: String {
+            switch self {
+            case .httpBody: return "http body"
+            case .json: return "JSON body"
+            case .urlQuery(let arrayBrakets): return "URL query " + (arrayBrakets ? "with" : "without") + " brakets"
+            }
+        }
 
         internal func alamofireEncoding() -> Alamofire.ParameterEncoding {
             switch self {
-            case .URLQuery: return Alamofire.URLEncoding(destination: URLEncoding.Destination.queryString)
-            case .JSON: return Alamofire.JSONEncoding()
+            case .httpBody:
+                return Alamofire.URLEncoding(destination: URLEncoding.Destination.httpBody)
+            case .urlQuery(let arrayBrakets):
+                return Alamofire.URLEncoding(destination: URLEncoding.Destination.queryString,
+                                             arrayEncoding: arrayBrakets ? .brackets : .noBrackets,
+                                             boolEncoding: URLEncoding.BoolEncoding.numeric)
+            case .json:
+                return Alamofire.JSONEncoding()
             }
         }
 
@@ -81,11 +99,17 @@ final public class HTTPClient {
         public let parser: ParserType.Type
         public var userSession: HTTPClientUserSession?
         public var parameters: [String: Any]?
+        /** Default encoding is HTTPClient.ParameterEncoding.json */
         public var parametersEncoding: HTTPClient.ParameterEncoding?
-        public var headers: [String: String] = [:] // applied after auth headers from session
+        /**
+         Headers will be applied in this order (overriding previous ones if key is the same):
+         default for http method -> HTTPClient.defaultHeaders() -> HTTPClientUserSession.httpHeaders() -> RequestOptions.headers
+         */
+        public var headers: [String: String] = [:]
         public var authCredential: URLCredential?
         public var timeoutInterval: TimeInterval = HTTPClientConstant.defaultTimeoutInterval
-        public var completionHandler: (_ response: HTTPClient.Response<ParserType.ResultType>, _ session: HTTPClientUserSession?) -> Void = { (_, _) in }
+        public var completionHandler: (_ response: HTTPClient.Response<ParserType.ResultType>, _ session: HTTPClientUserSession?) -> Void
+            = { (_, _) in }
 
         public init(method aMethod: HTTPClient.RequestMethod,
                     endpoint aEndpoint: HTTPClientAPIEndPoint,
@@ -106,15 +130,16 @@ final public class HTTPClient {
     private let acceptableContentTypes: [String]
     private let defaultGETHeaders: [String: String]
     private let defaultPOSTHeaders: [String: String]
-    public var isDebugLogEnabled: Bool = false
+    private let logger: HTTPClientLogger
 
     // MARK: - Initialization
 
-    init(name: String,
-         configuration: URLSessionConfiguration? = nil,
-         acceptableStatusCodes aAcceptableStatusCodes: [Int] = Array(200..<300),
-         acceptableContentTypes aAcceptableContentTypes: [String] = ["application/json", "application/vnd.api+json"],
-         requestContentTypes: [String] = ["application/json"]) {
+    public init(name: String,
+                configuration: URLSessionConfiguration? = nil,
+                acceptableStatusCodes aAcceptableStatusCodes: [Int] = Array(200..<300),
+                acceptableContentTypes aAcceptableContentTypes: [String] = ["application/json"],
+                requestContentTypes: [String] = ["application/json"],
+                logger alogger: HTTPClientLogger = HTTPClientLoggerNone()) {
 
         let config: URLSessionConfiguration
         if let realConfig = configuration {
@@ -135,12 +160,17 @@ final public class HTTPClient {
             "Accept": acceptableContentTypes.joined(separator: ","),
             "Content-Type": requestContentTypes.joined(separator: ",")
         ]
+        logger = alogger
     }
 
     // MARK: - Public
 
+    open func defaultHeaders() -> [String: String] {
+        return [:]
+    }
+
     public func cancelAllTasks(_ completion: (() -> Void)? = nil) {
-        manager.session.getTasksWithCompletionHandler { (dataTasks: [URLSessionDataTask], uploadTasks: [URLSessionUploadTask], downloadTasks: [URLSessionDownloadTask]) in
+        manager.session.getTasksWithCompletionHandler({ (dataTasks, uploadTasks, downloadTasks) in
             for task in dataTasks {
                 task.cancel()
             }
@@ -153,7 +183,7 @@ final public class HTTPClient {
             if let callback: (() -> Void) = completion {
                 callback()
             }
-        }
+        })
     }
 
     public func sendRequest<ParserType: HTTPClientParserProtocol>(options: RequestOptions<ParserType>) -> HTTPClientRequest {
@@ -162,11 +192,16 @@ final public class HTTPClient {
         if let credential = options.authCredential {
             request = request.authenticate(usingCredential: credential)
         }
+        let currentLogger = logger
+        currentLogger.logRequest(requestOptions: options, resolvedHeaders: requestPrefab.headers)
         request = request.validate(statusCode: acceptableStatusCodes)
             .validate(contentType: acceptableContentTypes)
-            .response(queue: callbackQueue, completionHandler: { [weak self] (response: DefaultDataResponse) in
-                self?.printDebugLogIfNeeded(response: response)
-                let parsedResult = HTTPClient.applyParser(response: response, parser: options.parser)
+            .response(queue: callbackQueue, completionHandler: { (response: DefaultDataResponse) in
+                currentLogger.logResponse(endpoint: options.endpoint, response: response, parser: options.parser)
+                let parsedResult = HTTPClient.applyParser(response: response,
+                                                          parser: options.parser,
+                                                          requestOptions: options,
+                                                          logger: currentLogger)
                 options.completionHandler(parsedResult, options.userSession)
             })
         return request
@@ -178,11 +213,16 @@ final public class HTTPClient {
         if let credential = options.authCredential {
             request = request.authenticate(usingCredential: credential)
         }
+        let currentLogger = logger
+        currentLogger.logRequest(requestOptions: options, resolvedHeaders: requestPrefab.headers)
         request.validate(statusCode: acceptableStatusCodes)
             .validate(contentType: acceptableContentTypes)
-            .response(queue: callbackQueue, completionHandler: { [weak self] (response: DefaultDataResponse) in
-                self?.printDebugLogIfNeeded(response: response)
-                let parsedResult = HTTPClient.applyParser(response: response, parser: options.parser)
+            .response(queue: callbackQueue, completionHandler: { (response: DefaultDataResponse) in
+                currentLogger.logResponse(endpoint: options.endpoint, response: response, parser: options.parser)
+                let parsedResult = HTTPClient.applyParser(response: response,
+                                                          parser: options.parser,
+                                                          requestOptions: options,
+                                                          logger: currentLogger)
                 options.completionHandler(parsedResult, options.userSession)
             })
         return request
@@ -200,45 +240,34 @@ final public class HTTPClient {
              .DELETE:
             headers = defaultGETHeaders
         case .POST,
-             .PUT:
+             .PUT,
+             .PATCH:
             headers = defaultPOSTHeaders
         }
-        if let authHeaders = userSession?.httpHeaders() {
-            for (key, value) in authHeaders {
-                headers[key] = value
-            }
-        }
-        for (key, value) in additionalHeaders {
-            headers[key] = value
-        }
+        defaultHeaders().forEach({ headers[$0] = $1 })
+        userSession?.httpHeaders().forEach({ headers[$0] = $1 })
+        additionalHeaders.forEach({ headers[$0] = $1 })
         return headers
     }
 
     private func formRequest<ParserType: HTTPClientParserProtocol>(options: RequestOptions<ParserType>) -> RequestData {
-        let requestHeaders = formHeaders(
-            method: options.method,
-            endpoint: options.endpoint,
-            userSession: options.userSession,
-            additionalHeaders: options.headers)
-        let parameterEncoding: HTTPClient.ParameterEncoding
-        switch options.method {
-        case .GET,
-             .DELETE:
-            parameterEncoding = options.parametersEncoding ?? HTTPClient.ParameterEncoding.URLQuery
-        case .POST,
-             .PUT:
-            parameterEncoding = options.parametersEncoding ?? HTTPClient.ParameterEncoding.JSON
-        }
+        let requestHeaders = formHeaders(method: options.method,
+                                         endpoint: options.endpoint,
+                                         userSession: options.userSession,
+                                         additionalHeaders: options.headers)
         return RequestData(urlString: options.endpoint.urlString(),
                            method: options.method.alamofireMethod(),
                            headers: requestHeaders,
                            timeoutInterval: options.timeoutInterval,
-                           parameterEncoding: parameterEncoding.alamofireEncoding(),
+                           parameterEncoding: options.parametersEncoding?.alamofireEncoding() ?? Alamofire.JSONEncoding(),
                            parameters: options.parameters)
     }
 
-    private static func applyParser<ParserType: HTTPClientParserProtocol>(response: DefaultDataResponse, parser: ParserType.Type) -> HTTPClient.Response<ParserType.ResultType> {
-        if let nsError = response.error as NSError?, nsError.domain == NSURLErrorDomain, nsError.code == NSURLErrorCancelled { // this is really a !guard
+    private static func applyParser<ParserType: HTTPClientParserProtocol>(response: DefaultDataResponse,
+                                                                          parser: ParserType.Type,
+                                                                          requestOptions: HTTPClient.RequestOptions<ParserType>,
+                                                                          logger: HTTPClientLogger) -> HTTPClient.Response<ParserType.ResultType> {
+        if let nsError = response.error as NSError?, nsError.domain == NSURLErrorDomain, nsError.code == NSURLErrorCancelled {
             return .cancelled
         }
 
@@ -259,28 +288,16 @@ final public class HTTPClient {
         }
 
         guard let responseValue = serializedResponseValue else {
+            logger.logParserError(responseData: response.data, requestOptions: requestOptions)
             return .failure(networkError: HTTPClientError.serializationError)
         }
 
         guard let parsedObject = parser.parseObject(responseValue, response: response.response) else {
+            logger.logParserError(responseData: response.data, requestOptions: requestOptions)
             return .failure(networkError: HTTPClientError.parseError)
         }
 
         return.success(networkResult: parsedObject)
-    }
-
-    private func printDebugLogIfNeeded(response: DefaultDataResponse) {
-        #if DEBUG
-            if isDebugLogEnabled {
-                let responseBody: String
-                if let data = response.data {
-                    responseBody = String(data: data, encoding: String.Encoding.utf8) ?? "EMPTY"
-                } else {
-                    responseBody = "EMPTY"
-                }
-                debugPrint("request: \(String(describing: response.request)), response: \(String(describing: response.response)), responseBody: \(responseBody)")
-            }
-        #endif
     }
 
 }

@@ -26,6 +26,10 @@ internal class StringsParser: HTTPClientParserProtocol {
     typealias ResultType = String
     typealias ResponseValueType = String
 
+    static func generateResponseDataDebugDescription(_ responseData: Data) -> String? {
+        return serializeResponseData(responseData)
+    }
+
     static func serializeResponseData(_ responseData: Data) -> String? {
         return String(data: responseData, encoding: String.Encoding.utf8)
     }
@@ -83,7 +87,6 @@ internal class ExampleHTTPClientViewController: UIViewController {
         randomOrgClient = HTTPClient(
             name: "RandomOrgClient",
             acceptableContentTypes: ["text/plain"])
-        randomOrgClient?.isDebugLogEnabled = true
     }
 
     // MARK: Interface callbacks

@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
     s.name             = 'Shakuro.iOS_Toolbox'
-    s.version          = '0.8.2'
+    s.version          = '0.9.14'
     s.summary          = 'A bunch of components for iOS'
     s.homepage         = 'https://github.com/shakurocom/iOS_Toolbox'
     s.license          = { :type => 'MIT', :file => 'LICENSE' }
@@ -81,35 +81,35 @@ Pod::Spec.new do |s|
 
     s.subspec 'Labels' do |sp|
 
-        sp.source_files = 'Labels/Source/Classes/**/*'
+        sp.source_files = 'Labels/Source/**/*'
         sp.frameworks = 'UIKit'
 
     end
 
     s.subspec 'PlaceholderTextView' do |sp|
 
-        sp.source_files = 'PlaceholderTextView/Source/Classes/**/*'
+        sp.source_files = 'PlaceholderTextView/Source/**/*'
         sp.frameworks = 'UIKit'
 
     end
 
     s.subspec 'PullToRefresh' do |sp|
 
-        sp.source_files = 'PullToRefresh/Source/Classes/**/*'
+        sp.source_files = 'PullToRefresh/Source/**/*'
         sp.frameworks = 'UIKit'
 
     end
 
     s.subspec 'Settings' do |sp|
 
-        sp.source_files = 'Settings/Source/Classes/**/*'
+        sp.source_files = 'Settings/Source/**/*'
         sp.frameworks = 'Foundation'
 
     end
 
     s.subspec 'TaskManager' do |sp|
 
-        sp.source_files = 'TaskManager/Source/Classes/**/*'
+        sp.source_files = 'TaskManager/Source/**/*'
         sp.frameworks = 'Foundation'
 
     end

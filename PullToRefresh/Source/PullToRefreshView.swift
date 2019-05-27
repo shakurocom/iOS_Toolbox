@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2017 Shakuro (https://shakuro.com/)
+// Copyright (c) 2017-2019 Shakuro (https://shakuro.com/)
 // Sergey Laschuk
 // based on: https://github.com/samvermette/SVPullToRefresh and https://github.com/Friend-LGA/LGRefreshView
 //
@@ -7,17 +7,16 @@
 import UIKit
 
 /**
- Constraints of this view or its subviews MUST NOT define width or height of this view - use stretchable/centered layout
+ Constraints of this view or its subviews MUST NOT define width or height of this view - use stretcheble/centered layout
  */
 public protocol PullToRefreshContentViewProtocol {
 
     /**
      This function will be called when visual state of the control changes (including change of state and chage of pull length).
      Look into 'PullToRefreshView.State' and change your content accordingly
-     - Parameters:
-        - currentPullDistance: current pull length(distance). Can be more than 'targetPullDistance'.
-        - targetPullDistance: designated 'length' of the pull-to-refresh control. Refresh event will be triggered, if user pulls more than this length and then releases a touch. A constant value.
-        - state: current (new) state of the control.
+     - parameter currentPullDistance: current pull length(distance). Can be more than 'targetPullDistance'.
+     - parameter targetPullDistance: designated 'length' of the pull-to-refresh control. Refresh event will be triggered, if user pulls more than this length and then releases a touch. A constant value.
+     - parameter state: current (new) state of the control.
      */
     func updateState(currentPullDistance: CGFloat, targetPullDistance: CGFloat, state: PullToRefreshView.State)
 
@@ -58,15 +57,17 @@ public class PullToRefreshView: UIView {
     }
 
     private enum ObservableKeyPath: String {
+
         case contentInset
         case contentOffset
 
-        static fileprivate func all() -> [ObservableKeyPath] {
+        static func all() -> [ObservableKeyPath] {
             return [
                 ObservableKeyPath.contentInset,
                 ObservableKeyPath.contentOffset
             ]
         }
+
     }
 
     /**
@@ -74,25 +75,29 @@ public class PullToRefreshView: UIView {
      Default value is '0.25 s'.
      */
     public var animationDuration: TimeInterval = 0.25
+
     /**
      This handler will be called, when control will enter 'refreshing' state.
      */
     public var eventHandler: (() -> Void)?
+
     /**
      For smooth transition between 'refreshing' and 'idle' state it is better to break current touch. Otherwise content offset will be abruptly changed to 0 and than back to user's drag position (because we are changing 'UIScrollView.contentInsets').
      Default value is 'true'.
      */
     public var canCancelTouches: Bool = true
+
     /**
      If size of content of UIScrollView is equal or greater than size of UIScrollView itself AND current offset is 0, than programmatic triggering of refreshing animation (via 'trigger()' or 'beginRefreshAnimation()') will be invisible for user - content offset will not be changed. If this flag is 'true' than content offset will be animated to reveal animating refresh control to user.
      It is recommended to enable this option, if size of initial/empty content of UIScrollView is big.
-     Default value is 'false'.
+     Default value is `false`.
      */
     public var adjustsOffsetToVisible: Bool = false
+
     /**
      Setting new value to this property will reset state of the control to 'idle'.
      If control is disabled, public methods will do nothing and control will not respond to changes in scroll view.
-     Default value is 'true'.
+     Default value is `true`.
      */
     public var isEnabled: Bool = true {
         didSet {
@@ -101,6 +106,16 @@ public class PullToRefreshView: UIView {
             }
         }
     }
+
+    /**
+     Determines how bounces during deceleration are processed.
+     `true` - bounce will be handled just as if user performed similar-to-bounce pull.
+            If bounce is big enough, refresh will be triggered.
+     `false` - only idle state will be processed without moving to `readyToTrigger` state.
+            Refresh won't be triggered regardles of bounce length.
+     Default value is `false`.
+     */
+    public var allowTriggerWithoutDragging: Bool = false
 
     private var observerContext: Int = 0
     private var observablePaths: [ObservableKeyPath] = []
@@ -118,19 +133,19 @@ public class PullToRefreshView: UIView {
     // MARK: - Initialization
 
     override public init(frame: CGRect) {
-        fatalError("PullToRefreshView init(scrollView:position:length:contentView:)")
+        fatalError("use PullToRefreshView init(scrollView:length:contentView:)")
     }
 
     required public init?(coder aDecoder: NSCoder) {
-        fatalError("PullToRefreshView: init(scrollView:position:length:contentView:)")
+        fatalError("use PullToRefreshView: init(scrollView:length:contentView:)")
     }
 
     /**
      Designated initializer.
-     - Parameters:
-        - scrollView: parent scroll view it must be it's subclass - UITableView or UICollectionView
-        - length: length of the view. It is width for horizontal pull (`.left` and `.right`) and height for vertical pull (`.top` and `.bottom`)
-        - contentView: content view that will display some kind of pull/refreshing animation
+     - parameter scrollView: parent scroll view it must be it's subclass - UITableView or UICollectionView
+     - parameter length: length of the view. It is width for horizontal pull (`.left` and `.right`)
+            and height for vertical pull (`.top` and `.bottom`)
+     - parameter contentView: content view that will display some kind of pull/refreshing animation
      */
     public init(scrollView: UIScrollView,
                 length aLength: CGFloat,
@@ -146,9 +161,14 @@ public class PullToRefreshView: UIView {
 
         // form view hierarchy with constraints
         translatesAutoresizingMaskIntoConstraints = false
-        heightConstraint = heightAnchor.constraint(equalToConstant: length)
-        heightConstraint?.isActive = true
         scrollView.insertSubview(self, at: 0)
+
+        // self constraints
+        widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
+        heightConstraint = heightAnchor.constraint(equalToConstant: aLength)
+        heightConstraint?.isActive = true
+        centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+        bottomAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
 
         // content constraints
         contentView.translatesAutoresizingMaskIntoConstraints = false
@@ -174,13 +194,13 @@ public class PullToRefreshView: UIView {
     }
 
     /**
-     Start refreshing animation. this will not trigger the event.
+     Start refreshing animation. This will not trigger the event.
      */
-    public func beginRefreshingAnimation() {
+    public func beginRefreshingAnimation(animated: Bool = true) {
         guard isEnabled else {
             return
         }
-        setState(.refreshing, report: false)
+        setState(.refreshing, report: false, animated: animated)
     }
 
     /**
@@ -194,34 +214,31 @@ public class PullToRefreshView: UIView {
         setState(.finishing, report: false)
     }
 
+    /**
+     - returns: `true` if refreshing animation is in progress.
+     */
+    public var isRefreshing: Bool {
+        return state == .refreshing
+    }
+
     // MARK: - Events
 
     public override func willMove(toSuperview newSuperview: UIView?) {
         super.willMove(toSuperview: newSuperview)
-
         // remove previous observers
-        if let oldParentScrollView = parentScrollView {
+        if let oldParentScrollView = self.superview as? UIScrollView {
             for path in observablePaths {
                 oldParentScrollView.removeObserver(self, forKeyPath: path.rawValue, context: &observerContext)
             }
             observablePaths.removeAll()
         }
 
-        // add new observers
+        // add new ibservers
         if let newParentScrollView = newSuperview as? UIScrollView {
             for path in ObservableKeyPath.all() {
                 newParentScrollView.addObserver(self, forKeyPath: path.rawValue, options: [.new, .old], context: &observerContext)
                 observablePaths.append(path)
             }
-        }
-    }
-
-    public override func didMoveToSuperview() {
-        // setup own constraints
-        if let realSuperview = parentScrollView {
-            widthAnchor.constraint(equalTo: realSuperview.widthAnchor).isActive = true
-            centerXAnchor.constraint(equalTo: realSuperview.centerXAnchor).isActive = true
-            bottomAnchor.constraint(equalTo: realSuperview.topAnchor).isActive = true
         }
     }
 
@@ -261,14 +278,18 @@ public class PullToRefreshView: UIView {
     }
 
     private func processContentOffsetChange(newValue: CGPoint, oldValue: CGPoint, forced: Bool) {
-        guard isEnabled, !ignoreContentOffsetChanges, (newValue != oldValue) || forced, let scrollView = parentScrollView else {
-            return
+        guard isEnabled,
+            !ignoreContentOffsetChanges,
+            (newValue != oldValue) || forced,
+            let scrollView = self.superview as? UIScrollView
+            else {
+                return
         }
         let newOffset = newValue
         let newPullLength = -newOffset.y - originalContentInset.top
         switch state {
         case .idle:
-            if newPullLength > length {
+            if newPullLength > length && (scrollView.isTracking || allowTriggerWithoutDragging) {
                 setPullLength(newPullLength, report: false)
                 setState(.readyToTrigger, report: true)
             } else {
@@ -302,21 +323,18 @@ public class PullToRefreshView: UIView {
 
     // MARK: Supplemental
 
-    private var parentScrollView: UIScrollView? {
-        return self.superview as? UIScrollView
-    }
-
     private func resetState(refreshOriginalContentInsets: Bool) {
-        if refreshOriginalContentInsets, let scrollview = parentScrollView {
+        if refreshOriginalContentInsets, let scrollview = self.superview as? UIScrollView {
             originalContentInset = scrollview.contentInset
         }
         setPullLength(0, report: false)
         setState(.idle, report: true)
     }
 
-    private func setState(_ newValue: State, report: Bool) {
-        guard state != newValue, let scrollView = parentScrollView else {
-            return
+    private func setState(_ newValue: State, report: Bool, animated: Bool = true) {
+        guard state != newValue,
+            let scrollView = self.superview as? UIScrollView else {
+                return
         }
         state = newValue
         contentView.updateState(currentPullDistance: currentPullLength, targetPullDistance: length, state: state)
@@ -336,10 +354,13 @@ public class PullToRefreshView: UIView {
                     self.ignoreContentOffsetChanges = false
                 } else {
                     UIView.animate(
-                        withDuration: animationDuration,
+                        withDuration: animated ? animationDuration : 0.0,
                         delay: 0.0,
                         options: .allowUserInteraction,
                         animations: {
+                            guard self.state == .idle || self.state == .readyToTrigger else {
+                                return
+                            }
                             self.ignoreContentInsetChanges = true
                             self.ignoreContentOffsetChanges = true
                             scrollView.contentInset = newInsets
@@ -361,10 +382,13 @@ public class PullToRefreshView: UIView {
                     var newOffset = scrollView.contentOffset
                     newOffset.y -= length
                     UIView.animate(
-                        withDuration: animationDuration,
+                        withDuration: animated ? animationDuration : 0.0,
                         delay: 0.0,
                         options: [.allowUserInteraction, .beginFromCurrentState],
                         animations: {
+                            guard self.state == .refreshing else {
+                                return
+                            }
                             self.ignoreContentInsetChanges = true
                             self.ignoreContentOffsetChanges = true
                             scrollView.contentInset = newInsets
@@ -376,10 +400,13 @@ public class PullToRefreshView: UIView {
                         completion: nil)
                 } else {
                     UIView.animate(
-                        withDuration: animationDuration,
+                        withDuration: animated ? animationDuration : 0.0,
                         delay: 0.0,
                         options: [.allowUserInteraction, .beginFromCurrentState],
                         animations: {
+                            guard self.state == .refreshing else {
+                                return
+                            }
                             self.ignoreContentInsetChanges = true
                             self.ignoreContentOffsetChanges = true
                             scrollView.contentInset = newInsets
@@ -396,10 +423,13 @@ public class PullToRefreshView: UIView {
             let oldOffset = scrollView.contentOffset
             if scrollView.contentInset != newInsets {
                 UIView.animate(
-                    withDuration: animationDuration,
+                    withDuration: animated ? animationDuration : 0.0,
                     delay: 0.0,
                     options: [.allowUserInteraction, .beginFromCurrentState],
                     animations: {
+                        guard self.state == .finishing else {
+                            return
+                        }
                         self.ignoreContentInsetChanges = true
                         self.ignoreContentOffsetChanges = true
                         scrollView.contentInset = newInsets
