@@ -294,6 +294,7 @@ open class BaseOperation<ResultType, OptionsType>: TaskOperation<ResultType>, De
     private func addDependencyInternal(operation dependencyOperation: Operation, isStrongDependency: Bool) {
         accessLock.execute({ () -> Void in
             guard case .idle = state else {
+                assertionFailure("BaseOperation: can't add dependencies for operation in state '\(state)'")
                 return
             }
             super.addDependency(dependencyOperation)
