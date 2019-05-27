@@ -42,13 +42,11 @@ internal class ExampleSettingsViewController: UIViewController {
     }
 
     deinit {
-        if let token = notificationToken {
-            settings.settingItemBoolDefaultFalse.didChange.removeHandler(token: token)
-        }
+        notificationToken?.invalidate()
     }
 
     @IBAction private func boolValueSwitchValueChanged() {
-        settings.settingItemBoolDefaultFalse.value = true
+        settings.settingItemBoolDefaultFalse.value = boolValueSwitch.isOn
         settings.settingItemEnum.value = .sample2
         settings.settingItemIntOptional.value = nil
         settings.settingItemEnum2Optional.value = nil
