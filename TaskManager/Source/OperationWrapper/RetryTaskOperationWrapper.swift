@@ -35,7 +35,11 @@ internal final class RetryTaskOperationWrapper<ResultType>: OperationWrapper<Res
         handleOperations()
     }
 
-    override var isCancelled: Bool {
+    internal override var operationHash: String {
+        return mainOperation.operationHash
+    }
+
+    internal override var isCancelled: Bool {
         return mainOperation.isCancelled
     }
 

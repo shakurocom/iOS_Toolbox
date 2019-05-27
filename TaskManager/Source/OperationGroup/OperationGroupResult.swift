@@ -5,7 +5,7 @@
 
 import Foundation
 
-internal struct OperationGroupResult<ResultType, OptionsType> {
+internal struct OperationGroupResult<ResultType, OptionsType: BaseOperationOptions> {
     internal let mainOperation: BaseOperation<ResultType, OptionsType>
     internal let secondaryOperations: [AsyncCompletionProtocol]
 }

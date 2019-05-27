@@ -5,10 +5,19 @@
 
 import Foundation
 
+public protocol CancellableTask {
+
+    var operationHash: String { get }
+    var isCancelled: Bool { get }
+
+    func cancel()
+
+}
+
 /**
  A 'token' for a paticular task. You are not required to strongly hold this.
  */
-public final class Task<ResultType> {
+public final class Task<ResultType>: CancellableTask {
 
     private let operationWrapper: OperationWrapper<ResultType>
 
@@ -17,10 +26,11 @@ public final class Task<ResultType> {
     }
 
     /**
-     Cancel operation related to this task. You can call this method multiple times.
+     Identyfier of internal operation.
+     Can be used to detect operation, that was reused from queue.
      */
-    public func cancel() {
-        operationWrapper.cancel()
+    public var operationHash: String {
+        return operationWrapper.operationHash
     }
 
     /**
@@ -28,6 +38,13 @@ public final class Task<ResultType> {
      */
     public var isCancelled: Bool {
         return operationWrapper.isCancelled
+    }
+
+    /**
+     Cancel operation related to this task. You can call this method multiple times.
+     */
+    public func cancel() {
+        operationWrapper.cancel()
     }
 
     /**

@@ -9,7 +9,7 @@ internal protocol OperationPrototypeProtocol {
     func instantiate() -> AsyncCompletionProtocol
 }
 
-internal final class OperationPrototype<ResultType, OptionsType>: OperationPrototypeProtocol {
+internal final class OperationPrototype<ResultType, OptionsType: BaseOperationOptions>: OperationPrototypeProtocol {
 
     private let operationType: BaseOperation<ResultType, OptionsType>.Type
     private let options: OptionsType

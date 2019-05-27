@@ -12,8 +12,8 @@ import Foundation
  */
 open class TaskManager {
 
-    public typealias OperationInQueue = CancellableOperation & TypedOperation & DependentOperation & PriorityProtocol & AsyncCompletionProtocol
-    private typealias OperationInQueueInternal = Operation & TypedOperation & DependentOperation & PriorityProtocol & AsyncCompletionProtocol
+    public typealias OperationInQueue = CancellableOperation & DependentOperation & PriorityProtocol & AsyncCompletionProtocol
+    private typealias OperationInQueueInternal = Operation & DependentOperation & PriorityProtocol & AsyncCompletionProtocol
 
     private let name: String
     private let accessLock: NSRecursiveLock
@@ -82,6 +82,7 @@ open class TaskManager {
 
     /**
      Override this method to add custom logic for specific operations.
+     Use `type(of:)` or `operationHash` to identify operations in queue.
 
      Default implementation returns input 'newOperation'.
 
@@ -95,22 +96,19 @@ open class TaskManager {
      ```
      // Example: 'sign in' operation is unique and will cancel all previous operations:
 
-     let result: BaseOperation<OperationResultType, OperationOptionsType>
+     let result: TaskManager.OperationInQueue
      switch newOperation {
      case let _ as SignInOperation:
-        let signInInQueue = operationsInQueue.first(where: { (operation: Operation) -> Bool in
-            return operation.operationType == MyOperationTypeEnum.signIn.rawValue
-        })
-        if let actualSignIn = signInInQueue {
-            result = signInInQueue
-        } else {
-            result = newOperation
-            for operation in operationsInQueue {
-                operation.cancel()
-            }
-        }
+     let signInInQueue = operationsInQueue.first(where: { (operation: Operation) -> Bool in
+     return operation.operationHash == newOperation.operationHash
+     })
+     if let actualSignIn = signInInQueue {
+     result = signInInQueue
+     } else {
+     result = newOperation
+     }
      default:
-        result = newOperation
+     result = newOperation
      }
      return result
      ```
@@ -146,8 +144,8 @@ private extension TaskManager {
     /**
      Instantiate single operation with provided options; resolve retries
      */
-    private func performGroupNoLock<ResultType, OptionsType>(_ group: OperationGroup<ResultType, OptionsType>,
-                                                             retryHandler: RetryHandler<ResultType>?) -> OperationWrapper<ResultType> {
+    private func performGroupNoLock<ResultType, OptionsType: BaseOperationOptions>(_ group: OperationGroup<ResultType, OptionsType>,
+                                                                                   retryHandler: RetryHandler<ResultType>?) -> OperationWrapper<ResultType> {
         let newWrapper: OperationWrapper<ResultType>
         if let realRetryHandler = retryHandler {
             let operations = instantiateOperationGroupNoLock(group)
@@ -190,7 +188,7 @@ private extension TaskManager {
     /**
      Instantiate and add to queue all operations from given `OperationSequence`.
      */
-    private func instantiateOperationGroupNoLock<R, O>(_ group: OperationGroup<R, O>) -> OperationGroupResult<R, O> {
+    private func instantiateOperationGroupNoLock<R, O: BaseOperationOptions>(_ group: OperationGroup<R, O>) -> OperationGroupResult<R, O> {
         let secondaryOperations = group.secondaryOperationPrototypes.map({ instantiateOperationNoLock(operation: $0) })
         let mainOperation = instantiateTypedOperationNoLock(operation: group.mainOperationPrototype)
         return OperationGroupResult(mainOperation: mainOperation, secondaryOperations: secondaryOperations)
@@ -199,7 +197,7 @@ private extension TaskManager {
     /**
      Typed variant of instantiateOperationNoLock(operation: options:)
      */
-    private func instantiateTypedOperationNoLock<R, O>(operation: OperationPrototype<R, O>) -> BaseOperation<R, O> {
+    private func instantiateTypedOperationNoLock<R, O: BaseOperationOptions>(operation: OperationPrototype<R, O>) -> BaseOperation<R, O> {
         let newOperation = instantiateOperationNoLock(operation: operation)
         guard let typedResult = newOperation as? BaseOperation<R, O> else {
             fatalError("\(type(of: self)): \(#function): resolved operation has invalid type. " +

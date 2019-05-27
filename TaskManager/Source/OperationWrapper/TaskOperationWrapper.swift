@@ -18,6 +18,10 @@ internal class TaskOperationWrapper<ResultType>: OperationWrapper<ResultType> {
         self.secondaryOperations = secondaryOperations
     }
 
+    internal override var operationHash: String {
+        return mainOperation.operationHash
+    }
+
     internal override var isCancelled: Bool {
         return mainOperation.isCancelled
     }

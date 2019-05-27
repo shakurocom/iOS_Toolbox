@@ -51,6 +51,7 @@
 		2F76AB432148170E0094A7B1 /* ExampleEMailValidatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F76AB422148170E0094A7B1 /* ExampleEMailValidatorViewController.swift */; };
 		2F86E3A8204814C50045070C /* OperationCallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F86E3A7204814C50045070C /* OperationCallback.swift */; };
 		2F86E3AA204815940045070C /* BaseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F86E3A9204815940045070C /* BaseOperation.swift */; };
+		2F956100229BE33400D5E6B9 /* BaseOperationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9560FF229BE33400D5E6B9 /* BaseOperationOptions.swift */; };
 		2FA876B82035BB130070AAAF /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF279C61FDEB44700F0F769 /* KeychainWrapper.swift */; };
 		2FA876BA2035BEE40070AAAF /* UnexpectedNilError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA876B92035BEE40070AAAF /* UnexpectedNilError.swift */; };
 		2FB05A2C204E8F16003B80CC /* OperationPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB05A2B204E8F16003B80CC /* OperationPriority.swift */; };
@@ -59,7 +60,6 @@
 		2FB05A49204EBA3D003B80CC /* TaskManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB05A48204EBA3D003B80CC /* TaskManagerTests.swift */; };
 		2FB494FF204577550068D380 /* TaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB494FE204577550068D380 /* TaskManager.swift */; };
 		2FB495012045A5460068D380 /* ExampleTaskManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB495002045A5460068D380 /* ExampleTaskManagerViewController.swift */; };
-		2FB6FEDA21AC2AC4008D3FC0 /* TypedOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB6FED921AC2AC4008D3FC0 /* TypedOperation.swift */; };
 		2FB6FEDC21AC2B72008D3FC0 /* CancellableOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB6FEDB21AC2B72008D3FC0 /* CancellableOperation.swift */; };
 		2FC1B1DC2199CB18006401F9 /* Array+Chunks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC1B1DB2199CB18006401F9 /* Array+Chunks.swift */; };
 		2FC2268F2201E80F0057C63B /* NSNumberRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC2268E2201E80F0057C63B /* NSNumberRepresentable.swift */; };
@@ -156,6 +156,7 @@
 		2F76AB422148170E0094A7B1 /* ExampleEMailValidatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleEMailValidatorViewController.swift; sourceTree = "<group>"; };
 		2F86E3A7204814C50045070C /* OperationCallback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationCallback.swift; sourceTree = "<group>"; };
 		2F86E3A9204815940045070C /* BaseOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseOperation.swift; sourceTree = "<group>"; };
+		2F9560FF229BE33400D5E6B9 /* BaseOperationOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseOperationOptions.swift; sourceTree = "<group>"; };
 		2FA876B92035BEE40070AAAF /* UnexpectedNilError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnexpectedNilError.swift; sourceTree = "<group>"; };
 		2FB05A2B204E8F16003B80CC /* OperationPriority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationPriority.swift; sourceTree = "<group>"; };
 		2FB05A2D204E9061003B80CC /* DependentOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependentOperation.swift; sourceTree = "<group>"; };
@@ -163,7 +164,6 @@
 		2FB05A48204EBA3D003B80CC /* TaskManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskManagerTests.swift; sourceTree = "<group>"; };
 		2FB494FE204577550068D380 /* TaskManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskManager.swift; sourceTree = "<group>"; };
 		2FB495002045A5460068D380 /* ExampleTaskManagerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleTaskManagerViewController.swift; sourceTree = "<group>"; };
-		2FB6FED921AC2AC4008D3FC0 /* TypedOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypedOperation.swift; sourceTree = "<group>"; };
 		2FB6FEDB21AC2B72008D3FC0 /* CancellableOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancellableOperation.swift; sourceTree = "<group>"; };
 		2FC1B1DB2199CB18006401F9 /* Array+Chunks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Chunks.swift"; sourceTree = "<group>"; };
 		2FC2268E2201E80F0057C63B /* NSNumberRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSNumberRepresentable.swift; sourceTree = "<group>"; };
@@ -446,6 +446,7 @@
 				2FB494FE204577550068D380 /* TaskManager.swift */,
 				2F0CC9B2204931E900A896B2 /* TaskManagerError.swift */,
 				2F86E3A9204815940045070C /* BaseOperation.swift */,
+				2F9560FF229BE33400D5E6B9 /* BaseOperationOptions.swift */,
 				2F50281C2048133A0088418A /* Task.swift */,
 				2F10746821AD7A91002D07DB /* RetryHandler.swift */,
 				2FF58C2921D75280003C534E /* Operation */,
@@ -690,7 +691,6 @@
 				2FB05A2D204E9061003B80CC /* DependentOperation.swift */,
 				2FB05A2B204E8F16003B80CC /* OperationPriority.swift */,
 				2FB05A2F204E9430003B80CC /* TaskOperation.swift */,
-				2FB6FED921AC2AC4008D3FC0 /* TypedOperation.swift */,
 				2F86E3A7204814C50045070C /* OperationCallback.swift */,
 			);
 			path = Operation;
@@ -710,8 +710,8 @@
 			isa = PBXGroup;
 			children = (
 				2F10746A21AD841F002D07DB /* OperationGroup.swift */,
-				2F2C8BFB21AE7A1600413ED3 /* OperationPrototype.swift */,
 				2F2C8BFD21AE7B7A00413ED3 /* OperationGroupResult.swift */,
+				2F2C8BFB21AE7A1600413ED3 /* OperationPrototype.swift */,
 			);
 			path = OperationGroup;
 			sourceTree = "<group>";
@@ -996,11 +996,11 @@
 				2F50281D2048133A0088418A /* Task.swift in Sources */,
 				2FF289441FDEB46C00F0F769 /* DeviceCamera.swift in Sources */,
 				2F10746B21AD841F002D07DB /* OperationGroup.swift in Sources */,
-				2FB6FEDA21AC2AC4008D3FC0 /* TypedOperation.swift in Sources */,
 				2FB6FEDC21AC2B72008D3FC0 /* CancellableOperation.swift in Sources */,
 				2FF279B61FDEA21B00F0F769 /* ExampleDeviceOrientationListenerViewController.swift in Sources */,
 				2F2DBABB205A8220000AFC0F /* InsetsLabel.swift in Sources */,
 				2F4FA518203DAECC003D57C0 /* ExampleHTTPClientViewController.swift in Sources */,
+				2F956100229BE33400D5E6B9 /* BaseOperationOptions.swift in Sources */,
 				2F4A2DF01FE3B8C6003B9F27 /* ImagePreviewViewController.swift in Sources */,
 				2F5C2EE320318B880031CD2D /* ExamplePullToRefreshViewController.swift in Sources */,
 				2F10746921AD7A91002D07DB /* RetryHandler.swift in Sources */,
