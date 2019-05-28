@@ -93,7 +93,7 @@ extension SimulatorCamera: VideoCamera {
         get {
             return AVCaptureDevice.FlashMode.off
         }
-        set {
+        set { // swiftlint:disable:this unused_setter_value
             // do nothing
         }
     }
@@ -110,7 +110,7 @@ extension SimulatorCamera: VideoCamera {
         get {
             return AVCaptureDevice.TorchMode.off
         }
-        set {
+        set {// swiftlint:disable:this unused_setter_value
             // do nothing
         }
     }
@@ -127,7 +127,7 @@ extension SimulatorCamera: VideoCamera {
         get {
             return AVCaptureDevice.WhiteBalanceMode.locked
         }
-        set {
+        set {// swiftlint:disable:this unused_setter_value
             // do nothing
         }
     }
@@ -136,7 +136,7 @@ extension SimulatorCamera: VideoCamera {
         get {
             return false
         }
-        set {
+        set {// swiftlint:disable:this unused_setter_value
             // do nothing
         }
     }
@@ -153,7 +153,7 @@ extension SimulatorCamera: VideoCamera {
         get {
             return false
         }
-        set {
+        set {// swiftlint:disable:this unused_setter_value
             // do nothing
         }
 
@@ -163,7 +163,7 @@ extension SimulatorCamera: VideoCamera {
         get {
             return AVCaptureDevice.AutoFocusRangeRestriction.none
         }
-        set {
+        set {// swiftlint:disable:this unused_setter_value
             // do nothing
         }
     }
@@ -233,7 +233,7 @@ extension SimulatorCamera: VideoCamera {
         get {
             return cameraPreviewView.bounds
         }
-        set {
+        set {// swiftlint:disable:this unused_setter_value
             // do nothing
         }
     }
