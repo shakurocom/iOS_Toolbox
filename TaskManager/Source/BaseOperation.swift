@@ -10,7 +10,7 @@ open class BaseOperation<ResultType, OptionsType>: TaskOperation<ResultType>, De
     private indirect enum State { // idle -> executing -> finished : always that way
         case idle
         case executing
-        case finished(operationResult: CancellableTaskResult<ResultType>)
+        case finished(operationResult: CancellableAsyncResult<ResultType>)
     }
 
     final public let options: OptionsType
@@ -63,8 +63,8 @@ open class BaseOperation<ResultType, OptionsType>: TaskOperation<ResultType>, De
     /**
      Result of the operation. Returns nil if operation is not yet finished.
      */
-    public final override var operationResult: CancellableTaskResult<ResultType>? {
-        let result = accessLock.execute({ () -> CancellableTaskResult<ResultType>? in
+    public final override var operationResult: CancellableAsyncResult<ResultType>? {
+        let result = accessLock.execute({ () -> CancellableAsyncResult<ResultType>? in
             switch state {
             case .idle,
                  .executing:
@@ -87,7 +87,7 @@ open class BaseOperation<ResultType, OptionsType>: TaskOperation<ResultType>, De
         })
     }
 
-    final public override func onComplete(queue: DispatchQueue?, closure: @escaping (_ result: CancellableTaskResult<ResultType>) -> Void) {
+    final public override func onComplete(queue: DispatchQueue?, closure: @escaping (_ result: CancellableAsyncResult<ResultType>) -> Void) {
         let newCallback = OperationCallback(callbackQueue: queue, callback: closure)
         accessLock.execute({ () -> Void in
             switch state {
@@ -118,8 +118,8 @@ open class BaseOperation<ResultType, OptionsType>: TaskOperation<ResultType>, De
      In release - second start will finish operation with `TaskManagerError.internalInconsistencyError`.
      */
     final public override func start() {
-        let startFailure = accessLock.execute({ () -> CancellableTaskResult<ResultType>? in
-            var failureResult: CancellableTaskResult<ResultType>?
+        let startFailure = accessLock.execute({ () -> CancellableAsyncResult<ResultType>? in
+            var failureResult: CancellableAsyncResult<ResultType>?
             guard self.isReady else {
                 assertionFailure("\(type(of: self)): operation is not ready.")
                 return .failure(error: TaskManagerError.internalInconsistencyError)
@@ -173,7 +173,7 @@ open class BaseOperation<ResultType, OptionsType>: TaskOperation<ResultType>, De
      Use this method at the end of 'main()' function to properly finish operation and execute callbacks.
      - parameter result: result of the operation. You can retrive it via `operationResult` property.
      */
-    final public func finish(result: CancellableTaskResult<ResultType>) {
+    final public func finish(result: CancellableAsyncResult<ResultType>) {
         accessLock.execute({ () -> Void in
             switch state {
             case .idle,
@@ -242,18 +242,14 @@ open class BaseOperation<ResultType, OptionsType>: TaskOperation<ResultType>, De
 
     // MARK: - Internal
 
-    final internal func dependencyResult() -> DependencyResult? {
-        let result = accessLock.execute({ () -> DependencyResult? in
-            guard case .finished(let opResult) = state else {
+    final internal func dependencyResult() -> CancellableAsyncResult<Void>? {
+        let result = accessLock.execute({ () -> CancellableAsyncResult<Void>? in
+            switch state {
+            case .idle,
+                 .executing:
                 return nil
-            }
-            switch opResult {
-            case .success:
-                return DependencyResult.success
-            case .cancelled:
-                return DependencyResult.cancelled
-            case .failure(let error):
-                return DependencyResult.failure(error: error)
+            case .finished(let opResult):
+                return opResult.removingType()
             }
         })
         return result

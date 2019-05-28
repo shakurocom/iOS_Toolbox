@@ -12,7 +12,7 @@ internal final class RetryTaskOperationWrapper<ResultType>: OperationWrapper<Res
 
     private enum State {
         case executing
-        case finished(result: CancellableTaskResult<ResultType>)
+        case finished(result: CancellableAsyncResult<ResultType>)
     }
 
     private var mainOperation: TaskOperation<ResultType>
@@ -45,7 +45,7 @@ internal final class RetryTaskOperationWrapper<ResultType>: OperationWrapper<Res
         })
     }
 
-    internal override func onComplete(queue: DispatchQueue?, closure: @escaping (CancellableTaskResult<ResultType>) -> Void) {
+    internal override func onComplete(queue: DispatchQueue?, closure: @escaping (CancellableAsyncResult<ResultType>) -> Void) {
         let newCallback = OperationCallback(callbackQueue: queue, callback: closure)
         accessLock.execute({ () -> Void in
             switch state {
@@ -63,7 +63,7 @@ internal final class RetryTaskOperationWrapper<ResultType>: OperationWrapper<Res
         })
     }
 
-    private func processMainOperationResult(_ mainOperationResult: CancellableTaskResult<ResultType>) {
+    private func processMainOperationResult(_ mainOperationResult: CancellableAsyncResult<ResultType>) {
         // sanity check
         if case .finished = state {
             let log = "invalid state of \(type(of: self)): \(state)"
@@ -101,7 +101,7 @@ internal final class RetryTaskOperationWrapper<ResultType>: OperationWrapper<Res
         })
     }
 
-    private func finish(result: CancellableTaskResult<ResultType>) {
+    private func finish(result: CancellableAsyncResult<ResultType>) {
         state = .finished(result: result)
         for callback in completions {
             callback.performAsync(result: result)

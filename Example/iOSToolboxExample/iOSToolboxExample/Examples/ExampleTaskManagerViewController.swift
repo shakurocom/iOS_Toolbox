@@ -285,7 +285,7 @@ internal class GetStringsFromRandomOrgOperation: BaseOperation<String, GetString
             "format": "plain",
             "rnd": "new"
         ]
-        requestOptions.completionHandler = { [weak self] (parsedResponse: HTTPClient.Response<String>, _) in
+        requestOptions.completionHandler = { [weak self] (parsedResponse, _) in
             guard let strongSelf = self else {
                 return
             }

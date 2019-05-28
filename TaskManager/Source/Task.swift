@@ -13,12 +13,6 @@ public enum TaskResult<ResultType> {
     case failure(error: Error)
 }
 
-public enum CancellableTaskResult<ResultType> {
-    case success(result: ResultType)
-    case cancelled
-    case failure(error: Error)
-}
-
 /**
  A 'token' for a paticular task. You are not required to strongly hold this.
  */
@@ -50,8 +44,8 @@ public final class Task<ResultType> {
      - parameter closure: completion block. Will be executed asynchroniously on a specified queue.
      */
     public func onComplete(queue: DispatchQueue? = nil,
-                           closure: @escaping (_ task: Task<ResultType>, _ result: CancellableTaskResult<ResultType>) -> Void) {
-        operationWrapper.onComplete(queue: queue, closure: { (result: CancellableTaskResult<ResultType>) in
+                           closure: @escaping (_ task: Task<ResultType>, _ result: CancellableAsyncResult<ResultType>) -> Void) {
+        operationWrapper.onComplete(queue: queue, closure: { (result: CancellableAsyncResult<ResultType>) in
             closure(self, result)
         })
     }

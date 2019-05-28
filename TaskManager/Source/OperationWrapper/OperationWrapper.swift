@@ -21,7 +21,7 @@ internal class OperationWrapper<ResultType>: OperationWrapperProtocol {
         fatalError("\(type(of: self)) is abstract!")
     }
 
-    func onComplete(queue: DispatchQueue?, closure: @escaping (CancellableTaskResult<ResultType>) -> Void) {
+    func onComplete(queue: DispatchQueue?, closure: @escaping (CancellableAsyncResult<ResultType>) -> Void) {
         fatalError("\(type(of: self)) is abstract!")
     }
 

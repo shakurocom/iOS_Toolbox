@@ -21,7 +21,7 @@ public protocol AsyncCompletionProtocol: class {
  */
 open class TaskOperation<ResultType>: Operation, AsyncCompletionProtocol {
 
-    public var operationResult: CancellableTaskResult<ResultType>? {
+    public var operationResult: CancellableAsyncResult<ResultType>? {
         fatalError("Do not subclass TaskOperation - use 'BaseOperation' instead.")
     }
 
@@ -36,7 +36,7 @@ open class TaskOperation<ResultType>: Operation, AsyncCompletionProtocol {
      - parameter queue: queue for a completion block. If `nil` `DispatchQueue.global()` will be used.
      - parameter closure: completion block.
      */
-    func onComplete(queue: DispatchQueue?, closure: @escaping (_ result: CancellableTaskResult<ResultType>) -> Void) {
+    func onComplete(queue: DispatchQueue?, closure: @escaping (_ result: CancellableAsyncResult<ResultType>) -> Void) {
         fatalError("Do not subclass TaskOperation - use 'BaseOperation' instead.")
     }
 

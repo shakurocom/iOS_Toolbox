@@ -93,9 +93,7 @@ extension SimulatorCamera: VideoCamera {
         get {
             return AVCaptureDevice.FlashMode.off
         }
-        set {
-            // do nothing
-        }
+        set { /* do nothing */ } // swiftlint:disable:this unused_setter_value
     }
 
     func setNextFlashMode() {
@@ -110,9 +108,7 @@ extension SimulatorCamera: VideoCamera {
         get {
             return AVCaptureDevice.TorchMode.off
         }
-        set {
-            // do nothing
-        }
+        set { /* do nothing */ } // swiftlint:disable:this unused_setter_value
     }
 
     func selectNextTorchMode() {
@@ -127,18 +123,14 @@ extension SimulatorCamera: VideoCamera {
         get {
             return AVCaptureDevice.WhiteBalanceMode.locked
         }
-        set {
-            // do nothing
-        }
+        set { /* do nothing */ } // swiftlint:disable:this unused_setter_value
     }
 
     var automaticallyEnablesLowLightBoostWhenAvailable: Bool {
         get {
             return false
         }
-        set {
-            // do nothing
-        }
+        set { /* do nothing */ } // swiftlint:disable:this unused_setter_value
     }
 
     var focusPointOfInterest: CGPoint {
@@ -153,9 +145,7 @@ extension SimulatorCamera: VideoCamera {
         get {
             return false
         }
-        set {
-            // do nothing
-        }
+        set { /* do nothing */ } // swiftlint:disable:this unused_setter_value
 
     }
 
@@ -163,9 +153,7 @@ extension SimulatorCamera: VideoCamera {
         get {
             return AVCaptureDevice.AutoFocusRangeRestriction.none
         }
-        set {
-            // do nothing
-        }
+        set { /* do nothing */ } // swiftlint:disable:this unused_setter_value
     }
 
     var videoDataOutputSize: CGSize {
@@ -233,9 +221,7 @@ extension SimulatorCamera: VideoCamera {
         get {
             return cameraPreviewView.bounds
         }
-        set {
-            // do nothing
-        }
+        set { /* do nothing */ } // swiftlint:disable:this unused_setter_value
     }
 
     func transformedMetadataObject(_ metadataObject: AVMetadataObject) -> AVMetadataObject? {

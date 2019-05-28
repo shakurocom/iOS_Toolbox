@@ -10,7 +10,7 @@ import Foundation
  */
 final internal class OperationCallback<ResultType> {
 
-    internal typealias CallbackType = (_ result: CancellableTaskResult<ResultType>) -> Void
+    internal typealias CallbackType = (_ result: CancellableAsyncResult<ResultType>) -> Void
 
     private let callbackQueue: DispatchQueue?
     private let callback: CallbackType
@@ -20,7 +20,7 @@ final internal class OperationCallback<ResultType> {
         callback = aCallback
     }
 
-    internal func performAsync(result: CancellableTaskResult<ResultType>) {
+    internal func performAsync(result: CancellableAsyncResult<ResultType>) {
         let queue = callbackQueue ?? DispatchQueue.global()
         queue.async(execute: {
             self.callback(result)
