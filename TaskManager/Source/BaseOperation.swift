@@ -249,7 +249,7 @@ open class BaseOperation<ResultType, OptionsType>: TaskOperation<ResultType>, De
                  .executing:
                 return nil
             case .finished(let opResult):
-                return opResult.voidTyped()
+                return opResult.removingType()
             }
         })
         return result
