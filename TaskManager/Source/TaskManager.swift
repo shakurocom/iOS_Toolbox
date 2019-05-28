@@ -34,7 +34,7 @@ open class TaskManager {
      - parameter qualityOfService: QoS for internal queue.
      - parameter maxConcurrentOperationCount: maximum number of operations allowed to execute in parallel.
      */
-    public required init(name aName: String, qualityOfService: QualityOfService, maxConcurrentOperationCount: Int) {
+    public init(name aName: String, qualityOfService: QualityOfService, maxConcurrentOperationCount: Int) {
         name = aName
         accessLock = NSRecursiveLock()
         accessLock.name = "\(aName).accessLock"
@@ -176,7 +176,7 @@ private extension TaskManager {
                 return
             }
             strongSelf.accessLock.execute({
-                let indexToRemove = strongSelf.operationWrappers.index(where: { (wrapper) -> Bool in
+                let indexToRemove = strongSelf.operationWrappers.firstIndex(where: { (wrapper) -> Bool in
                     return wrapper === newWrapper
                 })
                 if let index = indexToRemove {
@@ -250,11 +250,11 @@ private extension TaskManager {
         let index: Int?
         switch newOperation.priorityType {
         case .lifo:
-            index = notEnqueuedOperations.index(where: { (oldOperation) -> Bool in
+            index = notEnqueuedOperations.firstIndex(where: { (oldOperation) -> Bool in
                 return oldOperation.priorityValue <= newOperation.priorityValue
             })
         case .fifo:
-            index = notEnqueuedOperations.index(where: { (oldOperation) -> Bool in
+            index = notEnqueuedOperations.firstIndex(where: { (oldOperation) -> Bool in
                 return oldOperation.priorityValue < newOperation.priorityValue
             })
         }
@@ -269,7 +269,7 @@ private extension TaskManager {
                 return
             }
             strongSelf.accessLock.execute({
-                let indexToRemove = strongSelf.allOperations.index(where: { (operation) -> Bool in
+                let indexToRemove = strongSelf.allOperations.firstIndex(where: { (operation) -> Bool in
                     return operation === newOperation
                 })
                 if let index = indexToRemove {
@@ -303,7 +303,7 @@ private extension TaskManager {
             return
         }
         while operationQueue.operationCount < operationQueue.maxConcurrentOperationCount {
-            let readyOperationIndex = notEnqueuedOperations.index(where: { (operation) -> Bool in
+            let readyOperationIndex = notEnqueuedOperations.firstIndex(where: { (operation) -> Bool in
                 return operation.isReady
             })
             if let operationToExecuteIndex = readyOperationIndex {

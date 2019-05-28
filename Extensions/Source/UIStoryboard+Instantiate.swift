@@ -22,7 +22,7 @@ public extension UIStoryboard {
      - Example:
      `let exampleVC: ExampleViewController = storyboard.instantiateViewController(withIdentifier: "kExampleViewControllerStoryboardID")`
      */
-    public func instantiateViewController<ControllerType: UIViewController>(withIdentifier identifier: String) -> ControllerType {
+    func instantiateViewController<ControllerType: UIViewController>(withIdentifier identifier: String) -> ControllerType {
         guard let resultController: ControllerType = instantiateViewController(withIdentifier: identifier) as? ControllerType else {
             fatalError("\(type(of: self)) \(#function): \(identifier).")
         }

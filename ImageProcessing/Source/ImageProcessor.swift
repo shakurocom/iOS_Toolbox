@@ -72,6 +72,8 @@ public class ImageProcessor {
             return UIImage.Orientation.left
         case .landscapeRight:
             return UIImage.Orientation.right
+        @unknown default:
+            return UIImage.Orientation.up // like from portrait
         }
     }
 

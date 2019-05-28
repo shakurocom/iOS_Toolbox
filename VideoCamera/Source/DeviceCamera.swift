@@ -233,6 +233,9 @@ internal class DeviceCamera: NSObject {
             workQueue.async(execute: {
                 self.setupCaptureSession(configuration: self.initialConfiguration)
             })
+
+        @unknown default:
+            break // like 'denied'
         }
     }
 
@@ -451,7 +454,7 @@ extension DeviceCamera: VideoCamera {
             }
             let modesCount = output.supportedFlashModes.count
             if modesCount > 1 {
-                if let nextModeIndex = output.supportedFlashModes.index(of: photoSettings.flashMode) {
+                if let nextModeIndex = output.supportedFlashModes.firstIndex(of: photoSettings.flashMode) {
                     self.flashMode = output.supportedFlashModes[(nextModeIndex + 1) % modesCount]
                 }
             }
@@ -503,7 +506,7 @@ extension DeviceCamera: VideoCamera {
                 return
             }
             let modes: [AVCaptureDevice.TorchMode] = [.on, .auto, .off]
-            if let currentModeIndex = modes.index(of: device.torchMode) {
+            if let currentModeIndex = modes.firstIndex(of: device.torchMode) {
                 for index in 1...2 {
                     let nextMode = modes[(currentModeIndex + index) % modes.count]
                     if device.isTorchModeSupported(nextMode) {
@@ -858,6 +861,9 @@ extension DeviceCamera {
 
         case .portraitUpsideDown:
             return AVCaptureVideoOrientation.portraitUpsideDown
+
+        @unknown default:
+            return AVCaptureVideoOrientation.portrait // like 'unknown'
         }
     }
 

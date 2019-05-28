@@ -77,7 +77,7 @@ public extension DeviceType {
     /**
      Returns the current device type
      */
-    public static var current: DeviceType {
+    static var current: DeviceType {
         var systemInfo = utsname()
         uname(&systemInfo)
 
@@ -99,7 +99,7 @@ public extension DeviceType {
      For Simulator it will return simulated device model.
      This property is supposed to never return `DeviceType.simulator` value - use `current` if you need to detect simulator.
      */
-    public static var model: DeviceType {
+    static var model: DeviceType {
         var deviceType = DeviceType.current
         if deviceType == .simulator {
             deviceType = DeviceType(identifier: String(cString: getenv("SIMULATOR_MODEL_IDENTIFIER")))
@@ -110,7 +110,7 @@ public extension DeviceType {
     /**
      Returns the display name of the device type
      */
-    public var displayName: String {
+    var displayName: String {
         switch self {
         case .iPhone2G: return "iPhone 2G"
         case .iPhone3G: return "iPhone 3G"
@@ -157,7 +157,7 @@ public extension DeviceType {
         }
     }
 
-    public var identifiers: [String] {
+    var identifiers: [String] {
         switch self {
         case .notAvailable: return []
         case .simulator: return ["i386", "x86_64"]

@@ -95,6 +95,8 @@ class ExampleVideoCameraViewController: UIViewController {
                 newTitle = "flash: on"
             case .auto:
                 newTitle = "flash: auto"
+            @unknown default:
+                fatalError()
             }
             flashButton.setTitle(newTitle, for: UIControl.State.normal)
         }
@@ -110,6 +112,8 @@ class ExampleVideoCameraViewController: UIViewController {
                 newTitle = "torch: on"
             case .auto:
                 newTitle = "torch: auto"
+            @unknown default:
+                fatalError()
             }
             torchButton.setTitle(newTitle, for: UIControl.State.normal)
         }
@@ -157,6 +161,8 @@ extension ExampleVideoCameraViewController: VideoCameraDelegate {
                 self.cameraAuthorizationLabel.text = "auth: denied"
             case .authorized:
                 self.cameraAuthorizationLabel.text = nil
+            @unknown default:
+                fatalError()
             }
         })
     }

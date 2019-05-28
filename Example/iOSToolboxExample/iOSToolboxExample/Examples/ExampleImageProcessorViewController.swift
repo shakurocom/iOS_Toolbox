@@ -58,6 +58,8 @@ class ExampleImageProcessorViewController: UIViewController {
         case .portraitUpsideDown: videoOrientationString = "AVCaptureVideoOrientation.portraitUpsideDown"
         case .landscapeRight: videoOrientationString = "AVCaptureVideoOrientation.landscapeRight"
         case .landscapeLeft: videoOrientationString = "AVCaptureVideoOrientation.landscapeLeft"
+        @unknown default:
+            fatalError()
         }
         avVideoOrientationLabel.text = videoOrientationString
         let imageOrienationString: String
@@ -70,6 +72,8 @@ class ExampleImageProcessorViewController: UIViewController {
         case .downMirrored: imageOrienationString = "UIImageOrientation.downMirrored"
         case .leftMirrored: imageOrienationString = "UIImageOrientation.leftMirrored"
         case .rightMirrored: imageOrienationString = "UIImageOrientation.rightMirrored"
+        @unknown default:
+            fatalError()
         }
         uiImageOrienttionLabel.text = imageOrienationString
     }
