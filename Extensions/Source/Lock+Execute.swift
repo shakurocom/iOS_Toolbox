@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2018 Shakuro (https://shakuro.com/)
+// Copyright (c) 2018-2019 Shakuro (https://shakuro.com/)
 // Sergey Laschuk
 //
 
