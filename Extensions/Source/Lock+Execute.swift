@@ -5,30 +5,10 @@
 
 import Foundation
 
-public protocol ExecuteSyncProtocol {
-    func execute<ResultType>(_ closure: () -> ResultType) -> ResultType
-}
-
-extension NSLock: ExecuteSyncProtocol {
-
-    public func execute<ResultType>(_ closure: () -> ResultType) -> ResultType {
-        let result: ResultType
+extension NSLocking {
+    public func execute<ResultType>(_ closure: () throws -> ResultType) rethrows -> ResultType {
         lock()
-        result = closure()
-        unlock()
-        return result
+        defer { unlock() }
+        return try closure()
     }
-
-}
-
-extension NSRecursiveLock: ExecuteSyncProtocol {
-
-    public func execute<ResultType>(_ closure: () -> ResultType) -> ResultType {
-        let result: ResultType
-        lock()
-        result = closure()
-        unlock()
-        return result
-    }
-
 }
