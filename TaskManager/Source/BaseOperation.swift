@@ -297,14 +297,6 @@ open class BaseOperation<ResultType, OptionsType>: TaskOperation<ResultType>, De
                 assertionFailure("BaseOperation: can't add dependencies for operation in state '\(state)'")
                 return
             }
-            guard !isExecuting else {
-                assertionFailure("BaseOperation: can't add dependencies to already executing operation")
-                return
-            }
-            guard !isFinished else {
-                assertionFailure("BaseOperation: can't add dependencies to already finished operation")
-                return
-            }
             super.addDependency(dependencyOperation)
             if isStrongDependency {
                 strongDependencies.append(dependencyOperation)
