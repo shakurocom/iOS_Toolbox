@@ -8,5 +8,4 @@ import Foundation
 public enum HTTPClientError: Swift.Error {
     case cantSerializeResponseData
     case cantParseSerializedResponse
-    case httpClientDeallocated
 }
