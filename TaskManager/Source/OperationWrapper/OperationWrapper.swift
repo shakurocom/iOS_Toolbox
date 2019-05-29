@@ -13,6 +13,10 @@ internal protocol OperationWrapperProtocol: CancellableOperation {
  */
 internal class OperationWrapper<ResultType>: OperationWrapperProtocol {
 
+    internal var operationHash: String {
+        fatalError("\(type(of: self)) is abstract!")
+    }
+
     internal var isCancelled: Bool {
         fatalError("\(type(of: self)) is abstract!")
     }

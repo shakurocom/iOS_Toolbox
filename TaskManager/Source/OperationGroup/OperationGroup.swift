@@ -5,7 +5,7 @@
 
 import Foundation
 
-public final class OperationGroup<ResultType, OptionsType> {
+public final class OperationGroup<ResultType, OptionsType: BaseOperationOptions> {
 
     internal let mainOperationPrototype: OperationPrototype<ResultType, OptionsType>
     internal private(set) var secondaryOperationPrototypes: [OperationPrototypeProtocol] = []
@@ -14,7 +14,8 @@ public final class OperationGroup<ResultType, OptionsType> {
         self.mainOperationPrototype = OperationPrototype(operationType: mainOperationType, options: options)
     }
 
-    public func addSecondaryOperation<ResultType, OptionsType>(operationType: BaseOperation<ResultType, OptionsType>.Type, options: OptionsType) {
+    public func addSecondaryOperation<ResultType, OptionsType: BaseOperationOptions>(operationType: BaseOperation<ResultType, OptionsType>.Type,
+                                                                                     options: OptionsType) {
         let newPrototype = OperationPrototype(operationType: operationType, options: options)
         secondaryOperationPrototypes.append(newPrototype)
     }

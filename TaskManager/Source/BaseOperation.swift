@@ -5,7 +5,7 @@
 
 import Foundation
 
-open class BaseOperation<ResultType, OptionsType>: TaskOperation<ResultType>, DependencyProtocol, TypedOperation, PriorityProtocol, DependentOperation {
+open class BaseOperation<ResultType, OptionsType: BaseOperationOptions>: TaskOperation<ResultType>, DependencyProtocol, PriorityProtocol, DependentOperation {
 
     private indirect enum State { // idle -> executing -> finished : always that way
         case idle
@@ -19,6 +19,7 @@ open class BaseOperation<ResultType, OptionsType>: TaskOperation<ResultType>, De
     private let accessLock: NSRecursiveLock
     private var callbacks: [OperationCallback<ResultType>]
     private var strongDependencies: [Operation]
+    private let internalOperationHash: String
 
     // MARK: - Initialization
 
@@ -29,6 +30,7 @@ open class BaseOperation<ResultType, OptionsType>: TaskOperation<ResultType>, De
         accessLock.name = "\(type(of: self)).accessLock"
         callbacks = []
         strongDependencies = []
+        internalOperationHash = "\(type(of: self))-\(options.optionsHash())"
         super.init()
     }
 
@@ -74,6 +76,13 @@ open class BaseOperation<ResultType, OptionsType>: TaskOperation<ResultType>, De
             }
         })
         return result
+    }
+
+    /**
+     Unique identyfier of operation, including it's options.
+     */
+    final public override var operationHash: String {
+        return internalOperationHash
     }
 
     // MARK: - Operation actions
@@ -215,11 +224,6 @@ open class BaseOperation<ResultType, OptionsType>: TaskOperation<ResultType>, De
      */
     open func internalFinished() {
         //do nothing
-    }
-
-    open var operationType: Int {
-        assertionFailure("\(type(of: self)): you MUST override 'operationType' property.")
-        return 0
     }
 
     /**

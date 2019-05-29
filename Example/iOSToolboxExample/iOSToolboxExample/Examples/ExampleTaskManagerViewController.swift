@@ -26,17 +26,13 @@ internal class ExampleTaskManager: TaskManager {
     override func willPerformOperation(newOperation: TaskManager.OperationInQueue,
                                        enqueuedOperations: [TaskManager.OperationInQueue]) -> TaskManager.OperationInQueue {
         let result: TaskManager.OperationInQueue
-        switch newOperation.operationType {
-        case MyOperationType.unique.rawValue:
-            let uniqueInQueue = enqueuedOperations.first(where: { (operation: TaskManager.OperationInQueue) -> Bool in
-                return operation.operationType == MyOperationType.unique.rawValue
-            })
+        switch newOperation {
+        case _ as UniqueOperation:
+            let uniqueInQueue = enqueuedOperations.first(where: { $0.operationHash == newOperation.operationHash })
             result = uniqueInQueue ?? newOperation
 
-        case MyOperationType.dependsOnAlwaysFail.rawValue:
-            let dependencyInQueue = enqueuedOperations.first(where: { (operation: TaskManager.OperationInQueue) -> Bool in
-                return operation.operationType == MyOperationType.alwaysFailInTheEnd.rawValue
-            })
+        case _ as DependsOnAlwaysFailOperation:
+            let dependencyInQueue = enqueuedOperations.first(where: { $0 is AlwaysFailInTheEndOperation })
             if let actualDependency = dependencyInQueue {
                 newOperation.addDependency(operation: actualDependency, isStrongDependency: true)
             }
@@ -110,7 +106,7 @@ extension ExampleTaskManager {
 
 }
 
-internal struct ExampleOperationOptions { }
+internal struct ExampleOperationOptions: BaseOperationOptions { }
 
 internal class FirstOperation: BaseOperation<Int, ExampleOperationOptions> {
 
@@ -128,10 +124,6 @@ internal class FirstOperation: BaseOperation<Int, ExampleOperationOptions> {
         } else {
             finish(result: .success(result: numberOfSteps))
         }
-    }
-
-    internal override var operationType: Int {
-        return MyOperationType.first.rawValue
     }
 
     internal override var priorityValue: Int {
@@ -155,10 +147,6 @@ internal class UniqueOperation: BaseOperation<Int, ExampleOperationOptions> {
         finish(result: .success(result: numberOfSteps))
     }
 
-    internal override var operationType: Int {
-        return MyOperationType.unique.rawValue
-    }
-
     internal override var priorityValue: Int {
         return 0
     }
@@ -177,10 +165,6 @@ internal class LowPriorityOperation: BaseOperation<Int, ExampleOperationOptions>
         finish(result: .success(result: priorityValue))
     }
 
-    internal override var operationType: Int {
-        return MyOperationType.lowPriority.rawValue
-    }
-
     internal override var priorityValue: Int {
         return 0
     }
@@ -197,10 +181,6 @@ internal class HighPriorityOperation: BaseOperation<Int, ExampleOperationOptions
         Thread.sleep(forTimeInterval: 1.0)
         print("HighPriorityOperation")
         finish(result: .success(result: priorityValue))
-    }
-
-    internal override var operationType: Int {
-        return MyOperationType.highPriority.rawValue
     }
 
     internal override var priorityValue: Int {
@@ -224,10 +204,6 @@ internal class AlwaysFailInTheEndOperation: BaseOperation<Int, ExampleOperationO
         finish(result: .failure(error: NSError(domain: "ExampleErrorDomain", code: 9001, userInfo: nil)))
     }
 
-    internal override var operationType: Int {
-        return MyOperationType.alwaysFailInTheEnd.rawValue
-    }
-
     internal override var priorityValue: Int {
         return 1
     }
@@ -246,10 +222,6 @@ internal class DependsOnAlwaysFailOperation: BaseOperation<Int, ExampleOperation
         finish(result: .success(result: priorityValue))
     }
 
-    internal override var operationType: Int {
-        return MyOperationType.dependsOnAlwaysFail.rawValue
-    }
-
     internal override var priorityValue: Int {
         return 1000
     }
@@ -260,7 +232,7 @@ internal class DependsOnAlwaysFailOperation: BaseOperation<Int, ExampleOperation
 
 }
 
-internal struct GetStringsFromRandomOrgOperationOptions {
+internal struct GetStringsFromRandomOrgOperationOptions: BaseOperationOptions {
     let randomOrgClient: HTTPClient
 }
 
@@ -299,10 +271,6 @@ internal class GetStringsFromRandomOrgOperation: BaseOperation<String, GetString
 
     override func internalCancel() {
         request?.cancel()
-    }
-
-    internal override var operationType: Int {
-        return MyOperationType.dependsOnAlwaysFail.rawValue
     }
 
     internal override var priorityValue: Int {
