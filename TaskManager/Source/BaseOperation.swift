@@ -249,7 +249,7 @@ open class BaseOperation<ResultType, OptionsType>: TaskOperation<ResultType>, De
                  .executing:
                 return nil
             case .finished(let opResult):
-                return opResult.voidTyped()
+                return opResult.removingType()
             }
         })
         return result
@@ -291,14 +291,6 @@ open class BaseOperation<ResultType, OptionsType>: TaskOperation<ResultType>, De
         accessLock.execute({ () -> Void in
             guard case .idle = state else {
                 assertionFailure("BaseOperation: can't add dependencies for operation in state '\(state)'")
-                return
-            }
-            guard !isExecuting else {
-                assertionFailure("BaseOperation: can't add dependencies to already executing operation")
-                return
-            }
-            guard !isFinished else {
-                assertionFailure("BaseOperation: can't add dependencies to already finished operation")
                 return
             }
             super.addDependency(dependencyOperation)

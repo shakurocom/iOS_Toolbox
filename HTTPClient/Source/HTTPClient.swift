@@ -225,41 +225,43 @@ open class HTTPClient {
     /**
      Uploads multi part form data.
      - parameter multipartFormData: The closure used to append body parts to the `MultipartFormData`.
-     - parameter encodingCompletion: The closure called when the `MultipartFormData` encoding is complete.
+     - parameter encodingSuccess: The closure called when the `MultipartFormData` encoding is successfully complete.
      */
     public func upload<ParserType: HTTPClientParserProtocol>(multipartFormData: @escaping (MultipartFormData) -> Void,
                                                              options: RequestOptions<ParserType>,
-                                                             encodingCompletion: ((SessionManager.MultipartFormDataEncodingResult) -> Void)?) {
+                                                             encodingSuccess: ((HTTPClientRequest) -> Void)?) {
         let requestPrefab = formRequest(options: options)
-        let completion = { [weak self] (encodingResult: SessionManager.MultipartFormDataEncodingResult) -> Void in
-            guard let strongSelf = self else {
-                encodingCompletion?(.failure(HTTPClientError.httpClientDeallocated))
-                return
-            }
+        let currentAcceptableStatusCodes = acceptableStatusCodes
+        let currentAcceptableContentTypes = acceptableContentTypes
+        let currentCallbackQueue = callbackQueue
+        let currentLogger = logger
+        let completionHandler =  options.completionHandler
+        let session = options.userSession
+
+        manager.upload(multipartFormData: multipartFormData, with: requestPrefab) { (encodingResult) in
             switch encodingResult {
-            case .success(var request, let streamingFromDisk, let streamFileURL):
+            case .success(var request, _, _):
                 if let credential = options.authCredential {
                     request = request.authenticate(usingCredential: credential)
                 }
+                encodingSuccess?(request)
+
                 // TODO: improve logging?
-                let currentLogger = strongSelf.logger
                 currentLogger.logRequest(requestOptions: options, resolvedHeaders: requestPrefab.headers)
-                request.validate(statusCode: strongSelf.acceptableStatusCodes)
-                    .validate(contentType: strongSelf.acceptableContentTypes)
-                    .response(queue: strongSelf.callbackQueue, completionHandler: { (response: DefaultDataResponse) in
+                request.validate(statusCode: currentAcceptableStatusCodes)
+                    .validate(contentType: currentAcceptableContentTypes)
+                    .response(queue: currentCallbackQueue, completionHandler: { (response: DefaultDataResponse) in
                         currentLogger.logResponse(endpoint: options.endpoint, response: response, parser: options.parser)
                         let parsedResult = HTTPClient.applyParser(response: response,
                                                                   parser: options.parser,
                                                                   requestOptions: options,
                                                                   logger: currentLogger)
-                        options.completionHandler(parsedResult, options.userSession)
+                        completionHandler(parsedResult, session)
                     })
-                encodingCompletion?(.success(request: request, streamingFromDisk: streamingFromDisk, streamFileURL: streamFileURL))
             case .failure(let error):
-                encodingCompletion?(.failure(error))
+                completionHandler(.failure(error: error), session)
             }
         }
-        manager.upload(multipartFormData: multipartFormData, with: requestPrefab, encodingCompletion: completion)
     }
 
     // MARK: - Private
