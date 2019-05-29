@@ -201,7 +201,7 @@ open class HTTPClient {
         return request
     }
 
-    public func uploadData<ParserType: HTTPClientParserProtocol>(_ data: Data, options: RequestOptions<ParserType>) -> HTTPClientRequest {
+    public func upload<ParserType: HTTPClientParserProtocol>(data: Data, options: RequestOptions<ParserType>) -> HTTPClientRequest {
         let requestPrefab = formRequest(options: options)
         var request = manager.upload(data, with: requestPrefab)
         if let credential = options.authCredential {
@@ -220,6 +220,48 @@ open class HTTPClient {
                 options.completionHandler(parsedResult, options.userSession)
             })
         return request
+    }
+
+    /**
+     Uploads multi part form data.
+     - parameter multipartFormData: The closure used to append body parts to the `MultipartFormData`.
+     - parameter encodingSuccess: The closure called when the `MultipartFormData` encoding is successfully complete.
+     */
+    public func upload<ParserType: HTTPClientParserProtocol>(multipartFormData: @escaping (MultipartFormData) -> Void,
+                                                             options: RequestOptions<ParserType>,
+                                                             encodingSuccess: ((HTTPClientRequest) -> Void)?) {
+        let requestPrefab = formRequest(options: options)
+        let currentAcceptableStatusCodes = acceptableStatusCodes
+        let currentAcceptableContentTypes = acceptableContentTypes
+        let currentCallbackQueue = callbackQueue
+        let currentLogger = logger
+        let completionHandler =  options.completionHandler
+        let session = options.userSession
+
+        manager.upload(multipartFormData: multipartFormData, with: requestPrefab) { (encodingResult) in
+            switch encodingResult {
+            case .success(var request, _, _):
+                if let credential = options.authCredential {
+                    request = request.authenticate(usingCredential: credential)
+                }
+                encodingSuccess?(request)
+
+                // TODO: improve logging?
+                currentLogger.logRequest(requestOptions: options, resolvedHeaders: requestPrefab.headers)
+                request.validate(statusCode: currentAcceptableStatusCodes)
+                    .validate(contentType: currentAcceptableContentTypes)
+                    .response(queue: currentCallbackQueue, completionHandler: { (response: DefaultDataResponse) in
+                        currentLogger.logResponse(endpoint: options.endpoint, response: response, parser: options.parser)
+                        let parsedResult = HTTPClient.applyParser(response: response,
+                                                                  parser: options.parser,
+                                                                  requestOptions: options,
+                                                                  logger: currentLogger)
+                        completionHandler(parsedResult, session)
+                    })
+            case .failure(let error):
+                completionHandler(.failure(error: error), session)
+            }
+        }
     }
 
     // MARK: - Private
@@ -283,12 +325,12 @@ open class HTTPClient {
 
         guard let responseValue = serializedResponseValue else {
             logger.logParserError(responseData: response.data, requestOptions: requestOptions)
-            return .failure(error: HTTPClientError.serializationError)
+            return .failure(error: HTTPClientError.cantSerializeResponseData)
         }
 
         guard let parsedObject = parser.parseObject(responseValue, response: response.response) else {
             logger.logParserError(responseData: response.data, requestOptions: requestOptions)
-            return .failure(error: HTTPClientError.parseError)
+            return .failure(error: HTTPClientError.cantParseSerializedResponse)
         }
 
         return.success(result: parsedObject)
