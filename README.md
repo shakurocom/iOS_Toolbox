@@ -51,7 +51,7 @@ platform :ios, '10.0'
 use_frameworks!
 
 target '<Your Target Name>' do
-    pod 'Shakuro.iOS_Toolbox', :git => 'https://github.com/shakurocom/iOS_Toolbox', :tag => '0.14.0'
+    pod 'Shakuro.iOS_Toolbox', :git => 'https://github.com/shakurocom/iOS_Toolbox', :tag => '0.14.1'
 end
 ```
 
@@ -65,9 +65,9 @@ You can use/integrate only the necessary components. To do this, you need to spe
 
 ```ruby
 target '<Your Target Name>' do
-    pod 'Shakuro.iOS_Toolbox/<Component Name>', :git => 'https://github.com/shakurocom/iOS_Toolbox', :tag => '0.14.0'
+    pod 'Shakuro.iOS_Toolbox/<Component Name>', :git => 'https://github.com/shakurocom/iOS_Toolbox', :tag => '0.14.1'
 #example:
-    pod 'Shakuro.iOS_Toolbox/Keychain', :git => 'https://github.com/shakurocom/iOS_Toolbox', :tag => '0.14.0'
+    pod 'Shakuro.iOS_Toolbox/Keychain', :git => 'https://github.com/shakurocom/iOS_Toolbox', :tag => '0.14.1'
 end
 ```
 

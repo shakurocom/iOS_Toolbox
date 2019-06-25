@@ -6,14 +6,14 @@
 import UIKit
 
 extension UICollectionView {
-    
+
     public func dequeueReusableCell<T: UICollectionViewCell>(withReuseIdentifier identifier: String, for indexPath: IndexPath) -> T {
         guard let cell = self.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as? T else {
             fatalError("\(type(of: self)) - \(#function): can't dequeue cell with identifier: \(identifier); indexPath: \(indexPath).")
         }
         return cell
     }
-    
+
     public func dequeueReusableSupplementaryView<T: UICollectionReusableView>(ofKind kind: String,
                                                                               withReuseIdentifier identifier: String,
                                                                               for indexPath: IndexPath) -> T {
@@ -24,5 +24,5 @@ extension UICollectionView {
         }
         return typedView
     }
-    
+
 }
