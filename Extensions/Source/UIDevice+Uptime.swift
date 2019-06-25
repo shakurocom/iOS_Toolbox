@@ -1,12 +1,13 @@
 //
-//
+// Copyright (c) 2018 Shakuro (https://shakuro.com/)
+// Vlad Onipchenko
 //
 
 import UIKit
 
 extension UIDevice {
 
-    internal static func uptime() -> TimeInterval {
+    public static func uptime() -> TimeInterval {
         var boottime = timeval()
         var size = MemoryLayout<timeval>.stride
         sysctlbyname("kern.boottime", &boottime, &size, nil, 0)

@@ -17,22 +17,28 @@
 		2F03DBBF22097F65006E8404 /* HTTPClientUserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F03DBB822097F64006E8404 /* HTTPClientUserSession.swift */; };
 		2F0516BC2077B1CA00ECB7FF /* ExamplePullToRefreshContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5CED78205818C800BD508A /* ExamplePullToRefreshContentView.swift */; };
 		2F0CC9B3204931E900A896B2 /* TaskManagerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0CC9B2204931E900A896B2 /* TaskManagerError.swift */; };
+		2F0E297522C213E400CEF04D /* UITableView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0E296C22C213E300CEF04D /* UITableView+Reusable.swift */; };
+		2F0E297622C213E400CEF04D /* String+Hash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0E296D22C213E300CEF04D /* String+Hash.swift */; };
+		2F0E297722C213E400CEF04D /* UIDevice+Uptime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0E296E22C213E300CEF04D /* UIDevice+Uptime.swift */; };
+		2F0E297822C213E400CEF04D /* UICollectionView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0E296F22C213E300CEF04D /* UICollectionView+Reusable.swift */; };
+		2F0E297922C213E400CEF04D /* UIStoryboard+Instantiate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0E297022C213E400CEF04D /* UIStoryboard+Instantiate.swift */; };
+		2F0E297A22C213E400CEF04D /* Array+Chunks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0E297122C213E400CEF04D /* Array+Chunks.swift */; };
+		2F0E297B22C213E400CEF04D /* Lock+Execute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0E297222C213E400CEF04D /* Lock+Execute.swift */; };
+		2F0E297C22C213E400CEF04D /* Data+Hash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0E297322C213E400CEF04D /* Data+Hash.swift */; };
+		2F0E297D22C213E400CEF04D /* UIApplication+BundleIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0E297422C213E400CEF04D /* UIApplication+BundleIdentifier.swift */; };
 		2F10746721AD60ED002D07DB /* OperationWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F10746621AD60ED002D07DB /* OperationWrapper.swift */; };
 		2F10746921AD7A91002D07DB /* RetryHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F10746821AD7A91002D07DB /* RetryHandler.swift */; };
 		2F10746B21AD841F002D07DB /* OperationGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F10746A21AD841F002D07DB /* OperationGroup.swift */; };
 		2F10B16E21C0F8FB00701871 /* SettingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F10B16D21C0F8FB00701871 /* SettingItem.swift */; };
 		2F10B17221C0FA0D00701871 /* ExampleSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F10B17121C0FA0D00701871 /* ExampleSettingsViewController.swift */; };
 		2F11C93C2201817F0003B754 /* RawCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F11C93B2201817F0003B754 /* RawCodable.swift */; };
-		2F17E2CB20872CB900DF2FC5 /* UIApplication+BundleIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4FA51C203DBFFB003D57C0 /* UIApplication+BundleIdentifier.swift */; };
 		2F2C33E21FE173A900976FA2 /* ExampleKeyboardHandlerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2C33E11FE173A900976FA2 /* ExampleKeyboardHandlerViewController.swift */; };
 		2F2C33E41FE177C500976FA2 /* ExampleKeychainWrapperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2C33E31FE177C500976FA2 /* ExampleKeychainWrapperViewController.swift */; };
 		2F2C8BFC21AE7A1600413ED3 /* OperationPrototype.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2C8BFB21AE7A1600413ED3 /* OperationPrototype.swift */; };
 		2F2C8BFE21AE7B7A00413ED3 /* OperationGroupResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2C8BFD21AE7B7A00413ED3 /* OperationGroupResult.swift */; };
 		2F2DBABB205A8220000AFC0F /* InsetsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2DBABA205A8220000AFC0F /* InsetsLabel.swift */; };
 		2F2DBABD205A87D4000AFC0F /* ExampleLabelsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2DBABC205A87D4000AFC0F /* ExampleLabelsViewController.swift */; };
-		2F32FBCF208730BF00D61F25 /* String+Hash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4FA51D203DBFFB003D57C0 /* String+Hash.swift */; };
 		2F32FBD02087315B00D61F25 /* ExampleStoryboardName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F37FFF1204ED172000C6533 /* ExampleStoryboardName.swift */; };
-		2F3EAD1320A47F8900FABC4E /* Lock+Execute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3EAD1220A47F8900FABC4E /* Lock+Execute.swift */; };
 		2F4A2DED1FE3AE3A003B9F27 /* ExampleVideoCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4A2DEC1FE3AE3A003B9F27 /* ExampleVideoCameraViewController.swift */; };
 		2F4A2DF01FE3B8C6003B9F27 /* ImagePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4A2DEF1FE3B8C6003B9F27 /* ImagePreviewViewController.swift */; };
 		2F4FA518203DAECC003D57C0 /* ExampleHTTPClientViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4FA517203DAECC003D57C0 /* ExampleHTTPClientViewController.swift */; };
@@ -61,7 +67,6 @@
 		2FB494FF204577550068D380 /* TaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB494FE204577550068D380 /* TaskManager.swift */; };
 		2FB495012045A5460068D380 /* ExampleTaskManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB495002045A5460068D380 /* ExampleTaskManagerViewController.swift */; };
 		2FB6FEDC21AC2B72008D3FC0 /* CancellableOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB6FEDB21AC2B72008D3FC0 /* CancellableOperation.swift */; };
-		2FC1B1DC2199CB18006401F9 /* Array+Chunks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC1B1DB2199CB18006401F9 /* Array+Chunks.swift */; };
 		2FC2268F2201E80F0057C63B /* NSNumberRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC2268E2201E80F0057C63B /* NSNumberRepresentable.swift */; };
 		2FE04E50208731C3003ECABE /* VideoCameraPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF2833D1FDEB46A00F0F769 /* VideoCameraPreviewView.swift */; };
 		2FEEDDAC1FE28F3A00C6BC0A /* ExamplePlaceholderTextViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEEDDAB1FE28F3A00C6BC0A /* ExamplePlaceholderTextViewViewController.swift */; };
@@ -72,7 +77,6 @@
 		2FF279A31FDE84AF00F0F769 /* ExampleDeviceTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF279A21FDE84AF00F0F769 /* ExampleDeviceTypeViewController.swift */; };
 		2FF279AB1FDE855B00F0F769 /* DeviceOrientationListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF279A81FDE855B00F0F769 /* DeviceOrientationListener.swift */; };
 		2FF279AC1FDE855B00F0F769 /* DeviceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF279A91FDE855B00F0F769 /* DeviceType.swift */; };
-		2FF279B01FDE858900F0F769 /* UIStoryboard+Instantiate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF279AF1FDE858900F0F769 /* UIStoryboard+Instantiate.swift */; };
 		2FF279B31FDE925A00F0F769 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2FF279B11FDE925A00F0F769 /* Main.storyboard */; };
 		2FF279B41FDE925A00F0F769 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2FF279B21FDE925A00F0F769 /* LaunchScreen.storyboard */; };
 		2FF279B61FDEA21B00F0F769 /* ExampleDeviceOrientationListenerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF279B51FDEA21B00F0F769 /* ExampleDeviceOrientationListenerViewController.swift */; };
@@ -121,6 +125,15 @@
 		2F03DBB722097F64006E8404 /* HTTPClientRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClientRequest.swift; sourceTree = "<group>"; };
 		2F03DBB822097F64006E8404 /* HTTPClientUserSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClientUserSession.swift; sourceTree = "<group>"; };
 		2F0CC9B2204931E900A896B2 /* TaskManagerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskManagerError.swift; sourceTree = "<group>"; };
+		2F0E296C22C213E300CEF04D /* UITableView+Reusable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+Reusable.swift"; sourceTree = "<group>"; };
+		2F0E296D22C213E300CEF04D /* String+Hash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Hash.swift"; sourceTree = "<group>"; };
+		2F0E296E22C213E300CEF04D /* UIDevice+Uptime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Uptime.swift"; sourceTree = "<group>"; };
+		2F0E296F22C213E300CEF04D /* UICollectionView+Reusable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Reusable.swift"; sourceTree = "<group>"; };
+		2F0E297022C213E400CEF04D /* UIStoryboard+Instantiate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+Instantiate.swift"; sourceTree = "<group>"; };
+		2F0E297122C213E400CEF04D /* Array+Chunks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Chunks.swift"; sourceTree = "<group>"; };
+		2F0E297222C213E400CEF04D /* Lock+Execute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Lock+Execute.swift"; sourceTree = "<group>"; };
+		2F0E297322C213E400CEF04D /* Data+Hash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data+Hash.swift"; sourceTree = "<group>"; };
+		2F0E297422C213E400CEF04D /* UIApplication+BundleIdentifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+BundleIdentifier.swift"; sourceTree = "<group>"; };
 		2F10746621AD60ED002D07DB /* OperationWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationWrapper.swift; sourceTree = "<group>"; };
 		2F10746821AD7A91002D07DB /* RetryHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryHandler.swift; sourceTree = "<group>"; };
 		2F10746A21AD841F002D07DB /* OperationGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationGroup.swift; sourceTree = "<group>"; };
@@ -134,12 +147,9 @@
 		2F2DBABA205A8220000AFC0F /* InsetsLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsetsLabel.swift; sourceTree = "<group>"; };
 		2F2DBABC205A87D4000AFC0F /* ExampleLabelsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleLabelsViewController.swift; sourceTree = "<group>"; };
 		2F37FFF1204ED172000C6533 /* ExampleStoryboardName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleStoryboardName.swift; sourceTree = "<group>"; };
-		2F3EAD1220A47F8900FABC4E /* Lock+Execute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Lock+Execute.swift"; sourceTree = "<group>"; };
 		2F4A2DEC1FE3AE3A003B9F27 /* ExampleVideoCameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleVideoCameraViewController.swift; sourceTree = "<group>"; };
 		2F4A2DEF1FE3B8C6003B9F27 /* ImagePreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePreviewViewController.swift; sourceTree = "<group>"; };
 		2F4FA517203DAECC003D57C0 /* ExampleHTTPClientViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleHTTPClientViewController.swift; sourceTree = "<group>"; };
-		2F4FA51C203DBFFB003D57C0 /* UIApplication+BundleIdentifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+BundleIdentifier.swift"; sourceTree = "<group>"; };
-		2F4FA51D203DBFFB003D57C0 /* String+Hash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Hash.swift"; sourceTree = "<group>"; };
 		2F50281C2048133A0088418A /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		2F5C2EDF20317DC80031CD2D /* PullToRefreshView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PullToRefreshView.swift; sourceTree = "<group>"; };
 		2F5C2EE220318B880031CD2D /* ExamplePullToRefreshViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamplePullToRefreshViewController.swift; sourceTree = "<group>"; };
@@ -166,7 +176,6 @@
 		2FB494FE204577550068D380 /* TaskManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskManager.swift; sourceTree = "<group>"; };
 		2FB495002045A5460068D380 /* ExampleTaskManagerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleTaskManagerViewController.swift; sourceTree = "<group>"; };
 		2FB6FEDB21AC2B72008D3FC0 /* CancellableOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancellableOperation.swift; sourceTree = "<group>"; };
-		2FC1B1DB2199CB18006401F9 /* Array+Chunks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Chunks.swift"; sourceTree = "<group>"; };
 		2FC2268E2201E80F0057C63B /* NSNumberRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSNumberRepresentable.swift; sourceTree = "<group>"; };
 		2FEEDDAB1FE28F3A00C6BC0A /* ExamplePlaceholderTextViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamplePlaceholderTextViewViewController.swift; sourceTree = "<group>"; };
 		2FF279851FDE723800F0F769 /* iOSToolboxExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSToolboxExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -180,7 +189,6 @@
 		2FF279A61FDE855B00F0F769 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		2FF279A81FDE855B00F0F769 /* DeviceOrientationListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceOrientationListener.swift; sourceTree = "<group>"; };
 		2FF279A91FDE855B00F0F769 /* DeviceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceType.swift; sourceTree = "<group>"; };
-		2FF279AF1FDE858900F0F769 /* UIStoryboard+Instantiate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+Instantiate.swift"; sourceTree = "<group>"; };
 		2FF279B11FDE925A00F0F769 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		2FF279B21FDE925A00F0F769 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2FF279B51FDEA21B00F0F769 /* ExampleDeviceOrientationListenerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleDeviceOrientationListenerViewController.swift; sourceTree = "<group>"; };
@@ -582,11 +590,15 @@
 		2FF279AE1FDE858900F0F769 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				2FC1B1DB2199CB18006401F9 /* Array+Chunks.swift */,
-				2F3EAD1220A47F8900FABC4E /* Lock+Execute.swift */,
-				2F4FA51D203DBFFB003D57C0 /* String+Hash.swift */,
-				2F4FA51C203DBFFB003D57C0 /* UIApplication+BundleIdentifier.swift */,
-				2FF279AF1FDE858900F0F769 /* UIStoryboard+Instantiate.swift */,
+				2F0E297122C213E400CEF04D /* Array+Chunks.swift */,
+				2F0E297322C213E400CEF04D /* Data+Hash.swift */,
+				2F0E297222C213E400CEF04D /* Lock+Execute.swift */,
+				2F0E296D22C213E300CEF04D /* String+Hash.swift */,
+				2F0E297422C213E400CEF04D /* UIApplication+BundleIdentifier.swift */,
+				2F0E296F22C213E300CEF04D /* UICollectionView+Reusable.swift */,
+				2F0E296E22C213E300CEF04D /* UIDevice+Uptime.swift */,
+				2F0E297022C213E400CEF04D /* UIStoryboard+Instantiate.swift */,
+				2F0E296C22C213E300CEF04D /* UITableView+Reusable.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -952,6 +964,7 @@
 			files = (
 				2FF279B81FDEA77B00F0F769 /* ExampleUIStoryboardExtensionsViewController.swift in Sources */,
 				2F0516BC2077B1CA00ECB7FF /* ExamplePullToRefreshContentView.swift in Sources */,
+				2F0E297622C213E400CEF04D /* String+Hash.swift in Sources */,
 				2F03DBAF22097F4F006E8404 /* EventHandler.swift in Sources */,
 				2FF279BF1FDEB34800F0F769 /* ImageProcessor.swift in Sources */,
 				2F73E5DF21B0123900B3F79F /* Settings.swift in Sources */,
@@ -967,26 +980,27 @@
 				2F0CC9B3204931E900A896B2 /* TaskManagerError.swift in Sources */,
 				2FF279C31FDEB43D00F0F769 /* KeyboardHandler.swift in Sources */,
 				2F03DBBD22097F65006E8404 /* HTTPClientParser.swift in Sources */,
-				2F3EAD1320A47F8900FABC4E /* Lock+Execute.swift in Sources */,
 				2FF2798B1FDE723800F0F769 /* ExampleSelectorViewController.swift in Sources */,
 				2F03DBBB22097F65006E8404 /* HTTPClientError.swift in Sources */,
+				2F0E297922C213E400CEF04D /* UIStoryboard+Instantiate.swift in Sources */,
 				2FF289481FDEB46C00F0F769 /* VideoCamera.swift in Sources */,
 				2FF2894E1FDEB6FB00F0F769 /* ExampleImageProcessorViewController.swift in Sources */,
 				2FF289491FDEB46C00F0F769 /* VideoCameraConfiguration.swift in Sources */,
 				2F03DBB922097F65006E8404 /* HTTPClient.swift in Sources */,
-				2F17E2CB20872CB900DF2FC5 /* UIApplication+BundleIdentifier.swift in Sources */,
 				2FF289451FDEB46C00F0F769 /* DeviceCameraPreviewView.swift in Sources */,
-				2FC1B1DC2199CB18006401F9 /* Array+Chunks.swift in Sources */,
 				2F03DBBA22097F65006E8404 /* HTTPClientAPIEndPoint.swift in Sources */,
 				2FF279AC1FDE855B00F0F769 /* DeviceType.swift in Sources */,
 				2F03DBBF22097F65006E8404 /* HTTPClientUserSession.swift in Sources */,
 				2F76AB432148170E0094A7B1 /* ExampleEMailValidatorViewController.swift in Sources */,
 				2FF58C2E21D7548E003C534E /* RetryTaskOperationWrapper.swift in Sources */,
+				2F0E297522C213E400CEF04D /* UITableView+Reusable.swift in Sources */,
 				2F32FBD02087315B00D61F25 /* ExampleStoryboardName.swift in Sources */,
 				2F6DCB602058155B00B5E128 /* ShakuroLogoPullToRefreshContentView.swift in Sources */,
 				2FEEDDAC1FE28F3A00C6BC0A /* ExamplePlaceholderTextViewViewController.swift in Sources */,
+				2F0E297C22C213E400CEF04D /* Data+Hash.swift in Sources */,
 				2FB494FF204577550068D380 /* TaskManager.swift in Sources */,
 				2F2DBABD205A87D4000AFC0F /* ExampleLabelsViewController.swift in Sources */,
+				2F0E297D22C213E400CEF04D /* UIApplication+BundleIdentifier.swift in Sources */,
 				2FF2894A1FDEB46C00F0F769 /* VideoCameraError.swift in Sources */,
 				2F86E3A8204814C50045070C /* OperationCallback.swift in Sources */,
 				2F5CED7B20581A2900BD508A /* ExamplePullToRefreshShakuroLogoViewController.swift in Sources */,
@@ -994,13 +1008,14 @@
 				2FB05A30204E9430003B80CC /* TaskOperation.swift in Sources */,
 				2FE04E50208731C3003ECABE /* VideoCameraPreviewView.swift in Sources */,
 				2F03DBBC22097F65006E8404 /* HTTPClientLogger.swift in Sources */,
+				2F0E297B22C213E400CEF04D /* Lock+Execute.swift in Sources */,
 				2FF279891FDE723800F0F769 /* AppDelegate.swift in Sources */,
-				2F32FBCF208730BF00D61F25 /* String+Hash.swift in Sources */,
 				2F4FA519203DB276003D57C0 /* ExampleViewControllerProtocol.swift in Sources */,
 				2F50281D2048133A0088418A /* Task.swift in Sources */,
 				2FF289441FDEB46C00F0F769 /* DeviceCamera.swift in Sources */,
 				2F10746B21AD841F002D07DB /* OperationGroup.swift in Sources */,
 				2FB6FEDC21AC2B72008D3FC0 /* CancellableOperation.swift in Sources */,
+				2F0E297822C213E400CEF04D /* UICollectionView+Reusable.swift in Sources */,
 				2FF279B61FDEA21B00F0F769 /* ExampleDeviceOrientationListenerViewController.swift in Sources */,
 				2F2DBABB205A8220000AFC0F /* InsetsLabel.swift in Sources */,
 				2F4FA518203DAECC003D57C0 /* ExampleHTTPClientViewController.swift in Sources */,
@@ -1014,10 +1029,10 @@
 				2FC2268F2201E80F0057C63B /* NSNumberRepresentable.swift in Sources */,
 				2FFC2C4322A9430D008B4B8E /* CGSize+Aspect.swift in Sources */,
 				2F86E3AA204815940045070C /* BaseOperation.swift in Sources */,
-				2FF279B01FDE858900F0F769 /* UIStoryboard+Instantiate.swift in Sources */,
 				2F11C93C2201817F0003B754 /* RawCodable.swift in Sources */,
 				2FF279C71FDEB44700F0F769 /* KeychainWrapper.swift in Sources */,
 				2FB05A2C204E8F16003B80CC /* OperationPriority.swift in Sources */,
+				2F0E297A22C213E400CEF04D /* Array+Chunks.swift in Sources */,
 				2FB495012045A5460068D380 /* ExampleTaskManagerViewController.swift in Sources */,
 				2F10B16E21C0F8FB00701871 /* SettingItem.swift in Sources */,
 				2FB05A2E204E9061003B80CC /* DependentOperation.swift in Sources */,
@@ -1025,6 +1040,7 @@
 				2FF279A31FDE84AF00F0F769 /* ExampleDeviceTypeViewController.swift in Sources */,
 				2FF279CB1FDEB45100F0F769 /* PlaceholderTextView.swift in Sources */,
 				2FFD4C9B22539BFE00B07EB6 /* AsyncResult.swift in Sources */,
+				2F0E297722C213E400CEF04D /* UIDevice+Uptime.swift in Sources */,
 				2F2C33E21FE173A900976FA2 /* ExampleKeyboardHandlerViewController.swift in Sources */,
 				2FF2894B1FDEB46C00F0F769 /* VideoCameraFactory.swift in Sources */,
 			);
