@@ -93,7 +93,7 @@ public class KeychainWrapper {
     public static func removeKeychainItem(serviceName: String, account: String, accessGroup: String? = nil) throws {
         let searchQuery = makeKeychainQuery(serviceName: serviceName, account: account, accessGroup: accessGroup)
         let status = SecItemDelete(searchQuery as CFDictionary)
-        guard status == noErr || status != errSecItemNotFound else {
+        guard status == noErr || status == errSecItemNotFound else {
             throw KeychainWrapper.Error.deleteKeychainItemError(osStatus: status)
         }
     }
