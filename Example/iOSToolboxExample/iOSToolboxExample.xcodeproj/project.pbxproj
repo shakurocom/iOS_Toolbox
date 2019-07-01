@@ -142,6 +142,7 @@
 		2F11C93B2201817F0003B754 /* RawCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawCodable.swift; sourceTree = "<group>"; };
 		2F2C33E11FE173A900976FA2 /* ExampleKeyboardHandlerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleKeyboardHandlerViewController.swift; sourceTree = "<group>"; };
 		2F2C33E31FE177C500976FA2 /* ExampleKeychainWrapperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleKeychainWrapperViewController.swift; sourceTree = "<group>"; };
+		2F2C87BA22C36DF5004F3254 /* ExceptionCatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExceptionCatcher.h; sourceTree = "<group>"; };
 		2F2C8BFB21AE7A1600413ED3 /* OperationPrototype.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationPrototype.swift; sourceTree = "<group>"; };
 		2F2C8BFD21AE7B7A00413ED3 /* OperationGroupResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationGroupResult.swift; sourceTree = "<group>"; };
 		2F2DBABA205A8220000AFC0F /* InsetsLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsetsLabel.swift; sourceTree = "<group>"; };
@@ -283,6 +284,23 @@
 				2F03DBB622097F64006E8404 /* HTTPClientParser.swift */,
 				2F03DBB722097F64006E8404 /* HTTPClientRequest.swift */,
 				2F03DBB822097F64006E8404 /* HTTPClientUserSession.swift */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		2F2C87B822C36DF5004F3254 /* Exceptions */ = {
+			isa = PBXGroup;
+			children = (
+				2F2C87B922C36DF5004F3254 /* Source */,
+			);
+			name = Exceptions;
+			path = ../../../Exceptions;
+			sourceTree = "<group>";
+		};
+		2F2C87B922C36DF5004F3254 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				2F2C87BA22C36DF5004F3254 /* ExceptionCatcher.h */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -544,6 +562,7 @@
 				2FF279A51FDE855B00F0F769 /* Device */,
 				2F76AB33214814AF0094A7B1 /* EMail */,
 				2F03DBAC22097F4F006E8404 /* EventHandler */,
+				2F2C87B822C36DF5004F3254 /* Exceptions */,
 				2FF279AD1FDE858900F0F769 /* Extensions */,
 				2F03DBB022097F64006E8404 /* HTTPClient */,
 				2FF279BA1FDEB34800F0F769 /* ImageProcessing */,

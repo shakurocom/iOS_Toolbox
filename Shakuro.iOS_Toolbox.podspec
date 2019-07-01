@@ -4,7 +4,7 @@
 
 Pod::Spec.new do |s|
     s.name             = 'Shakuro.iOS_Toolbox'
-    s.version          = '0.14.1'
+    s.version          = '0.15.0'
     s.summary          = 'A bunch of components for iOS'
     s.homepage         = 'https://github.com/shakurocom/iOS_Toolbox'
     s.license          = { :type => 'MIT', :file => 'LICENSE' }
@@ -41,6 +41,13 @@ Pod::Spec.new do |s|
     s.subspec 'EventHandler' do |sp|
 
         sp.source_files = 'EventHandler/Source/**/*'
+        sp.frameworks = 'Foundation'
+
+    end
+
+    s.subspec 'Exceptions' do |sp|
+
+        sp.source_files = 'Exceptions/Source/**/*'
         sp.frameworks = 'Foundation'
 
     end
