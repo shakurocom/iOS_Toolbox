@@ -10,7 +10,7 @@ import Foundation
 extension Array {
 
     // Split array into multiple arrays of given size.
-    func chunked(chunkSize: Int) -> [[Element]] {
+    public func chunked(chunkSize: Int) -> [[Element]] {
         return stride(from: 0, to: count, by: chunkSize).map({ (startIndex) -> [Element] in
             Array(self[startIndex..<Swift.min(startIndex + chunkSize, count)])
         })

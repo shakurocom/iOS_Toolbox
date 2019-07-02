@@ -180,6 +180,7 @@ open class HTTPClient {
         })
     }
 
+    // TODO: move completion from options to param of the method
     public func sendRequest<ParserType: HTTPClientParserProtocol>(options: RequestOptions<ParserType>) -> HTTPClientRequest {
         let requestPrefab = formRequest(options: options)
         var request = manager.request(requestPrefab)
@@ -245,8 +246,6 @@ open class HTTPClient {
                     request = request.authenticate(usingCredential: credential)
                 }
                 encodingSuccess?(request)
-
-                // TODO: improve logging?
                 currentLogger.logRequest(requestOptions: options, resolvedHeaders: requestPrefab.headers)
                 request.validate(statusCode: currentAcceptableStatusCodes)
                     .validate(contentType: currentAcceptableContentTypes)
