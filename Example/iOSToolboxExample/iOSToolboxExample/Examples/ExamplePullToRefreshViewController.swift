@@ -136,7 +136,7 @@ internal class ExamplePullToRefreshLeftCell: UITableViewCell {
 
     @IBOutlet private var titleLabel: UILabel!
 
-    fileprivate func setup(message: String) {
+    internal func setup(message: String) {
         titleLabel.text = message
         self.layoutIfNeeded()
     }
