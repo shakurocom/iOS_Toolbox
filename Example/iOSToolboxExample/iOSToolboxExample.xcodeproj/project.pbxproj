@@ -93,6 +93,7 @@
 		2FF289501FDECC6E00F0F769 /* IMG_0010.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 2FF2894F1FDECC6D00F0F769 /* IMG_0010.JPG */; };
 		2FF58C2C21D7545D003C534E /* TaskOperationWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF58C2B21D7545D003C534E /* TaskOperationWrapper.swift */; };
 		2FF58C2E21D7548E003C534E /* RetryTaskOperationWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF58C2D21D7548E003C534E /* RetryTaskOperationWrapper.swift */; };
+		2FFC2C4322A9430D008B4B8E /* CGSize+Aspect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFC2C4222A9430D008B4B8E /* CGSize+Aspect.swift */; };
 		2FFD4C952253908500B07EB6 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 2FFD4C942253908500B07EB6 /* README.md */; };
 		2FFD4C972253908E00B07EB6 /* Shakuro.iOS_Toolbox.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 2FFD4C962253908E00B07EB6 /* Shakuro.iOS_Toolbox.podspec */; };
 		2FFD4C9B22539BFE00B07EB6 /* AsyncResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFD4C9A22539BFE00B07EB6 /* AsyncResult.swift */; };
@@ -203,6 +204,7 @@
 		2FF2894F1FDECC6D00F0F769 /* IMG_0010.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_0010.JPG; sourceTree = "<group>"; };
 		2FF58C2B21D7545D003C534E /* TaskOperationWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskOperationWrapper.swift; sourceTree = "<group>"; };
 		2FF58C2D21D7548E003C534E /* RetryTaskOperationWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryTaskOperationWrapper.swift; sourceTree = "<group>"; };
+		2FFC2C4222A9430D008B4B8E /* CGSize+Aspect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGSize+Aspect.swift"; sourceTree = "<group>"; };
 		2FFD4C942253908500B07EB6 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../README.md; sourceTree = "<group>"; };
 		2FFD4C962253908E00B07EB6 /* Shakuro.iOS_Toolbox.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Shakuro.iOS_Toolbox.podspec; path = ../../Shakuro.iOS_Toolbox.podspec; sourceTree = "<group>"; };
 		2FFD4C9A22539BFE00B07EB6 /* AsyncResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncResult.swift; sourceTree = "<group>"; };
@@ -603,6 +605,7 @@
 			isa = PBXGroup;
 			children = (
 				2FF279BD1FDEB34800F0F769 /* ImageProcessor.swift */,
+				2FFC2C4222A9430D008B4B8E /* CGSize+Aspect.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -1009,6 +1012,7 @@
 				2F76AB38214814AF0094A7B1 /* EMailValidator.swift in Sources */,
 				2FF2799D1FDE732000F0F769 /* Example.swift in Sources */,
 				2FC2268F2201E80F0057C63B /* NSNumberRepresentable.swift in Sources */,
+				2FFC2C4322A9430D008B4B8E /* CGSize+Aspect.swift in Sources */,
 				2F86E3AA204815940045070C /* BaseOperation.swift in Sources */,
 				2FF279B01FDE858900F0F769 /* UIStoryboard+Instantiate.swift in Sources */,
 				2F11C93C2201817F0003B754 /* RawCodable.swift in Sources */,
