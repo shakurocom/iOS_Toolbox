@@ -35,6 +35,7 @@ internal extension Example {
             Example(title: "VideoCamera", viewControllerType: ExampleVideoCameraViewController.self),
             Example(title: "PullToRefresh", viewControllerType: ExamplePullToRefreshViewController.self),
             Example(title: "PullToRefresh - ShakuroLogo", viewControllerType: ExamplePullToRefreshShakuroLogoViewController.self),
+            Example(title: "PullToRefresh - StickyHeaders", viewControllerType: ExamplePullToRefreshStickyHeadersViewController.self),
             Example(title: "HTTPClient", viewControllerType: ExampleHTTPClientViewController.self),
             Example(title: "TaskManager", viewControllerType: ExampleTaskManagerViewController.self),
             Example(title: "Labels", viewControllerType: ExampleLabelsViewController.self),

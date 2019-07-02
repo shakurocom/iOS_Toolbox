@@ -121,14 +121,16 @@ public class PullToRefreshView: UIView {
     private var observablePaths: [ObservableKeyPath] = []
     private let length: CGFloat
     private let contentView: PullToRefreshContentViewProtocol & UIView
-    private var topConstraint: NSLayoutConstraint?
-    private var leadingConstraint: NSLayoutConstraint?
+    private var bottomConstraint: NSLayoutConstraint?
     private var heightConstraint: NSLayoutConstraint?
     private var originalContentInset: UIEdgeInsets = UIEdgeInsets.zero
     private var ignoreContentInsetChanges: Bool = false                 // to break recursion
     private var ignoreContentOffsetChanges: Bool = false
     private var state: State = .idle
     private var currentPullLength: CGFloat = 0
+
+    private let tableView: UITableView?
+    private let tableHeaderView: UIView?
 
     // MARK: - Initialization
 
@@ -146,18 +148,35 @@ public class PullToRefreshView: UIView {
      - parameter length: length of the view. It is width for horizontal pull (`.left` and `.right`)
             and height for vertical pull (`.top` and `.bottom`)
      - parameter contentView: content view that will display some kind of pull/refreshing animation
+     - parameter useTableViewHeader: enables workaround for smooth animation of sticky headers.
+            Transparent table view header is used in this case.
+            For obvious reasons this solution is not compatible with your table view header with actual content.
      */
     public init(scrollView: UIScrollView,
                 length aLength: CGFloat,
-                contentView aContentView: PullToRefreshContentViewProtocol & UIView) {
+                contentView aContentView: PullToRefreshContentViewProtocol & UIView,
+                useTableViewHeader: Bool = false) {
         // privates
         originalContentInset = scrollView.contentInset
         length = aLength
         contentView = aContentView
 
+        if useTableViewHeader {
+            guard let contentTableView = scrollView as? UITableView else {
+                fatalError("'useTableViewHeader' param can be set to 'true' only for 'scrollView' being subclass of 'UITableView'")
+            }
+            let headerView = UIView(frame: CGRect(x: 0, y: 0, width: contentTableView.bounds.width, height: 0))
+            headerView.backgroundColor = UIColor.clear
+            contentTableView.tableHeaderView = headerView
+            tableHeaderView = headerView
+            tableView = contentTableView
+        } else {
+            tableHeaderView = nil
+            tableView = nil
+        }
+
         // self
-        super.init(frame: CGRect(x: 0, y: 0, width: aLength, height: aLength))
-        backgroundColor = UIColor.clear
+        super.init(frame: CGRect(x: 0, y: 0, width: scrollView.bounds.width, height: aLength))
 
         // form view hierarchy with constraints
         translatesAutoresizingMaskIntoConstraints = false
@@ -168,7 +187,8 @@ public class PullToRefreshView: UIView {
         heightConstraint = heightAnchor.constraint(equalToConstant: aLength)
         heightConstraint?.isActive = true
         centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
-        bottomAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
+        bottomConstraint = bottomAnchor.constraint(equalTo: scrollView.topAnchor, constant: 0)
+        bottomConstraint?.isActive = true
 
         // content constraints
         contentView.translatesAutoresizingMaskIntoConstraints = false
@@ -341,6 +361,10 @@ public class PullToRefreshView: UIView {
         switch newValue {
         case .idle,
              .readyToTrigger:
+            if let table = tableView, let header = tableHeaderView {
+                updateTableHeaderHeight(table: table, header: header, height: 0, animated: animated, keepOffset: false)
+                return
+            }
             let newInsets = originalContentInset
             if scrollView.contentInset != newInsets {
                 if scrollView.isTracking == true {
@@ -374,6 +398,10 @@ public class PullToRefreshView: UIView {
         case .refreshing:
             if report {
                 eventHandler?()
+            }
+            if let table = tableView, let header = tableHeaderView {
+                updateTableHeaderHeight(table: table, header: header, height: length, animated: false, keepOffset: true)
+                return
             }
             var newInsets = originalContentInset
             newInsets.top += length
@@ -421,6 +449,16 @@ public class PullToRefreshView: UIView {
         case .finishing:
             let newInsets = originalContentInset
             let oldOffset = scrollView.contentOffset
+            if let table = tableView, let header = tableHeaderView {
+                updateTableHeaderHeight(table: table, header: header, height: 0, animated: animated, keepOffset: false, finishedCompletion: {
+                    self.processContentOffsetChange(newValue: scrollView.contentOffset, oldValue: oldOffset, forced: true)
+                })
+                if canCancelTouches && scrollView.isTracking {
+                    scrollView.panGestureRecognizer.isEnabled = false
+                    scrollView.panGestureRecognizer.isEnabled = true
+                }
+                return
+            }
             if scrollView.contentInset != newInsets {
                 UIView.animate(
                     withDuration: animated ? animationDuration : 0.0,
@@ -452,11 +490,60 @@ public class PullToRefreshView: UIView {
     }
 
     private func setPullLength(_ newValue: CGFloat, report: Bool) {
-        heightConstraint?.constant = CGFloat.maximum(newValue, 0)
+        heightConstraint?.constant = CGFloat.maximum(newValue + (bottomConstraint?.constant ?? 0), 0)
         superview?.layoutIfNeeded()
         currentPullLength = newValue
         if report {
             contentView.updateState(currentPullDistance: newValue, targetPullDistance: length, state: state)
+        }
+    }
+
+    private func updateTableHeaderHeight(table: UITableView,
+                                         header: UIView,
+                                         height newHeight: CGFloat,
+                                         animated: Bool,
+                                         keepOffset: Bool,
+                                         finishedCompletion: (() -> Void)? = nil) {
+        let oldHeight = header.frame.height
+        guard oldHeight != newHeight else {
+            return
+        }
+        let contentOffsetOld = table.contentOffset
+
+        let animations = {
+            self.ignoreContentInsetChanges = true
+            self.ignoreContentOffsetChanges = true
+
+            self.bottomConstraint?.constant = newHeight
+            self.setNeedsLayout()
+            self.superview?.layoutIfNeeded()
+
+            var headerFrame = header.frame
+            headerFrame.size.height = newHeight
+            header.frame = headerFrame
+            table.tableHeaderView = header
+
+            if keepOffset {
+                table.contentOffset = CGPoint(x: contentOffsetOld.x, y: contentOffsetOld.y - (oldHeight - newHeight))
+            }
+
+            self.ignoreContentInsetChanges = false
+            self.ignoreContentOffsetChanges = false
+        }
+        if animated {
+            UIView.animate(
+                withDuration: animationDuration,
+                delay: 0.0,
+                options: [.allowUserInteraction],
+                animations: animations,
+                completion: { (finished) -> Void in
+                    if finished {
+                        finishedCompletion?()
+                    }
+            })
+        } else {
+            animations()
+            finishedCompletion?()
         }
     }
 
