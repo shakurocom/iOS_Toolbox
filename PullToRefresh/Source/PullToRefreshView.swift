@@ -506,6 +506,7 @@ public class PullToRefreshView: UIView {
                                          finishedCompletion: (() -> Void)? = nil) {
         let oldHeight = header.frame.height
         guard oldHeight != newHeight else {
+            finishedCompletion?()
             return
         }
         let contentOffsetOld = table.contentOffset
