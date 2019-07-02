@@ -12,7 +12,7 @@ extension String {
     }
 
     public func MD5() -> String? {
-       return data(using: String.Encoding.utf8)?.MD5()
+        return data(using: String.Encoding.utf8)?.MD5()
     }
 
 }
