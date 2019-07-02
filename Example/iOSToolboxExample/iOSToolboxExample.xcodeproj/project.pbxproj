@@ -103,6 +103,12 @@
 		2FFD4C972253908E00B07EB6 /* Shakuro.iOS_Toolbox.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 2FFD4C962253908E00B07EB6 /* Shakuro.iOS_Toolbox.podspec */; };
 		2FFD4C9B22539BFE00B07EB6 /* AsyncResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFD4C9A22539BFE00B07EB6 /* AsyncResult.swift */; };
 		5F2BE42F76A6C745178C14A5 /* Pods_iOSToolboxExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 009702E9AD272B72DEC6FC66 /* Pods_iOSToolboxExample.framework */; };
+		CE46496C22CB807900A872E0 /* SingleObjectFetchedResultController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE46494722CB807900A872E0 /* SingleObjectFetchedResultController.swift */; };
+		CE46496D22CB807900A872E0 /* FetchedResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE46494822CB807900A872E0 /* FetchedResultsController.swift */; };
+		CE46496F22CB807900A872E0 /* PredicateConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE46494A22CB807900A872E0 /* PredicateConvertible.swift */; };
+		CE46497022CB807900A872E0 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE46494B22CB807900A872E0 /* Storage.swift */; };
+		CE46497F22CB807900A872E0 /* NSManagedObject+Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE46495C22CB807900A872E0 /* NSManagedObject+Update.swift */; };
+		CE46498F22CB817100A872E0 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE46498E22CB817100A872E0 /* Entity.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -221,6 +227,12 @@
 		2FFD4C9A22539BFE00B07EB6 /* AsyncResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncResult.swift; sourceTree = "<group>"; };
 		8460D0405FC3E3B4F135CBAF /* Pods-iOSToolboxExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSToolboxExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iOSToolboxExample/Pods-iOSToolboxExample.debug.xcconfig"; sourceTree = "<group>"; };
 		BC61A924359D6E16CFD7D6E6 /* Pods-iOSToolboxExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSToolboxExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-iOSToolboxExample/Pods-iOSToolboxExample.release.xcconfig"; sourceTree = "<group>"; };
+		CE46494722CB807900A872E0 /* SingleObjectFetchedResultController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleObjectFetchedResultController.swift; sourceTree = "<group>"; };
+		CE46494822CB807900A872E0 /* FetchedResultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchedResultsController.swift; sourceTree = "<group>"; };
+		CE46494A22CB807900A872E0 /* PredicateConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PredicateConvertible.swift; sourceTree = "<group>"; };
+		CE46494B22CB807900A872E0 /* Storage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
+		CE46495C22CB807900A872E0 /* NSManagedObject+Update.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+Update.swift"; sourceTree = "<group>"; };
+		CE46498E22CB817100A872E0 /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -561,6 +573,7 @@
 		2FF279A41FDE852D00F0F769 /* Toolbox */ = {
 			isa = PBXGroup;
 			children = (
+				CE46494422CB7EDE00A872E0 /* PoliteCoreData */,
 				2FFD4C9822539BFE00B07EB6 /* CommonTypes */,
 				2FF279A51FDE855B00F0F769 /* Device */,
 				2F76AB33214814AF0094A7B1 /* EMail */,
@@ -788,6 +801,27 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		CE46494422CB7EDE00A872E0 /* PoliteCoreData */ = {
+			isa = PBXGroup;
+			children = (
+				CE46494522CB7F1E00A872E0 /* Source */,
+			);
+			path = PoliteCoreData;
+			sourceTree = "<group>";
+		};
+		CE46494522CB7F1E00A872E0 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				CE46495C22CB807900A872E0 /* NSManagedObject+Update.swift */,
+				CE46498E22CB817100A872E0 /* Entity.swift */,
+				CE46494722CB807900A872E0 /* SingleObjectFetchedResultController.swift */,
+				CE46494822CB807900A872E0 /* FetchedResultsController.swift */,
+				CE46494A22CB807900A872E0 /* PredicateConvertible.swift */,
+				CE46494B22CB807900A872E0 /* Storage.swift */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1001,12 +1035,14 @@
 				2FF58C2C21D7545D003C534E /* TaskOperationWrapper.swift in Sources */,
 				2F0CC9B3204931E900A896B2 /* TaskManagerError.swift in Sources */,
 				2FF279C31FDEB43D00F0F769 /* KeyboardHandler.swift in Sources */,
+				CE46496F22CB807900A872E0 /* PredicateConvertible.swift in Sources */,
 				2F03DBBD22097F65006E8404 /* HTTPClientParser.swift in Sources */,
 				2FF2798B1FDE723800F0F769 /* ExampleSelectorViewController.swift in Sources */,
 				2F03DBBB22097F65006E8404 /* HTTPClientError.swift in Sources */,
 				2F0E297922C213E400CEF04D /* UIStoryboard+Instantiate.swift in Sources */,
 				2FF289481FDEB46C00F0F769 /* VideoCamera.swift in Sources */,
 				2FF2894E1FDEB6FB00F0F769 /* ExampleImageProcessorViewController.swift in Sources */,
+				CE46497F22CB807900A872E0 /* NSManagedObject+Update.swift in Sources */,
 				2FF289491FDEB46C00F0F769 /* VideoCameraConfiguration.swift in Sources */,
 				2F03DBB922097F65006E8404 /* HTTPClient.swift in Sources */,
 				2FF289451FDEB46C00F0F769 /* DeviceCameraPreviewView.swift in Sources */,
@@ -1019,6 +1055,7 @@
 				2F32FBD02087315B00D61F25 /* ExampleStoryboardName.swift in Sources */,
 				2F6DCB602058155B00B5E128 /* ShakuroLogoPullToRefreshContentView.swift in Sources */,
 				2FEEDDAC1FE28F3A00C6BC0A /* ExamplePlaceholderTextViewViewController.swift in Sources */,
+				CE46496C22CB807900A872E0 /* SingleObjectFetchedResultController.swift in Sources */,
 				2F0E297C22C213E400CEF04D /* Data+Hash.swift in Sources */,
 				2FB494FF204577550068D380 /* TaskManager.swift in Sources */,
 				2F2DBABD205A87D4000AFC0F /* ExampleLabelsViewController.swift in Sources */,
@@ -1026,6 +1063,7 @@
 				2FF2894A1FDEB46C00F0F769 /* VideoCameraError.swift in Sources */,
 				2F86E3A8204814C50045070C /* OperationCallback.swift in Sources */,
 				2F5CED7B20581A2900BD508A /* ExamplePullToRefreshShakuroLogoViewController.swift in Sources */,
+				CE46497022CB807900A872E0 /* Storage.swift in Sources */,
 				2F2C33E41FE177C500976FA2 /* ExampleKeychainWrapperViewController.swift in Sources */,
 				2FB05A30204E9430003B80CC /* TaskOperation.swift in Sources */,
 				2FE04E50208731C3003ECABE /* VideoCameraPreviewView.swift in Sources */,
@@ -1040,6 +1078,7 @@
 				2F0E297822C213E400CEF04D /* UICollectionView+Reusable.swift in Sources */,
 				2FF279B61FDEA21B00F0F769 /* ExampleDeviceOrientationListenerViewController.swift in Sources */,
 				2F2DBABB205A8220000AFC0F /* InsetsLabel.swift in Sources */,
+				CE46496D22CB807900A872E0 /* FetchedResultsController.swift in Sources */,
 				2F4FA518203DAECC003D57C0 /* ExampleHTTPClientViewController.swift in Sources */,
 				2F956100229BE33400D5E6B9 /* BaseOperationOptions.swift in Sources */,
 				2F4A2DF01FE3B8C6003B9F27 /* ImagePreviewViewController.swift in Sources */,
@@ -1063,6 +1102,7 @@
 				2FF279A31FDE84AF00F0F769 /* ExampleDeviceTypeViewController.swift in Sources */,
 				2FF279CB1FDEB45100F0F769 /* PlaceholderTextView.swift in Sources */,
 				2FFD4C9B22539BFE00B07EB6 /* AsyncResult.swift in Sources */,
+				CE46498F22CB817100A872E0 /* Entity.swift in Sources */,
 				2F0E297722C213E400CEF04D /* UIDevice+Uptime.swift in Sources */,
 				2F2C33E21FE173A900976FA2 /* ExampleKeyboardHandlerViewController.swift in Sources */,
 				2FF2894B1FDEB46C00F0F769 /* VideoCameraFactory.swift in Sources */,
