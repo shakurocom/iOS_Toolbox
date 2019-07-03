@@ -1,3 +1,8 @@
+//
+// Copyright (c) 2019 Shakuro (https://shakuro.com/)
+//
+//
+
 import CoreData
 import UIKit
 
@@ -408,6 +413,7 @@ private extension Storage {
     }
 
     // MARK: - Observing
+
     func addObservers() {
         if rootSavingContext == nil || mainQueueContext == nil {
             return
