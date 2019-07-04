@@ -6,38 +6,39 @@
 import CoreData
 import UIKit
 
-enum StorageError: Int, Error {
+public class PoliteCoreStorage {
 
-    case internalInconsistency = 100
+    public enum PCError: Int, Error {
 
-    func errorDomain() -> String {
-        return "\(UIApplication.bundleIdentifier).storage"
+        case internalInconsistency = 100
+
+        func errorDescription() -> String {
+            switch self {
+            case .internalInconsistency:
+                return NSLocalizedString("The operation could not be completed. Internal inconsistency.", comment: "Storage Error description")
+            }
+        }
+
     }
 
-    func errorCode() -> Int {
-        return self.rawValue
+    public struct Configuration {
+        let modelName: String
+        init(modelName: String) {
+            self.modelName = modelName
+        }
     }
 
-    func errorDescription() -> String {
-        return NSLocalizedString("The operation could not be completed. Internal inconsistency.", comment: "Storage Error description")
+    private enum Constant {
+        static let defaultRootDirectoryPrefix = "politeCoreStorage"
+        static let defaultBatchSize: Int = 100
     }
-
-}
-
-private let kRootStorageDirectoryName = "\(UIApplication.bundleIdentifier).coreDataStorage"
-private let kStorageDefaultBatchSize: Int = 100
-
-class Storage {
 
     private let rootSavingContext: NSManagedObjectContext!
     private let concurrentFetchContext: NSManagedObjectContext!
-
     private let mainQueueContext: NSManagedObjectContext!
-
     private let persistentStoreCoordinatorMain: NSPersistentStoreCoordinator!
     private let persistentStoreCoordinatorWorker: NSPersistentStoreCoordinator!
     private let classToEntityNameMap: [String: String]!
-
     private let callbackQueue: DispatchQueue
 
     private init(modelName: String) {
@@ -46,7 +47,7 @@ class Storage {
             else {
                 fatalError("Could not initialize database object model")
         }
-        callbackQueue = DispatchQueue(label: "\(UIApplication.bundleIdentifier).storage.queue", attributes: [])
+        callbackQueue = DispatchQueue(label: "politeCoreStorage.callbackQueue.queue", attributes: [])
 
         let entitiesByName = model.entitiesByName
         var entitiesMap: [String: String] = [String: String]()
@@ -66,13 +67,23 @@ class Storage {
     }
 
     // MARK: - Setup
-    class func setupStack(modelName: String) -> Storage {
-        let storage: Storage = Storage(modelName: modelName)
-        storage.setupCoreDataStack(retryFiled: true, removeOldDB: false)
+
+    class func setupStack(configuration: Configuration, removeDBOnSetupFailed: Bool) throws -> PoliteCoreStorage {
+        let storage: PoliteCoreStorage = PoliteCoreStorage(modelName: configuration.modelName)
+        do {
+            try storage.setupCoreDataStack(removeOldDB: false, modelName: configuration.modelName)
+        } catch let error {
+            if removeDBOnSetupFailed {
+                try storage.setupCoreDataStack(removeOldDB: true, modelName: configuration.modelName)
+            } else {
+                throw error
+            }
+        }
         return storage
     }
 
     // MARK: - Maintenance
+
     func resetMainQueueContext() {
         mainQueueContext.performAndWait { () -> Void in
             self.mainQueueContext.reset()
@@ -88,16 +99,17 @@ class Storage {
 }
 
 // MARK: - Public
-// MARK: - Save/Create
 
-extension Storage {
+// MARK: Save/Create
+
+extension PoliteCoreStorage {
 
     func saveWithBlock(_ block: @escaping (_ context: NSManagedObjectContext) -> Void, completion: @escaping ((_ error: Error?) -> Void)) {
         saveContext(rootSavingContext, resetAfterSaving: true, changesBlock: block, completion: completion)
     }
 
-    func saveWithBlockAndWait(_ block: @escaping (_ context: NSManagedObjectContext) -> Void) -> Error? {
-        return saveContextAndWait(rootSavingContext, resetAfterSaving: true, changesBlock: block)
+    func saveWithBlockAndWait(_ block: @escaping (_ context: NSManagedObjectContext) -> Void) throws {
+        try saveContextAndWait(rootSavingContext, resetAfterSaving: true, changesBlock: block)
     }
 
     func findFirstOrCreate<T: NSManagedObject>(_ entityType: T.Type, withPredicate predicate: NSPredicate, inContext context: NSManagedObjectContext) -> T {
@@ -108,58 +120,54 @@ extension Storage {
     }
 }
 
-// MARK: - Fetch
+// MARK: Main Queue
 
-extension Storage {
-
-    // MARK: Main Queue
+extension PoliteCoreStorage {
 
     func existingObjectWithIDInMainQueueContext<T: NSManagedObject>(_ objectID: NSManagedObjectID) -> T? {
         return existingObjectWithID(objectID, inContext: mainQueueContext)
     }
 
-    func findFirstInMainQueueContext<T: NSManagedObject>(_ entityType: T.Type, withPredicate predicate: NSPredicate) -> T? {
+    func findFirstInMainQueueContext<T: NSManagedObject>(_ entityType: T.Type,
+                                                         withPredicate predicate: NSPredicate) -> T? {
         return findFirst(entityType, withPredicate: predicate, inContext: mainQueueContext)
     }
 
-    func findAllInMainQueueContext<T: NSManagedObject>(_ entityType: T.Type, sortTerm: [(sortKey: String, ascending: Bool)] = [], predicate: NSPredicate? = nil) -> [T]? {
-        return findAll(entityType, sortTerm: sortTerm, predicate: predicate, inContext: mainQueueContext)
+    func findAllInMainQueueContext<T: NSManagedObject>(_ entityType: T.Type,
+                                                       sortTerm: [(sortKey: String, ascending: Bool)] = [],
+                                                       predicate: NSPredicate? = nil) -> [T]? {
+        return findAll(entityType, inContext: mainQueueContext, sortTerm: sortTerm, predicate: predicate)
     }
 
-    func fetchAllInMainQueueContext<T: NSManagedObject>(_ entityType: T.Type,
-                                                        fetchBatchSize: Int = kStorageDefaultBatchSize,
-                                                        fetchLimit: Int? = nil,
-                                                        returnsObjectsAsFaults: Bool = false,
-                                                        sortTerm: [(sortKey: String, ascending: Bool)] = [],
-                                                        sectionNameKeyPath: String? = nil,
-                                                        predicate: NSPredicate? = nil,
-                                                        delegate: NSFetchedResultsControllerDelegate? = nil,
-                                                        performFetch: Bool = true) -> NSFetchedResultsController<T> {
+    func mainQueueFetchedResultsController<T: NSManagedObject>(_ entityType: T.Type,
+                                                               sortTerm: [(sortKey: String, ascending: Bool)],
+                                                               predicate: NSPredicate? = nil,
+                                                               sectionNameKeyPath: String? = nil,
+                                                               cacheName: String? = nil,
+                                                               configureRequest: ((_ request: NSFetchRequest<T>) -> Void)?) -> NSFetchedResultsController<T> {
 
         assert(Thread.current.isMainThread, "Access to mainQueueContext in BG thread")
-
-        let request = requestWithEntityType(entityType, sortTerm: sortTerm, predicate: predicate, fetchLimit: fetchLimit, fetchBatchSize: fetchBatchSize)
-        request.returnsObjectsAsFaults = returnsObjectsAsFaults
+        let request = requestWithEntityType(entityType, sortTerm: sortTerm, predicate: predicate)
+        request.fetchBatchSize = Constant.defaultBatchSize
+        request.returnsObjectsAsFaults = false
         request.includesPropertyValues = true
+        configureRequest?(request)
+
         let resultsController: NSFetchedResultsController<T> = NSFetchedResultsController(fetchRequest: request,
                                                                                           managedObjectContext: mainQueueContext,
                                                                                           sectionNameKeyPath: sectionNameKeyPath,
-                                                                                          cacheName: nil)
-        resultsController.delegate = delegate
-        if performFetch {
-            do {
-                try resultsController.performFetch()
-            } catch let error as NSError {
-                debugPrint("NSFetchedResultsController \(error)")
-                assertionFailure()
-            }
-        }
+                                                                                          cacheName: cacheName)
         return resultsController
     }
 
     func countForEntityInMainQueueContext<T: NSManagedObject>(_ entityType: T.Type, predicate: NSPredicate? = nil) -> Int {
-        return countForEntity(entityType, predicate: predicate, inContext: mainQueueContext)
+        return countForEntity(entityType, inContext: mainQueueContext, predicate: predicate)
     }
+}
+
+// MARK: General
+
+extension PoliteCoreStorage {
 
     // MARK: General
 
@@ -196,76 +204,74 @@ extension Storage {
     }
 
     func findFirst<T: NSManagedObject>(_ entityType: T.Type, withPredicate predicate: NSPredicate, inContext context: NSManagedObjectContext) -> T? {
-        let request = requestWithEntityType(entityType, predicate: predicate, fetchLimit: 1)
+        let request = requestWithEntityType(entityType, predicate: predicate)
+        request.fetchLimit = 1
         return executeFetchRequest(request, inContext: context).first
     }
 
-    func findAll<T: NSManagedObject>(_ entityType: T.Type, sortTerm: [(sortKey: String, ascending: Bool)] = [], predicate: NSPredicate? = nil, inContext context: NSManagedObjectContext) -> [T]? {
+    func findAll<T: NSManagedObject>(_ entityType: T.Type,
+                                     inContext context: NSManagedObjectContext,
+                                     sortTerm: [(sortKey: String, ascending: Bool)] = [],
+                                     predicate: NSPredicate? = nil) -> [T]? {
         let request = requestWithEntityType(entityType, sortTerm: sortTerm, predicate: predicate)
         return executeFetchRequest(request, inContext: context)
     }
 
-    func countForEntity<T: NSManagedObject>(_ entityType: T.Type, predicate: NSPredicate? = nil, inContext context: NSManagedObjectContext) -> Int {
-        let request = requestWithEntityType(entityType, predicate: predicate, resultType: .managedObjectIDResultType)
+    func countForEntity<T: NSManagedObject>(_ entityType: T.Type, inContext context: NSManagedObjectContext, predicate: NSPredicate? = nil) -> Int {
+        let request = requestWithEntityType(entityType, predicate: predicate)
+        request.resultType = .managedObjectIDResultType
         return countForFetchRequest(request, inContext: context)
     }
 
     func obtainPermanentIDsForObject<T: NSManagedObject>(_ object: T) {
-        if let context = object.managedObjectContext, object.objectID.isTemporaryID {
-            assert(context !== mainQueueContext || Thread.current.isMainThread, "Access to mainQueueContext in BG thread")
-            do {
-                try context.obtainPermanentIDs(for: [object])
-            } catch {
-                //do nothing
-            }
+        guard let context = object.managedObjectContext, object.objectID.isTemporaryID else {
+            return
+        }
+        assert(context !== mainQueueContext || Thread.current.isMainThread, "Access to mainQueueContext in BG thread")
+        do {
+            try context.obtainPermanentIDs(for: [object])
+        } catch {
+            //do nothing
         }
     }
 }
 
 // MARK: - Private
 
-private extension Storage {
+private extension PoliteCoreStorage {
 
-    // MARK: Core Data Stack
+    // MARK: Setup
 
-    func setupCoreDataStack(retryFiled: Bool = false, removeOldDB: Bool = false) {
-        do {
-            let storeURL = Storage.rootStorageDirectoryURL(removeOldDB: removeOldDB).appendingPathComponent("db.sqlite", isDirectory: false)
-            let options: [AnyHashable: Any] = [NSMigratePersistentStoresAutomaticallyOption: true,
-                                               NSInferMappingModelAutomaticallyOption: true]
+    func setupCoreDataStack(removeOldDB: Bool, modelName: String) throws {
+        let storeURL = PoliteCoreStorage.rootStorageDirectoryURL(removeOldDB: removeOldDB, modelName: modelName).appendingPathComponent("\(modelName).sqlite", isDirectory: false)
+        let options: [AnyHashable: Any] = [NSMigratePersistentStoresAutomaticallyOption: true,
+                                           NSInferMappingModelAutomaticallyOption: true]
 
-            try self.persistentStoreCoordinatorMain.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storeURL, options: options)
-            try self.persistentStoreCoordinatorWorker.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storeURL, options: options)
+        try self.persistentStoreCoordinatorMain.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storeURL, options: options)
+        try self.persistentStoreCoordinatorWorker.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storeURL, options: options)
 
-            // Setup context
+        // Setup context
 
-            self.rootSavingContext.mergePolicy = NSOverwriteMergePolicy
-            self.rootSavingContext.undoManager = nil
-            self.rootSavingContext.persistentStoreCoordinator = self.persistentStoreCoordinatorWorker
+        self.rootSavingContext.mergePolicy = NSOverwriteMergePolicy
+        self.rootSavingContext.undoManager = nil
+        self.rootSavingContext.persistentStoreCoordinator = self.persistentStoreCoordinatorWorker
 
-            self.concurrentFetchContext.parent = self.rootSavingContext
-            self.concurrentFetchContext.undoManager = nil
+        self.concurrentFetchContext.parent = self.rootSavingContext
+        self.concurrentFetchContext.undoManager = nil
 
-            self.mainQueueContext.undoManager = nil
-            self.mainQueueContext.persistentStoreCoordinator = self.persistentStoreCoordinatorMain
+        self.mainQueueContext.undoManager = nil
+        self.mainQueueContext.persistentStoreCoordinator = self.persistentStoreCoordinatorMain
 
-            self.addObservers()
-        } catch let error {
-            if retryFiled {
-                setupCoreDataStack(retryFiled: false, removeOldDB: true)
-            } else {
-                fatalError("Failed to assign store to database. error:\(error)")
-            }
-        }
+        self.addObservers()
     }
 
-    // MARK: - Helpers
-    class func rootStorageDirectoryURL(removeOldDB: Bool) -> URL {
+    class func rootStorageDirectoryURL(removeOldDB: Bool, modelName: String) -> URL {
         let fileManager: FileManager =  FileManager.default
         guard let rootDirURL: URL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
             fatalError("Can't create root storage directory. .urls(for: .documentDirectory")
         }
-        var storeDirURL: URL = rootDirURL.appendingPathComponent(kRootStorageDirectoryName, isDirectory: true)
+        let dirName: String = "\(Constant.defaultRootDirectoryPrefix).\(modelName)"
+        var storeDirURL: URL = rootDirURL.appendingPathComponent(dirName, isDirectory: true)
         if removeOldDB {
             try? fileManager.removeItem(at: storeDirURL)
         }
@@ -281,6 +287,8 @@ private extension Storage {
         }
         return storeDirURL
     }
+
+    // MARK: Helpers
 
     func entityName<T: NSManagedObject>(_ entityType: T.Type) -> String {
         let className = String(describing: entityType)
@@ -301,16 +309,9 @@ private extension Storage {
 
     func requestWithEntityType<T: NSManagedObject>(_ entityType: T.Type,
                                                    sortTerm: [(sortKey: String, ascending: Bool)] = [],
-                                                   predicate: NSPredicate? = nil,
-                                                   fetchLimit: Int? = nil,
-                                                   fetchBatchSize: Int? = nil,
-                                                   resultType: NSFetchRequestResultType? = nil,
-                                                   returnsObjectsAsFaults: Bool? = nil) -> NSFetchRequest<T> {
-
+                                                   predicate: NSPredicate? = nil) -> NSFetchRequest<T> {
         let request: NSFetchRequest<T> = NSFetchRequest<T>(entityName: entityName(entityType))
-        // true by default but for sure
         request.includesPendingChanges = true
-
         if sortTerm.count > 0 {
             var sortDescriptors: [NSSortDescriptor] = [NSSortDescriptor]()
             for sortKey in sortTerm {
@@ -320,18 +321,6 @@ private extension Storage {
         }
 
         request.predicate = predicate
-        if let limit = fetchLimit {
-            request.fetchLimit = limit
-        }
-        if let batchSize = fetchBatchSize {
-            request.fetchBatchSize = batchSize
-        }
-        if let actualResultType = resultType {
-            request.resultType = actualResultType
-        }
-        if let faults = returnsObjectsAsFaults {
-            request.returnsObjectsAsFaults = faults
-        }
         return request
     }
 
@@ -340,9 +329,8 @@ private extension Storage {
         var results: [T]?
         do {
             try results = context.fetch(request)
-        } catch let error as NSError {
-            debugPrint("Can't execute Fetch Request \(error)")
-            assertionFailure()
+        } catch let error {
+            assertionFailure("Can't execute Fetch Request \(error)")
         }
         return results ?? [T]()
     }
@@ -352,9 +340,8 @@ private extension Storage {
         do {
             let result: Int = try context.count(for: request)
             return result
-        } catch let error as NSError {
-            debugPrint("Can't execute Fetch Request \(error)")
-            assertionFailure()
+        } catch let error {
+            assertionFailure("Can't execute Fetch Request \(error)")
             return 0
         }
     }
@@ -371,45 +358,46 @@ private extension Storage {
         context.perform {
             context.reset()
             changesBlock?(context)
-            if context.hasChanges {
-                do {
-                    try context.save()
-                    if resetAfterSaving {
-                        context.reset()
-                    }
-                    performCompletionClosure(nil)
-                } catch let error {
-                    performCompletionClosure(error)
-                    debugPrint("Could not save database context \(error)")
-                    assertionFailure()
-                }
-            } else {
+            guard context.hasChanges else {
                 performCompletionClosure(nil)
+                return
+            }
+            do {
+                try context.save()
+                if resetAfterSaving {
+                    context.reset()
+                }
+                performCompletionClosure(nil)
+            } catch let error {
+                performCompletionClosure(error)
+                assertionFailure("Could not save context \(error)")
             }
         }
     }
 
     func saveContextAndWait(_ context: NSManagedObjectContext,
                             resetAfterSaving: Bool,
-                            changesBlock: ((_ context: NSManagedObjectContext) -> Void)? = nil) -> Error? {
+                            changesBlock: ((_ context: NSManagedObjectContext) -> Void)? = nil) throws {
         var saveError: Error?
         context.performAndWait {
             context.reset()
             changesBlock?(context)
-            if context.hasChanges {
-                do {
-                    try context.save()
-                    if resetAfterSaving {
-                        context.reset()
-                    }
-                } catch let error {
-                    saveError = error
-                    debugPrint("Could not save database context \(error)")
-                    assertionFailure()
+            guard context.hasChanges else {
+                return
+            }
+            do {
+                try context.save()
+                if resetAfterSaving {
+                    context.reset()
                 }
+            } catch let error {
+                saveError = error
+                assertionFailure("Could not save context \(error)")
             }
         }
-        return saveError
+        if let  actualError = saveError {
+            throw actualError
+        }
     }
 
     // MARK: - Observing
@@ -420,10 +408,10 @@ private extension Storage {
         }
         removeObservers()
         let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(Storage.rootSavingContextDidSave(_:)), name: NSNotification.Name.NSManagedObjectContextDidSave, object: rootSavingContext)
-        notificationCenter.addObserver(self, selector: #selector(Storage.contextWillSave(_:)), name: NSNotification.Name.NSManagedObjectContextWillSave, object: rootSavingContext)
-        notificationCenter.addObserver(self, selector: #selector(Storage.contextWillSave(_:)), name: NSNotification.Name.NSManagedObjectContextWillSave, object: mainQueueContext)
-        notificationCenter.addObserver(self, selector: #selector(Storage.contextWillSave(_:)), name: NSNotification.Name.NSManagedObjectContextWillSave, object: concurrentFetchContext)
+        notificationCenter.addObserver(self, selector: #selector(rootSavingContextDidSave(_:)), name: NSNotification.Name.NSManagedObjectContextDidSave, object: rootSavingContext)
+        notificationCenter.addObserver(self, selector: #selector(contextWillSave(_:)), name: NSNotification.Name.NSManagedObjectContextWillSave, object: rootSavingContext)
+        notificationCenter.addObserver(self, selector: #selector(contextWillSave(_:)), name: NSNotification.Name.NSManagedObjectContextWillSave, object: mainQueueContext)
+        notificationCenter.addObserver(self, selector: #selector(contextWillSave(_:)), name: NSNotification.Name.NSManagedObjectContextWillSave, object: concurrentFetchContext)
     }
 
     func removeObservers() {

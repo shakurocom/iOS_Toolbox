@@ -6,19 +6,17 @@
 import Foundation
 import CoreData
 
-final class SingleObjectFetchedResultController<CDEntityType, ResultType> where ResultType: Entity<CDEntityType> & ManagedEntity, ResultType.CDEntityType == CDEntityType {
+final class SingleObjectFetchedResultController<CDEntityType, ResultType> where ResultType: ManagedEntity, ResultType.CDEntityType == CDEntityType {
 
     var willChange: ((_ controller: SingleObjectFetchedResultController<CDEntityType, ResultType>) -> Void)?
     var didChange: ((_ controller: SingleObjectFetchedResultController<CDEntityType, ResultType>) -> Void)?
 
-    let resultIndexPath: IndexPath
     private(set) var result: ResultType?
 
     private let fetchedResultsController: FetchedResultsController<CDEntityType, ResultType>
+    private let resultIndexPath: IndexPath = IndexPath(row: 0, section: 0)
 
-    init(fetchedResultsController: NSFetchedResultsController<CDEntityType>,
-         resultIndexPath: IndexPath = IndexPath(row: 0, section: 0)) {
-        self.resultIndexPath = resultIndexPath
+    init(fetchedResultsController: NSFetchedResultsController<CDEntityType>) {
         self.fetchedResultsController = FetchedResultsController<CDEntityType, ResultType>(fetchedResultsController: fetchedResultsController)
         setup()
     }

@@ -106,7 +106,7 @@
 		CE46496C22CB807900A872E0 /* SingleObjectFetchedResultController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE46494722CB807900A872E0 /* SingleObjectFetchedResultController.swift */; };
 		CE46496D22CB807900A872E0 /* FetchedResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE46494822CB807900A872E0 /* FetchedResultsController.swift */; };
 		CE46496F22CB807900A872E0 /* PredicateConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE46494A22CB807900A872E0 /* PredicateConvertible.swift */; };
-		CE46497022CB807900A872E0 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE46494B22CB807900A872E0 /* Storage.swift */; };
+		CE46497022CB807900A872E0 /* PoliteCoreStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE46494B22CB807900A872E0 /* PoliteCoreStorage.swift */; };
 		CE46497F22CB807900A872E0 /* NSManagedObject+Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE46495C22CB807900A872E0 /* NSManagedObject+Update.swift */; };
 		CE46498F22CB817100A872E0 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE46498E22CB817100A872E0 /* Entity.swift */; };
 /* End PBXBuildFile section */
@@ -230,7 +230,7 @@
 		CE46494722CB807900A872E0 /* SingleObjectFetchedResultController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleObjectFetchedResultController.swift; sourceTree = "<group>"; };
 		CE46494822CB807900A872E0 /* FetchedResultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchedResultsController.swift; sourceTree = "<group>"; };
 		CE46494A22CB807900A872E0 /* PredicateConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PredicateConvertible.swift; sourceTree = "<group>"; };
-		CE46494B22CB807900A872E0 /* Storage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
+		CE46494B22CB807900A872E0 /* PoliteCoreStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PoliteCoreStorage.swift; sourceTree = "<group>"; };
 		CE46495C22CB807900A872E0 /* NSManagedObject+Update.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+Update.swift"; sourceTree = "<group>"; };
 		CE46498E22CB817100A872E0 /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -817,7 +817,7 @@
 				CE46494722CB807900A872E0 /* SingleObjectFetchedResultController.swift */,
 				CE46494822CB807900A872E0 /* FetchedResultsController.swift */,
 				CE46494A22CB807900A872E0 /* PredicateConvertible.swift */,
-				CE46494B22CB807900A872E0 /* Storage.swift */,
+				CE46494B22CB807900A872E0 /* PoliteCoreStorage.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -1063,7 +1063,7 @@
 				2FF2894A1FDEB46C00F0F769 /* VideoCameraError.swift in Sources */,
 				2F86E3A8204814C50045070C /* OperationCallback.swift in Sources */,
 				2F5CED7B20581A2900BD508A /* ExamplePullToRefreshShakuroLogoViewController.swift in Sources */,
-				CE46497022CB807900A872E0 /* Storage.swift in Sources */,
+				CE46497022CB807900A872E0 /* PoliteCoreStorage.swift in Sources */,
 				2F2C33E41FE177C500976FA2 /* ExampleKeychainWrapperViewController.swift in Sources */,
 				2FB05A30204E9430003B80CC /* TaskOperation.swift in Sources */,
 				2FE04E50208731C3003ECABE /* VideoCameraPreviewView.swift in Sources */,

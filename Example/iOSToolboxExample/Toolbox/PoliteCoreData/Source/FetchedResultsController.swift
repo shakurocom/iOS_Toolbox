@@ -6,21 +6,21 @@
 import Foundation
 import CoreData
 
-enum FetchedResultsChangeType {
-    case insert(indexPath: IndexPath)
-    case delete(indexPath: IndexPath)
-    case move(indexPath: IndexPath, newIndexPath: IndexPath)
-    case update(indexPath: IndexPath)
+final class FetchedResultsController<CDEntityType, ResultType>: NSObject, NSFetchedResultsControllerDelegate where ResultType: ManagedEntity, ResultType.CDEntityType == CDEntityType {
 
-    case insertSection(index: Int)
-    case deleteSection(index: Int)
-}
+    enum ChangeType {
+        case insert(indexPath: IndexPath)
+        case delete(indexPath: IndexPath)
+        case move(indexPath: IndexPath, newIndexPath: IndexPath)
+        case update(indexPath: IndexPath)
 
-final class FetchedResultsController<CDEntityType, ResultType>: NSObject, NSFetchedResultsControllerDelegate where ResultType: Entity<CDEntityType> & ManagedEntity, ResultType.CDEntityType == CDEntityType {
+        case insertSection(index: Int)
+        case deleteSection(index: Int)
+    }
 
     var willChangeContent: ((_ controller: FetchedResultsController<CDEntityType, ResultType>) -> Void)?
     var didChangeContent: ((_ controller: FetchedResultsController<CDEntityType, ResultType>) -> Void)?
-    var didChangeFetchedResults: ((_ controller: FetchedResultsController<CDEntityType, ResultType>, _ type: FetchedResultsChangeType) -> Void)?
+    var didChangeFetchedResults: ((_ controller: FetchedResultsController<CDEntityType, ResultType>, _ type: ChangeType) -> Void)?
 
     private let fetchedResultsController: NSFetchedResultsController<CDEntityType>
 
@@ -92,8 +92,8 @@ final class FetchedResultsController<CDEntityType, ResultType>: NSObject, NSFetc
         let numberOfObjects = numberOfItemsInSection(section)
         for row in 0..<numberOfObjects {
             let path = IndexPath(row: row, section: section)
-            let shouldSontinue = body(path, itemAtIndexPath(path))
-            if !shouldSontinue {
+            let shouldContinue = body(path, itemAtIndexPath(path))
+            if !shouldContinue {
                 break
             }
         }
