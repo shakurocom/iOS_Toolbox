@@ -4,7 +4,7 @@
 
 Pod::Spec.new do |s|
     s.name             = 'Shakuro.iOS_Toolbox'
-    s.version          = '0.15.3'
+    s.version          = '0.15.4'
     s.summary          = 'A bunch of components for iOS'
     s.homepage         = 'https://github.com/shakurocom/iOS_Toolbox'
     s.license          = { :type => 'MIT', :file => 'LICENSE' }
@@ -134,5 +134,12 @@ Pod::Spec.new do |s|
         sp.frameworks = 'Accelerate', 'AVFoundation', 'UIKit'
 
     end
+
+   s.subspec 'PoliteCoreData' do |sp|
+
+        sp.source_files = 'PoliteCoreData/Source/**/*'
+        sp.frameworks = 'Foundation', 'CoreData'
+
+   end
 
 end

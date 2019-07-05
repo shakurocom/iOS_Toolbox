@@ -8,25 +8,26 @@ import CoreData
 
 public final class SingleObjectFetchedResultController<CDEntityType, ResultType> where ResultType: ManagedEntity, ResultType.CDEntityType == CDEntityType {
 
-    public var willChange: ((_ controller: SingleObjectFetchedResultController<CDEntityType, ResultType>) -> Void)?
-    public var didChange: ((_ controller: SingleObjectFetchedResultController<CDEntityType, ResultType>) -> Void)?
+    var willChange: ((_ controller: SingleObjectFetchedResultController<CDEntityType, ResultType>) -> Void)?
+    var didChange: ((_ controller: SingleObjectFetchedResultController<CDEntityType, ResultType>) -> Void)?
 
     private(set) var result: ResultType?
+
     private let fetchedResultsController: FetchedResultsController<CDEntityType, ResultType>
     private let resultIndexPath: IndexPath = IndexPath(row: 0, section: 0)
 
-    public init(fetchedResultsController: NSFetchedResultsController<CDEntityType>) {
+    init(fetchedResultsController: NSFetchedResultsController<CDEntityType>) {
         self.fetchedResultsController = FetchedResultsController<CDEntityType, ResultType>(fetchedResultsController: fetchedResultsController)
         setup()
     }
 
-    public func performFetch() {
+    func performFetch() {
         willChange?(self)
         fetchedResultsController.performFetch()
         updateResult()
     }
 
-    public func performFetch(predicate: NSPredicate) {
+    func performFetch(predicate: NSPredicate) {
         willChange?(self)
         fetchedResultsController.performFetch(predicate: predicate)
         updateResult()

@@ -11,7 +11,7 @@ public class PoliteCoreStorage {
 
         case internalInconsistency = 100
 
-        public func errorDescription() -> String {
+        func errorDescription() -> String {
             switch self {
             case .internalInconsistency:
                 return NSLocalizedString("The operation could not be completed. Internal inconsistency.", comment: "Storage Error description")
@@ -21,9 +21,8 @@ public class PoliteCoreStorage {
     }
 
     public struct Configuration {
-        public let modelName: String
-
-        public init(modelName: String) {
+        let modelName: String
+        init(modelName: String) {
             self.modelName = modelName
         }
     }
@@ -68,7 +67,7 @@ public class PoliteCoreStorage {
 
     // MARK: - Setup
 
-    public class func setupStack(configuration: Configuration, removeDBOnSetupFailed: Bool) throws -> PoliteCoreStorage {
+    class func setupStack(configuration: Configuration, removeDBOnSetupFailed: Bool) throws -> PoliteCoreStorage {
         let storage: PoliteCoreStorage = PoliteCoreStorage(modelName: configuration.modelName)
         do {
             try storage.setupCoreDataStack(removeOldDB: false, modelName: configuration.modelName)
@@ -84,13 +83,13 @@ public class PoliteCoreStorage {
 
     // MARK: - Maintenance
 
-    public func resetMainQueueContext() {
+    func resetMainQueueContext() {
         mainQueueContext.performAndWait { () -> Void in
             self.mainQueueContext.reset()
         }
     }
 
-    public func resetRootSavingContext() {
+    func resetRootSavingContext() {
         rootSavingContext.performAndWait { () -> Void in
             self.rootSavingContext.reset()
         }

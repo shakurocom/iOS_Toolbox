@@ -6,9 +6,9 @@
 import Foundation
 import CoreData
 
-final class FetchedResultsController<CDEntityType, ResultType>: NSObject, NSFetchedResultsControllerDelegate where ResultType: ManagedEntity, ResultType.CDEntityType == CDEntityType {
+public final class FetchedResultsController<CDEntityType, ResultType>: NSObject where ResultType: ManagedEntity, ResultType.CDEntityType == CDEntityType {
 
-    enum ChangeType {
+    public enum ChangeType {
         case insert(indexPath: IndexPath)
         case delete(indexPath: IndexPath)
         case move(indexPath: IndexPath, newIndexPath: IndexPath)
@@ -18,19 +18,21 @@ final class FetchedResultsController<CDEntityType, ResultType>: NSObject, NSFetc
         case deleteSection(index: Int)
     }
 
-    var willChangeContent: ((_ controller: FetchedResultsController<CDEntityType, ResultType>) -> Void)?
-    var didChangeContent: ((_ controller: FetchedResultsController<CDEntityType, ResultType>) -> Void)?
-    var didChangeFetchedResults: ((_ controller: FetchedResultsController<CDEntityType, ResultType>, _ type: ChangeType) -> Void)?
+    public var willChangeContent: ((_ controller: FetchedResultsController<CDEntityType, ResultType>) -> Void)?
+    public var didChangeContent: ((_ controller: FetchedResultsController<CDEntityType, ResultType>) -> Void)?
+    public var didChangeFetchedResults: ((_ controller: FetchedResultsController<CDEntityType, ResultType>, _ type: ChangeType) -> Void)?
 
     private let fetchedResultsController: NSFetchedResultsController<CDEntityType>
+    private let delegateProxy = HiddenDelegateProxy<CDEntityType, ResultType>()
 
-    init(fetchedResultsController: NSFetchedResultsController<CDEntityType>) {
+    public init(fetchedResultsController: NSFetchedResultsController<CDEntityType>) {
         self.fetchedResultsController = fetchedResultsController
         super.init()
-        fetchedResultsController.delegate = self
+        delegateProxy.target = self
+        fetchedResultsController.delegate = delegateProxy
     }
 
-    func setSortTerm(_ term: [(sortKey: String, ascending: Bool)], shouldPerformFetch: Bool) {
+    public func setSortTerm(_ term: [(sortKey: String, ascending: Bool)], shouldPerformFetch: Bool) {
         guard !term.isEmpty else {
             assertionFailure("FetchedResultsController.setSortTerm SortTerm can't be empty!")
             return
@@ -45,11 +47,11 @@ final class FetchedResultsController<CDEntityType, ResultType>: NSObject, NSFetc
         }
     }
 
-    func performFetch() {
+    public func performFetch() {
         _ = try? fetchedResultsController.performFetch()
     }
 
-    func performFetch(predicate: NSPredicate) {
+    public func performFetch(predicate: NSPredicate) {
         if let cacheName = fetchedResultsController.cacheName {
             NSFetchedResultsController<CDEntityType>.deleteCache(withName: cacheName)
         }
@@ -57,30 +59,30 @@ final class FetchedResultsController<CDEntityType, ResultType>: NSObject, NSFetc
         performFetch()
     }
 
-    func totalNumberOfItems() -> Int {
+    public func totalNumberOfItems() -> Int {
         return fetchedResultsController.sections?.reduce(0, {$0 + $1.numberOfObjects}) ?? 0
     }
 
-    func numberOfItemsInSection(_ index: Int) -> Int {
+    public func numberOfItemsInSection(_ index: Int) -> Int {
         return fetchedResultsController.sections?[index].numberOfObjects ?? 0
     }
 
-    func numberOfSections() -> Int {
+    public func numberOfSections() -> Int {
         return fetchedResultsController.sections?.count ?? 0
     }
 
-    func itemAtIndexPath(_ indexPath: IndexPath) -> ResultType {
+    public func itemAtIndexPath(_ indexPath: IndexPath) -> ResultType {
         return ResultType(cdEntity: fetchedResultsController.object(at: indexPath))
     }
 
-    func indexPath(entity: ResultType) -> IndexPath? {
+    public func indexPath(entity: ResultType) -> IndexPath? {
         guard let object: CDEntityType = (try? fetchedResultsController.managedObjectContext.existingObject(with: entity.objectID)) as? CDEntityType else {
             return nil
         }
         return fetchedResultsController.indexPath(forObject: object)
     }
 
-    func itemWithURL(_ url: URL) -> ResultType? {
+    public func itemWithURL(_ url: URL) -> ResultType? {
         guard let objectID = fetchedResultsController.managedObjectContext.persistentStoreCoordinator?.managedObjectID(forURIRepresentation: url),
             let object: CDEntityType = (try? fetchedResultsController.managedObjectContext.existingObject(with: objectID)) as? CDEntityType else {
                 return nil
@@ -88,7 +90,7 @@ final class FetchedResultsController<CDEntityType, ResultType>: NSObject, NSFetc
         return ResultType(cdEntity: object)
     }
 
-    func forEach(inSection section: Int, body: (IndexPath, ResultType) -> Bool) {
+    public func forEach(inSection section: Int, body: (IndexPath, ResultType) -> Bool) {
         let numberOfObjects = numberOfItemsInSection(section)
         for row in 0..<numberOfObjects {
             let path = IndexPath(row: row, section: section)
@@ -99,34 +101,42 @@ final class FetchedResultsController<CDEntityType, ResultType>: NSObject, NSFetc
         }
     }
 
-    // MARK: - NSFetchedResultsControllerDelegate
+}
+
+// MARK: - Private NSFetchedResultsControllerDelegate
+
+private final class HiddenDelegateProxy<CDEntityType, ResultType>: NSObject, NSFetchedResultsControllerDelegate where ResultType: ManagedEntity, ResultType.CDEntityType == CDEntityType {
+    weak var target: FetchedResultsController<CDEntityType, ResultType>?
 
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
                     didChange anObject: Any,
                     at indexPath: IndexPath?,
                     for type: NSFetchedResultsChangeType,
                     newIndexPath: IndexPath?) {
+        guard let actualTarget = target else {
+            return
+        }
         switch type {
         case .insert:
             if let actualPath: IndexPath = newIndexPath {
-                didChangeFetchedResults?(self, .insert(indexPath: actualPath))
+                actualTarget.didChangeFetchedResults?(actualTarget, .insert(indexPath: actualPath))
             }
         case .delete:
             if let actualPath: IndexPath = indexPath {
-                didChangeFetchedResults?(self, .delete(indexPath: actualPath))
+                actualTarget.didChangeFetchedResults?(actualTarget, .delete(indexPath: actualPath))
             }
         case .move:
             if let actualPath: IndexPath = indexPath,
                 let actualNewIndexPath: IndexPath = newIndexPath {
                 if actualPath != actualNewIndexPath {
-                    didChangeFetchedResults?(self, .move(indexPath: actualPath, newIndexPath: actualNewIndexPath))
+                    actualTarget.didChangeFetchedResults?(actualTarget, .move(indexPath: actualPath, newIndexPath: actualNewIndexPath))
                 } else {
-                    didChangeFetchedResults?(self, .update(indexPath: actualNewIndexPath))
+                    actualTarget.didChangeFetchedResults?(actualTarget, .update(indexPath: actualNewIndexPath))
                 }
             }
         case .update:
             if let actualPath: IndexPath = indexPath {
-                didChangeFetchedResults?(self, .update(indexPath: actualPath))
+                actualTarget.didChangeFetchedResults?(actualTarget, .update(indexPath: actualPath))
             }
         @unknown default:
             break
@@ -137,21 +147,30 @@ final class FetchedResultsController<CDEntityType, ResultType>: NSObject, NSFetc
                     didChange sectionInfo: NSFetchedResultsSectionInfo,
                     atSectionIndex sectionIndex: Int,
                     for type: NSFetchedResultsChangeType) {
+        guard let actualTarget = target else {
+            return
+        }
         switch type {
         case .insert:
-            didChangeFetchedResults?(self, .insertSection(index: sectionIndex))
+            actualTarget.didChangeFetchedResults?(actualTarget, .insertSection(index: sectionIndex))
         case .delete:
-            didChangeFetchedResults?(self, .deleteSection(index: sectionIndex))
+            actualTarget.didChangeFetchedResults?(actualTarget, .deleteSection(index: sectionIndex))
         default:
             break
         }
     }
 
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        willChangeContent?(self)
+        guard let actualTarget = target else {
+            return
+        }
+        actualTarget.willChangeContent?(actualTarget)
     }
 
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        didChangeContent?(self)
+        guard let actualTarget = target else {
+            return
+        }
+        actualTarget.didChangeContent?(actualTarget)
     }
 }

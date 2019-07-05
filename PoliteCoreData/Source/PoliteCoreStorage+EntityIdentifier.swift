@@ -1,16 +1,16 @@
 import Foundation
 import CoreData
 
-public class BaseEntity<CDType> where CDType: NSManagedObject {
+class BaseEntity<CDType> where CDType: NSManagedObject {
 
-    public let identifier: String
+    let identifier: String
 
-    public init(identifier: String) {
+    init(identifier: String) {
         self.identifier = identifier
     }
 }
 
-public extension NSPredicate {
+extension NSPredicate {
 
     class func objectWithIDPredicate(_ identifier: PredicateConvertible,
                                      identifierKey: String = "identifier",
@@ -25,7 +25,7 @@ public extension NSPredicate {
 
 }
 
-public extension PoliteCoreStorage {
+extension PoliteCoreStorage {
     func findFirstByIdOrCreate<T: NSManagedObject>(_ entityType: T.Type,
                                                    identifier: PredicateConvertible,
                                                    inContext context: NSManagedObjectContext,
