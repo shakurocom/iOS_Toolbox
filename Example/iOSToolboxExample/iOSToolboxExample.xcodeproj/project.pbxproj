@@ -108,7 +108,8 @@
 		CE46496F22CB807900A872E0 /* PredicateConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE46494A22CB807900A872E0 /* PredicateConvertible.swift */; };
 		CE46497022CB807900A872E0 /* PoliteCoreStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE46494B22CB807900A872E0 /* PoliteCoreStorage.swift */; };
 		CE46497F22CB807900A872E0 /* NSManagedObject+Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE46495C22CB807900A872E0 /* NSManagedObject+Update.swift */; };
-		CE46498F22CB817100A872E0 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE46498E22CB817100A872E0 /* Entity.swift */; };
+		CE46498F22CB817100A872E0 /* ManagedEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE46498E22CB817100A872E0 /* ManagedEntity.swift */; };
+		CE5AA48922CF27B700A6A84C /* PoliteCoreStorage+EntityIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5AA48822CF27B700A6A84C /* PoliteCoreStorage+EntityIdentifier.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -232,7 +233,8 @@
 		CE46494A22CB807900A872E0 /* PredicateConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PredicateConvertible.swift; sourceTree = "<group>"; };
 		CE46494B22CB807900A872E0 /* PoliteCoreStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PoliteCoreStorage.swift; sourceTree = "<group>"; };
 		CE46495C22CB807900A872E0 /* NSManagedObject+Update.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+Update.swift"; sourceTree = "<group>"; };
-		CE46498E22CB817100A872E0 /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
+		CE46498E22CB817100A872E0 /* ManagedEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedEntity.swift; sourceTree = "<group>"; };
+		CE5AA48822CF27B700A6A84C /* PoliteCoreStorage+EntityIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PoliteCoreStorage+EntityIdentifier.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -813,11 +815,12 @@
 			isa = PBXGroup;
 			children = (
 				CE46495C22CB807900A872E0 /* NSManagedObject+Update.swift */,
-				CE46498E22CB817100A872E0 /* Entity.swift */,
+				CE46498E22CB817100A872E0 /* ManagedEntity.swift */,
 				CE46494722CB807900A872E0 /* SingleObjectFetchedResultController.swift */,
 				CE46494822CB807900A872E0 /* FetchedResultsController.swift */,
 				CE46494A22CB807900A872E0 /* PredicateConvertible.swift */,
 				CE46494B22CB807900A872E0 /* PoliteCoreStorage.swift */,
+				CE5AA48822CF27B700A6A84C /* PoliteCoreStorage+EntityIdentifier.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -1053,6 +1056,7 @@
 				2FF58C2E21D7548E003C534E /* RetryTaskOperationWrapper.swift in Sources */,
 				2F0E297522C213E400CEF04D /* UITableView+Reusable.swift in Sources */,
 				2F32FBD02087315B00D61F25 /* ExampleStoryboardName.swift in Sources */,
+				CE5AA48922CF27B700A6A84C /* PoliteCoreStorage+EntityIdentifier.swift in Sources */,
 				2F6DCB602058155B00B5E128 /* ShakuroLogoPullToRefreshContentView.swift in Sources */,
 				2FEEDDAC1FE28F3A00C6BC0A /* ExamplePlaceholderTextViewViewController.swift in Sources */,
 				CE46496C22CB807900A872E0 /* SingleObjectFetchedResultController.swift in Sources */,
@@ -1102,7 +1106,7 @@
 				2FF279A31FDE84AF00F0F769 /* ExampleDeviceTypeViewController.swift in Sources */,
 				2FF279CB1FDEB45100F0F769 /* PlaceholderTextView.swift in Sources */,
 				2FFD4C9B22539BFE00B07EB6 /* AsyncResult.swift in Sources */,
-				CE46498F22CB817100A872E0 /* Entity.swift in Sources */,
+				CE46498F22CB817100A872E0 /* ManagedEntity.swift in Sources */,
 				2F0E297722C213E400CEF04D /* UIDevice+Uptime.swift in Sources */,
 				2F2C33E21FE173A900976FA2 /* ExampleKeyboardHandlerViewController.swift in Sources */,
 				2FF2894B1FDEB46C00F0F769 /* VideoCameraFactory.swift in Sources */,

@@ -169,12 +169,6 @@ extension PoliteCoreStorage {
 
 extension PoliteCoreStorage {
 
-    // MARK: General
-
-    /** Context will be reseted after block execution.
-     This method can be used for fetching objects in concurrent context without saving.
-     Do not perform .save() on this context!!!!
-     **/
     func fetchWithBlock(_ block: @escaping ((_ context: NSManagedObjectContext) -> Void), waitUntilFinished: Bool) {
         let fetchContext: NSManagedObjectContext = concurrentFetchContext
         let fetchBlock = { () -> Void in
