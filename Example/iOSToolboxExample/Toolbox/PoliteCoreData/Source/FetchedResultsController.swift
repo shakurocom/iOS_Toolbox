@@ -49,8 +49,8 @@ final class FetchedResultsController<CDEntityType, ResultType>: NSObject, NSFetc
         _ = try? fetchedResultsController.performFetch()
     }
 
-    func performFetch(predicate: NSPredicate, deleteCache: Bool) {
-        if deleteCache, let cacheName = fetchedResultsController.cacheName {
+    func performFetch(predicate: NSPredicate) {
+        if let cacheName = fetchedResultsController.cacheName {
             NSFetchedResultsController<CDEntityType>.deleteCache(withName: cacheName)
         }
         fetchedResultsController.fetchRequest.predicate = predicate

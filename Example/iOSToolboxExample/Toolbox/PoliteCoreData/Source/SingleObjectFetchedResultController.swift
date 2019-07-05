@@ -27,9 +27,9 @@ final class SingleObjectFetchedResultController<CDEntityType, ResultType> where 
         updateResult()
     }
 
-    func performFetch(predicate: NSPredicate, deleteCache: Bool) {
+    func performFetch(predicate: NSPredicate) {
         willChange?(self)
-        fetchedResultsController.performFetch(predicate: predicate, deleteCache: deleteCache)
+        fetchedResultsController.performFetch(predicate: predicate)
         updateResult()
     }
 }
