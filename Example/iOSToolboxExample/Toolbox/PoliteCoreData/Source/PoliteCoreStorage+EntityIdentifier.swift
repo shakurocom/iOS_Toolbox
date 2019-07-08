@@ -1,7 +1,7 @@
 import Foundation
 import CoreData
 
-public class BaseEntity<CDType> where CDType: NSManagedObject {
+public class BaseEntity {
 
     public let identifier: String
 

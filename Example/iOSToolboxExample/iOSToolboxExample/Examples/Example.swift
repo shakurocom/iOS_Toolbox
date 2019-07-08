@@ -40,7 +40,8 @@ internal extension Example {
             Example(title: "TaskManager", viewControllerType: ExampleTaskManagerViewController.self),
             Example(title: "Labels", viewControllerType: ExampleLabelsViewController.self),
             Example(title: "EMailValidator", viewControllerType: ExampleEMailValidatorViewController.self),
-            Example(title: "Settings", viewControllerType: ExampleSettingsViewController.self)
+            Example(title: "Settings", viewControllerType: ExampleSettingsViewController.self),
+            Example(title: "Core Data", viewControllerType: ExampleCoreDataViewController.self)
         ]
     }
 

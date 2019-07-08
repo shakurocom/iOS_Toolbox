@@ -1496,6 +1496,22 @@
             </objects>
             <point key="canvasLocation" x="2550" y="7549"/>
         </scene>
+        <!--Example Core Data View Controller-->
+        <scene sceneID="ijw-CD-zHI">
+            <objects>
+                <viewController storyboardIdentifier="ExampleCoreDataViewController" id="aDp-J3-FSS" customClass="ExampleCoreDataViewController" customModule="iOSToolboxExample" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="WQa-gM-mVP">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.97894531250000005" green="0.97894531250000005" blue="0.97894531250000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <viewLayoutGuide key="safeArea" id="pPB-uj-fdV"/>
+                    </view>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="giV-bJ-1zI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1697" y="11158"/>
+        </scene>
     </scenes>
     <resources>
         <image name="IMG_0010.JPG" width="1242" height="1656"/>
