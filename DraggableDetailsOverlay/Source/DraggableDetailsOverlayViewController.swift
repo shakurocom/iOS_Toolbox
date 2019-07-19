@@ -43,6 +43,7 @@ public class DraggableDetailsOverlayViewController: UIViewController {
     private enum Constant {
         static let hiddenContainerOffset: CGFloat = 10
         static let showHideAnimationDuration: TimeInterval = 0.25
+        static let snapAnimationDuration: TimeInterval = 0.2
     }
 
     public var isShadowEnabled: Bool = true { //TODO: 58: example
@@ -158,8 +159,6 @@ public class DraggableDetailsOverlayViewController: UIViewController {
 
 //    override func viewDidLoad() {
 //        super.viewDidLoad()
-//
-//        nestedController.didMove(toParent: self)
 //
 //        if let contentScrollView = nestedController.contentMainScrollView() {
 //            currentContentScrollOffset = contentScrollView.contentOffset
@@ -346,7 +345,11 @@ extension DraggableDetailsOverlayViewController: UIGestureRecognizerDelegate {
         case .ended,
              .cancelled,
              .failed:
-            break
+            //TODO: 58: velocity
+            let restOffset = closestAnchorOffsetForOffset(draggableContainerShownTopConstraint.constant)
+            if draggableContainerShownTopConstraint.constant != restOffset {
+                animateToOffset(restOffset)
+            }
 //            let canChangeState = state != .hidden && (state != bottomAncorState || velocityY < 0) &&
 //                (draggableContainerTopConstraint.constant != topAncorOffset || isContentScrollAtTop()) &&
 //                abs(velocityY) > Constant.changeStateVelocityThreshold
@@ -467,6 +470,10 @@ private extension DraggableDetailsOverlayViewController {
         }
     }
 
+    private func closestAnchorOffsetForOffset(_ targetOffset: CGFloat) -> CGFloat {
+        return cachedAnchorOffsets.min(by: { return abs($0 - targetOffset) < abs($1 - targetOffset)}) ?? 0
+    }
+
     private func bottomSafeAreaInset() -> CGFloat {
         if #available(iOS 11.0, *) {
             return view.safeAreaInsets.bottom
@@ -481,8 +488,7 @@ private extension DraggableDetailsOverlayViewController {
             updateAnchors()
             view.isHidden = false
             let wantedOffset = offsetForAnchor(initialAnchor)
-            let closestOffset = cachedAnchorOffsets.min(by: { return abs($0 - wantedOffset) < abs($1 - wantedOffset)})
-            initialOffset = closestOffset ?? 0
+            initialOffset = closestAnchorOffsetForOffset(wantedOffset)
         } else {
             initialOffset = 0
         }
@@ -498,18 +504,31 @@ private extension DraggableDetailsOverlayViewController {
             }
         }
         if animated {
-            UIView.animate(withDuration: Constant.showHideAnimationDuration,
-                           delay: 0.0,
-                           options: [.beginFromCurrentState],
-                           animations: {
-                            animations()
-                            self.view.layoutIfNeeded()
+            UIView.animate(
+                withDuration: Constant.showHideAnimationDuration,
+                delay: 0.0,
+                options: [.beginFromCurrentState],
+                animations: {
+                    animations()
+                    self.view.layoutIfNeeded()
             },
-                           completion: completion)
+                completion: completion)
         } else {
             animations()
             completion(true)
         }
+    }
+
+    private func animateToOffset(_ targetOffset: CGFloat) {
+        UIView.animate(
+            withDuration: Constant.snapAnimationDuration,
+            delay: 0.0,
+            options: [.beginFromCurrentState],
+            animations: {
+                self.draggableContainerShownTopConstraint.constant = targetOffset
+                self.view.layoutIfNeeded()
+        },
+            completion: nil)
     }
 
 }
