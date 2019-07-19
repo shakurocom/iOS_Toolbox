@@ -5,6 +5,8 @@
 import Foundation
 import UIKit
 
+// MARK: - Example Content
+
 internal class ExampleDraggableDetailsContentViewController: UIViewController {
 
     internal static func instantiate() -> ExampleDraggableDetailsContentViewController {
@@ -13,6 +15,8 @@ internal class ExampleDraggableDetailsContentViewController: UIViewController {
     }
 
 }
+
+// MARK: - Example
 
 internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
 
@@ -31,8 +35,9 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
         sampleActionCountLabel.text = "\(sampleActionCount)"
 
         contentViewController = ExampleDraggableDetailsContentViewController.instantiate()
-        overlayViewController = DraggableDetailsOverlayViewController(nestedController: contentViewController)
+        overlayViewController = DraggableDetailsOverlayViewController(nestedController: contentViewController, delegate: self)
         self.addToContainerChildViewController(overlayViewController)
+        overlayViewController.hide(animated: false)
     }
 
     @IBAction private func sampleActionButtonDidPress() {
@@ -41,7 +46,21 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
     }
 
     @IBAction private func showOverlayButtonDidPress() {
-        //TODO: 58: show
+        overlayViewController.show(initialAnchor: .middle(height: 400), animated: true)
+    }
+
+}
+
+// MARK: - DraggableDetailsOverlayViewControllerDelegate
+
+extension ExampleDraggableDetailsOverlayViewController: DraggableDetailsOverlayViewControllerDelegate {
+
+    func draggableDetailsOverlayAnchors(_ overlay: DraggableDetailsOverlayViewController) -> [DraggableDetailsOverlayViewController.Anchor] {
+        return [
+            .top(offset: 40),
+            .middle(height: 300),
+            .middle(height: 100)
+        ]
     }
 
 }

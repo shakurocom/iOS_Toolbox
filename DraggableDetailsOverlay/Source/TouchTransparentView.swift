@@ -1,5 +1,6 @@
 //
-//
+// Copyright (c) 2019 Shakuro (https://shakuro.com/)
+// Sergey Laschuk
 //
 
 import UIKit

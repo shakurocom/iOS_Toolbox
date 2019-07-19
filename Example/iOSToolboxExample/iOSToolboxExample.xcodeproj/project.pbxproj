@@ -106,6 +106,8 @@
 		2FFD4C952253908500B07EB6 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 2FFD4C942253908500B07EB6 /* README.md */; };
 		2FFD4C972253908E00B07EB6 /* Shakuro.iOS_Toolbox.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 2FFD4C962253908E00B07EB6 /* Shakuro.iOS_Toolbox.podspec */; };
 		2FFD4C9B22539BFE00B07EB6 /* AsyncResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFD4C9A22539BFE00B07EB6 /* AsyncResult.swift */; };
+		2FFE8D3C22E1DC60005520F9 /* DraggableDetailsOverlayContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFE8D3B22E1DC60005520F9 /* DraggableDetailsOverlayContainerView.swift */; };
+		2FFE8D3E22E1F077005520F9 /* DraggableDetailsOverlayHandleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFE8D3D22E1F077005520F9 /* DraggableDetailsOverlayHandleView.swift */; };
 		5F2BE42F76A6C745178C14A5 /* Pods_iOSToolboxExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 009702E9AD272B72DEC6FC66 /* Pods_iOSToolboxExample.framework */; };
 /* End PBXBuildFile section */
 
@@ -227,6 +229,8 @@
 		2FFD4C942253908500B07EB6 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../README.md; sourceTree = "<group>"; };
 		2FFD4C962253908E00B07EB6 /* Shakuro.iOS_Toolbox.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Shakuro.iOS_Toolbox.podspec; path = ../../Shakuro.iOS_Toolbox.podspec; sourceTree = "<group>"; };
 		2FFD4C9A22539BFE00B07EB6 /* AsyncResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncResult.swift; sourceTree = "<group>"; };
+		2FFE8D3B22E1DC60005520F9 /* DraggableDetailsOverlayContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableDetailsOverlayContainerView.swift; sourceTree = "<group>"; };
+		2FFE8D3D22E1F077005520F9 /* DraggableDetailsOverlayHandleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableDetailsOverlayHandleView.swift; sourceTree = "<group>"; };
 		8460D0405FC3E3B4F135CBAF /* Pods-iOSToolboxExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSToolboxExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iOSToolboxExample/Pods-iOSToolboxExample.debug.xcconfig"; sourceTree = "<group>"; };
 		BC61A924359D6E16CFD7D6E6 /* Pods-iOSToolboxExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSToolboxExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-iOSToolboxExample/Pods-iOSToolboxExample.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -311,6 +315,8 @@
 			isa = PBXGroup;
 			children = (
 				2F129C5B22E0A015002B8FB0 /* DraggableDetailsOverlayViewController.swift */,
+				2FFE8D3B22E1DC60005520F9 /* DraggableDetailsOverlayContainerView.swift */,
+				2FFE8D3D22E1F077005520F9 /* DraggableDetailsOverlayHandleView.swift */,
 				2F129C5F22E0B70F002B8FB0 /* TouchTransparentView.swift */,
 			);
 			path = Source;
@@ -1078,6 +1084,8 @@
 				2F5C2EE320318B880031CD2D /* ExamplePullToRefreshViewController.swift in Sources */,
 				2F10746921AD7A91002D07DB /* RetryHandler.swift in Sources */,
 				2F2C8BFC21AE7A1600413ED3 /* OperationPrototype.swift in Sources */,
+				2FFE8D3C22E1DC60005520F9 /* DraggableDetailsOverlayContainerView.swift in Sources */,
+				2FFE8D3E22E1F077005520F9 /* DraggableDetailsOverlayHandleView.swift in Sources */,
 				2F76AB38214814AF0094A7B1 /* EMailValidator.swift in Sources */,
 				2FF2799D1FDE732000F0F769 /* Example.swift in Sources */,
 				2FC2268F2201E80F0057C63B /* NSNumberRepresentable.swift in Sources */,

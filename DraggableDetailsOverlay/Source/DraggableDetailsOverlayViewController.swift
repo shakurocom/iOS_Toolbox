@@ -1,17 +1,12 @@
 //
-//
+// Copyright (c) 2019 Shakuro (https://shakuro.com/)
+// Sergey Laschuk
 //
 
 import Foundation
 import UIKit
-
-//internal struct DraggableDetailsOverlayStyle {
-//    internal var backgroundColor: UIColor = UIColor.white
-//    internal var cornerRadius: CGFloat = 0.0
-//    internal var handleContainerHeight: CGFloat = 10.0
-//    internal var handleSize: CGSize = CGSize(width: 50.0, height: 5.0)
-//    internal var handleColor: UIColor = UIColor.blue
-//}
+//TODO: 58: bounces
+//TODO: 58: handle
 //
 //internal protocol DraggableDetailsOverlayContainerInterface: class {
 //    func scrollViewDidScroll(_ scrollView: UIScrollView)
@@ -31,49 +26,86 @@ import UIKit
 //
 //    func stateDidChange(newState: DraggableDetailsOverlayViewController.State)
 //}
-//
-///*
-// add similar instruction and a helper method
-// self.loginView = [self.storyboard instantiateViewControllerWithIdentifier:@"LOGIN"];
-// [self addChildViewController:self.loginView];
-// [self.loginView.view setFrame:CGRectMake(0.0f, 0.0f, self.contentView.frame.size.width, self.contentView.frame.size.height)];
-// [self.contentView addSubview:self.loginView.view];
-// [self.loginView didMoveToParentViewController:self];
-// */
-//
-///**
-// */
+
+public protocol DraggableDetailsOverlayViewControllerDelegate: class {
+    func draggableDetailsOverlayAnchors(_ overlay: DraggableDetailsOverlayViewController) -> [DraggableDetailsOverlayViewController.Anchor]
+}
+
 public class DraggableDetailsOverlayViewController: UIViewController {
 
     public typealias NestedConstroller = UIViewController
 
+    public enum Anchor {
+        case top(offset: CGFloat)
+        case middle(height: CGFloat)
+    }
+
+    private enum Constant {
+        static let hiddenContainerOffset: CGFloat = 10
+        static let showHideAnimationDuration: TimeInterval = 0.25
+    }
+
+    public var isShadowEnabled: Bool = true { //TODO: 58: example
+        didSet {
+            guard isViewLoaded else { return }
+            shadowBackgroundView.isHidden = !isShadowEnabled
+        }
+    }
+
+    public var shadowBackgroundColor: UIColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5) { //TODO: 58: example
+        didSet {
+            guard isViewLoaded else { return }
+            shadowBackgroundView.backgroundColor = shadowBackgroundColor
+        }
+    }
+
+    public var draggableContainerBackgroundColor: UIColor = UIColor.white { //TODO: 58: example
+        didSet {
+            guard isViewLoaded else { return }
+            draggableContainerView.backgroundColor = draggableContainerBackgroundColor
+        }
+    }
+
+    public var isDraggableContainerRoundedTopCornersEnabled: Bool = false { //TODO: 58: example
+        didSet {
+            guard isViewLoaded else { return }
+            draggableContainerView.isRoundedTopCornersEnabled = isDraggableContainerRoundedTopCornersEnabled
+        }
+    }
+
+    public var draggableContainerTopCornersRadius: CGFloat = 5 { //TODO: 58: example
+        didSet {
+            guard isViewLoaded else { return }
+            draggableContainerView.topCornersRadius = draggableContainerTopCornersRadius
+        }
+    }
+
 //    private enum Constant {
-//        static let changeStateVelocityThreshold: CGFloat = 1000.0
 //        static let springAnimationDuration: TimeInterval = 0.4
 //        static let plainAnimationDuration: TimeInterval = 0.2
 //    }
 //
 //    internal private(set) var state: State = .hidden
 //    private var availableStates: [State] = [.hidden, .onScreenBottom, .onScreenMiddle, .onScreenFull]
-//    private var showBackground: Bool = false
-//    private var bottomAncorState: State = .hidden
-//    private var topAncorOffset: CGFloat = 0.0
-//
-//    private var draggableContainerView: UIView!
-//    private var draggableContainerTopConstraint: NSLayoutConstraint!
-//    private var dragHandleContainerView: UIView!
-//    private var dragHandleView: UIView!
-//    private var contentHeaderContainerView: UIView!
-//    private var contentMainContainerView: UIView!
-//
-//    private var dragGestureRecognizer: UIPanGestureRecognizer!
-//
-//    private let style: DraggableDetailsOverlayStyle
+    private var shadowBackgroundView: UIView!
+
+    private var draggableContainerView: DraggableDetailsOverlayContainerView!
+    private var draggableContainerHiddenTopConstraint: NSLayoutConstraint!
+    private var draggableContainerShownTopConstraint: NSLayoutConstraint!
+    private var draggableContainerHeightConstraint: NSLayoutConstraint!
+
+    private var dragGestureRecognizer: UIPanGestureRecognizer!
+
+    private let nestedController: NestedConstroller
+    private weak var delegate: DraggableDetailsOverlayViewControllerDelegate?
+
+    private var anchors: [Anchor] = []
+    private var cachedAnchorOffsets: [CGFloat] = [0]
+    private var cachedAnchorOffsetsForHeight: CGFloat = 0 // height for which offsets were cached
+
 //    private var isDragInScroll: Bool = false
 //    private var preventContentScroll: Bool = false
 //    private var currentContentScrollOffset: CGPoint = CGPoint.zero
-
-    private let nestedController: NestedConstroller
 
     // MARK: - Initialization
 
@@ -81,116 +113,51 @@ public class DraggableDetailsOverlayViewController: UIViewController {
         fatalError("init(coder) is not allowed. Use init(style:)")
     }
 
-    public init(nestedController: NestedConstroller) {
+    public init(nestedController: NestedConstroller, delegate: DraggableDetailsOverlayViewControllerDelegate) {
         self.nestedController = nestedController
+        self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
     }
 
     override public func loadView() {
         // some solid frame to operate with constraints
         let mainView = TouchTransparentView(frame: CGRect(x: 0, y: 0, width: 300, height: 300))
-        mainView.backgroundColor = UIColor.green.withAlphaComponent(0.4) //TODO: 58:
+        mainView.backgroundColor = UIColor.clear
+        mainView.clipsToBounds = true
         view = mainView
 
-//        setupDraggableContainer(mainView: mainView)
-//        setupDragHandle()
-//        setupHeader()
-//        setupContent()
-//
-//        dragGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handleDragGesture))
-//        dragGestureRecognizer.delegate = self
-//        draggableContainerView.addGestureRecognizer(dragGestureRecognizer)
-
+        setupShadowBackgroundView(mainView: mainView)
+        setupDraggableContainer(mainView: mainView)
+        setupPanRecognizer(mainView: mainView)
     }
 
     public override func viewDidLoad() {
         super.viewDidLoad()
+        addToContainerChildViewController(nestedController, targetContainerView: draggableContainerView)
+    }
 
-        //TODO: overlay.addToContainerChildViewController(nestedController, targetContainerView: nil) //TODO: 58:
+    // MARK: - Events
+
+    public override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if view.bounds.height != cachedAnchorOffsetsForHeight {
+            updateAnchors()
+            cachedAnchorOffsetsForHeight = view.bounds.height
+        }
     }
 
     // MARK: - Public
 
-//
-//    private func setupDraggableContainer(mainView: UIView) {
-//        draggableContainerView = UIView(frame: mainView.bounds)
-//        draggableContainerView.backgroundColor = style.backgroundColor
-//        draggableContainerView.translatesAutoresizingMaskIntoConstraints = false
-//        mainView.addSubview(draggableContainerView)
-//        draggableContainerTopConstraint = draggableContainerView.topAnchor.constraint(equalTo: mainView.topAnchor, constant: 0)
-//        draggableContainerTopConstraint.isActive = true
-//        draggableContainerView.heightAnchor.constraint(equalTo: mainView.heightAnchor, constant: -topAncorOffset).isActive = true
-//        draggableContainerView.leadingAnchor.constraint(equalTo: mainView.leadingAnchor, constant: 0).isActive = true
-//        draggableContainerView.trailingAnchor.constraint(equalTo: mainView.trailingAnchor, constant: 0).isActive = true
-//    }
-//
-//    private func setupDragHandle() {
-//        dragHandleContainerView = UIView(frame: CGRect(x: 0, y: 0, width: draggableContainerView.bounds.width, height: style.handleContainerHeight))
-//        dragHandleContainerView.backgroundColor = style.backgroundColor
-//        dragHandleContainerView.translatesAutoresizingMaskIntoConstraints = true
-//        dragHandleContainerView.autoresizingMask = [.flexibleWidth, .flexibleBottomMargin]
-//        draggableContainerView.addSubview(dragHandleContainerView)
-//
-//        dragHandleView = UIView(frame: CGRect(x: 0, y: 0, width: style.handleSize.width, height: style.handleSize.height))
-//        dragHandleView.backgroundColor = style.handleColor
-//        dragHandleView.layer.cornerRadius = style.handleSize.height / 2.0
-//        dragHandleView.translatesAutoresizingMaskIntoConstraints = false
-//        dragHandleContainerView.addSubview(dragHandleView)
-//        dragHandleView.widthAnchor.constraint(equalToConstant: style.handleSize.width).isActive = true
-//        dragHandleView.heightAnchor.constraint(equalToConstant: style.handleSize.height).isActive = true
-//        dragHandleView.centerXAnchor.constraint(equalTo: dragHandleContainerView.centerXAnchor, constant: 0.0).isActive = true
-//        dragHandleView.centerYAnchor.constraint(equalTo: dragHandleContainerView.centerYAnchor, constant: 0.0).isActive = true
-//    }
-//
-//    private func setupHeader() {
-//        contentHeaderContainerView = UIView(frame: CGRect(x: 0,
-//                                                          y: draggableContainerView.frame.maxY,
-//                                                          width: draggableContainerView.frame.width,
-//                                                          height: 100.0)) // placeholder height
-//        contentHeaderContainerView.backgroundColor = style.backgroundColor
-//        contentHeaderContainerView.translatesAutoresizingMaskIntoConstraints = false
-//        draggableContainerView.addSubview(contentHeaderContainerView)
-//        contentHeaderContainerView.leadingAnchor.constraint(equalTo: draggableContainerView.leadingAnchor, constant: 0.0).isActive = true
-//        contentHeaderContainerView.trailingAnchor.constraint(equalTo: draggableContainerView.trailingAnchor, constant: 0.0).isActive = true
-//        contentHeaderContainerView.topAnchor.constraint(equalTo: dragHandleContainerView.bottomAnchor, constant: 0.0).isActive = true
-//    }
-//
-//    private func setupContent() {
-//        contentMainContainerView = UIView(frame: CGRect(x: 0,
-//                                                        y: contentHeaderContainerView.frame.maxY,
-//                                                        width: draggableContainerView.frame.width,
-//                                                        height: 100.0)) // placeholder height
-//        contentMainContainerView.backgroundColor = style.backgroundColor
-//        contentMainContainerView.translatesAutoresizingMaskIntoConstraints = false
-//        draggableContainerView.addSubview(contentMainContainerView)
-//        contentMainContainerView.topAnchor.constraint(equalTo: contentHeaderContainerView.bottomAnchor, constant: 0.0).isActive = true
-//        contentMainContainerView.leadingAnchor.constraint(equalTo: draggableContainerView.leadingAnchor, constant: 0.0).isActive = true
-//        contentMainContainerView.trailingAnchor.constraint(equalTo: draggableContainerView.trailingAnchor, constant: 0.0).isActive = true
-//        contentMainContainerView.bottomAnchor.constraint(equalTo: draggableContainerView.bottomAnchor, constant: 0.0).isActive = true
-//    }
-//
+    public func show(initialAnchor: Anchor, animated: Bool) {
+        setVisible(true, animated: animated, initialAnchor: initialAnchor)
+    }
+
+    public func hide(animated: Bool) {
+        setVisible(false, animated: animated, initialAnchor: .top(offset: 0))
+    }
+
 //    override func viewDidLoad() {
 //        super.viewDidLoad()
-//
-//        addChild(nestedController)
-//
-//        // add header content
-//        let contentHeaderView = nestedController.contentHeaderView()
-//        contentHeaderView.translatesAutoresizingMaskIntoConstraints = false
-//        contentHeaderContainerView.addSubview(contentHeaderView)
-//        contentHeaderView.leadingAnchor.constraint(equalTo: contentHeaderContainerView.leadingAnchor, constant: 0.0).isActive = true
-//        contentHeaderView.trailingAnchor.constraint(equalTo: contentHeaderContainerView.trailingAnchor, constant: 0.0).isActive = true
-//        contentHeaderView.topAnchor.constraint(equalTo: contentHeaderContainerView.topAnchor, constant: 0.0).isActive = true
-//        contentHeaderView.bottomAnchor.constraint(equalTo: contentHeaderContainerView.bottomAnchor, constant: 0.0).isActive = true
-//
-//        // add main content
-//        let contentMainView = nestedController.contentMainView()
-//        contentMainView.translatesAutoresizingMaskIntoConstraints = false
-//        contentMainContainerView.addSubview(contentMainView)
-//        contentMainView.leadingAnchor.constraint(equalTo: contentMainContainerView.leadingAnchor, constant: 0.0).isActive = true
-//        contentMainView.trailingAnchor.constraint(equalTo: contentMainContainerView.trailingAnchor, constant: 0.0).isActive = true
-//        contentMainView.topAnchor.constraint(equalTo: contentMainContainerView.topAnchor, constant: 0.0).isActive = true
-//        contentMainView.bottomAnchor.constraint(equalTo: contentMainContainerView.bottomAnchor, constant: 0.0).isActive = true
 //
 //        nestedController.didMove(toParent: self)
 //
@@ -201,34 +168,7 @@ public class DraggableDetailsOverlayViewController: UIViewController {
 //        updateLayout(state: .hidden, animated: false)
 //    }
 //
-//    // MARK: - Events
-//
-//    override func viewDidLayoutSubviews() {
-//        super.viewDidLayoutSubviews()
-//        if style.cornerRadius > 0 {
-//            let maskLayer = CAShapeLayer()
-//            maskLayer.path = UIBezierPath(
-//                roundedRect: draggableContainerView.bounds,
-//                byRoundingCorners: [.topLeft, .topRight],
-//                cornerRadii: CGSize(width: style.cornerRadius, height: style.cornerRadius)).cgPath
-//            draggableContainerView.layer.mask = maskLayer
-//        }
-//    }
-//
 //    // MARK: - Public
-//
-//    /**
-//     Helper method, that will add this controller to provided `parentViewController` and add overlay over the whole area of `containerView`.
-//     */
-//
-//    internal func addTo(parentViewController: UIViewController, containerView: UIView, belowSubview subview: UIView? = nil) {
-//        parentViewController.addToContainerChildViewController(self, targetView: containerView, belowSubview: subview)
-//        view.layoutIfNeeded()
-//    }
-//
-//    internal func removeOverlayFromParentViewController() {
-//        removeFromContainerChildViewController()
-//    }
 //
 //    internal func changeToState(_ newState: State, animated: Bool) {
 //        state = newState
@@ -300,13 +240,6 @@ public class DraggableDetailsOverlayViewController: UIViewController {
 //        }
 //    }
 //
-//    private func bottomSafeAreaInset() -> CGFloat {
-//        if #available(iOS 11.0, *) {
-//            return view.safeAreaInsets.bottom
-//        } else {
-//            return bottomLayoutGuide.length
-//        }
-//    }
 //
 //    private func stateForOffset(_ offset: CGFloat) -> State {
 //        let states: [State] = availableStates
@@ -348,31 +281,29 @@ public class DraggableDetailsOverlayViewController: UIViewController {
 //
 }
 
-//// MARK: - UIGestureRecognizerDelegate
-//
-//extension DraggableDetailsOverlayViewController: UIGestureRecognizerDelegate {
-//
+// MARK: - UIGestureRecognizerDelegate
+
+extension DraggableDetailsOverlayViewController: UIGestureRecognizerDelegate {
+
 //    private func isContentScrollAtTop() -> Bool {
 //        if let contentScrollview = nestedController.contentMainScrollView() {
 //            return contentScrollview.contentOffset.y <= -contentScrollview.contentInset.top
 //        }
 //        return true
 //    }
-//
-//    @objc private func handleDragGesture(_ recognizer: UIGestureRecognizer) {
-//        guard recognizer === dragGestureRecognizer,
-//            state != .hidden
-//            else {
-//                return
-//        }
-//        let translationY: CGFloat = dragGestureRecognizer.translation(in: dragGestureRecognizer.view).y
-//        let velocityY = dragGestureRecognizer.velocity(in: dragGestureRecognizer.view).y
-//        dragGestureRecognizer.setTranslation(CGPoint.zero, in: dragGestureRecognizer.view)
-//        switch recognizer.state {
-//        case .possible:
-//            break
-//
-//        case .began:
+
+    @objc private func handleDragGesture(_ recognizer: UIGestureRecognizer) {
+        guard recognizer === dragGestureRecognizer, !view.isHidden else {
+            return
+        }
+        let translationY: CGFloat = dragGestureRecognizer.translation(in: dragGestureRecognizer.view).y
+        let velocityY = dragGestureRecognizer.velocity(in: dragGestureRecognizer.view).y
+        dragGestureRecognizer.setTranslation(CGPoint.zero, in: dragGestureRecognizer.view)
+        switch recognizer.state {
+        case .possible:
+            break
+
+        case .began:
 //            if dragGestureRecognizer.numberOfTouches > 0, let contentScrollView = nestedController.contentMainScrollView() {
 //                let touchLocation = dragGestureRecognizer.location(ofTouch: 0, in: contentScrollView.superview)
 //                if contentScrollView.frame.contains(touchLocation) {
@@ -380,38 +311,42 @@ public class DraggableDetailsOverlayViewController: UIViewController {
 //                    setPreventContentScroll(true)
 //                }
 //            }
-//
-//        case .changed:
+            //TODO: 58:
+            break
+
+        case .changed:
 //            if draggableContainerTopConstraint.constant != topAncorOffset || isContentScrollAtTop() || !isDragInScroll {
-//                let newOffset = draggableContainerTopConstraint.constant + translationY
-//                let maxOffset = offsetForState(bottomAncorState)
-//                let minOffset = topAncorOffset
+                let newOffset = draggableContainerShownTopConstraint.constant + translationY
+                let maxOffset = cachedAnchorOffsets.last ?? 0
+                let minOffset = cachedAnchorOffsets.first ?? 0
 //                let preventContentScroll: Bool
-//                switch newOffset {
-//                case ..<minOffset:
-//                    draggableContainerTopConstraint.constant = minOffset
+                switch newOffset {
+                case ..<minOffset:
+                    draggableContainerShownTopConstraint.constant = minOffset
 //                    preventContentScroll = false
 //
-//                case minOffset...maxOffset:
-//                    draggableContainerTopConstraint.constant = newOffset
+                case minOffset...maxOffset:
+                    draggableContainerShownTopConstraint.constant = newOffset
 //                    preventContentScroll = true
 //
-//                case maxOffset...:
-//                    draggableContainerTopConstraint.constant = maxOffset
+                case maxOffset...:
+                    draggableContainerShownTopConstraint.constant = maxOffset
 //                    preventContentScroll = true
 //
-//                default:
-//                    // this should not be happening
+                default:
+                    //this should not be happening
+                    break
 //                    preventContentScroll = false
-//                }
+                }
 //                setPreventContentScroll(preventContentScroll)
 //            } else {
 //                setPreventContentScroll(false)
 //            }
-//
-//        case .ended,
-//             .cancelled,
-//             .failed:
+
+        case .ended,
+             .cancelled,
+             .failed:
+            break
 //            let canChangeState = state != .hidden && (state != bottomAncorState || velocityY < 0) &&
 //                (draggableContainerTopConstraint.constant != topAncorOffset || isContentScrollAtTop()) &&
 //                abs(velocityY) > Constant.changeStateVelocityThreshold
@@ -428,39 +363,157 @@ public class DraggableDetailsOverlayViewController: UIViewController {
 //                self.setPreventContentScroll(false)
 //            })
 //            isDragInScroll = false
-//
-//        @unknown default:
-//            break
-//        }
-//    }
-//
-//    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-//        guard state != .hidden else {
-//            return false
-//        }
-//        return true
-//    }
-//
-//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
-//                           shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-//        if gestureRecognizer === dragGestureRecognizer || otherGestureRecognizer === dragGestureRecognizer {
-//            return true
-//        }
-//        return false
-//    }
-//
-//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-//        guard gestureRecognizer === dragGestureRecognizer,
-//            state != .hidden,
-//            draggableContainerView.frame.contains(touch.location(in: view))
-//            else {
-//                return false
-//        }
-//        return true
-//    }
-//
-//}
-//
+
+        @unknown default:
+            break
+        }
+    }
+
+    public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        guard !view.isHidden else {
+            return false
+        }
+        return true
+    }
+
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                                  shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        //TODO: 58: add scroll to exmaple - test this
+        if gestureRecognizer === dragGestureRecognizer || otherGestureRecognizer === dragGestureRecognizer {
+            return true
+        }
+        return false
+    }
+
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        guard gestureRecognizer === dragGestureRecognizer,
+            !view.isHidden,
+            isShadowEnabled || draggableContainerView.frame.contains(touch.location(in: view))
+            else {
+                return false
+        }
+        return true
+    }
+
+}
+
+// MARK: - Private
+
+private extension DraggableDetailsOverlayViewController {
+
+    private func setupShadowBackgroundView(mainView: UIView) {
+        shadowBackgroundView = UIView(frame: mainView.bounds)
+        shadowBackgroundView.backgroundColor = shadowBackgroundColor
+        shadowBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        mainView.addSubview(shadowBackgroundView)
+        shadowBackgroundView.topAnchor.constraint(equalTo: mainView.topAnchor).isActive = true
+        shadowBackgroundView.bottomAnchor.constraint(equalTo: mainView.bottomAnchor).isActive = true
+        shadowBackgroundView.leadingAnchor.constraint(equalTo: mainView.leadingAnchor).isActive = true
+        shadowBackgroundView.trailingAnchor.constraint(equalTo: mainView.trailingAnchor).isActive = true
+        shadowBackgroundView.isHidden = !isShadowEnabled
+    }
+
+    private func setupDraggableContainer(mainView: UIView) {
+        draggableContainerView = DraggableDetailsOverlayContainerView(frame: mainView.bounds)
+        draggableContainerView.backgroundColor = draggableContainerBackgroundColor
+        draggableContainerView.translatesAutoresizingMaskIntoConstraints = false
+        mainView.addSubview(draggableContainerView)
+        if #available(iOS 11.0, *) {
+            draggableContainerShownTopConstraint = draggableContainerView.topAnchor.constraint(equalTo: mainView.safeAreaLayoutGuide.topAnchor)
+            draggableContainerHiddenTopConstraint = draggableContainerView.topAnchor.constraint(equalTo: mainView.bottomAnchor,
+                                                                                                constant: Constant.hiddenContainerOffset)
+        } else {
+            draggableContainerShownTopConstraint = draggableContainerView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor)
+            draggableContainerHiddenTopConstraint = draggableContainerView.topAnchor.constraint(equalTo: mainView.bottomAnchor,
+                                                                                                constant: Constant.hiddenContainerOffset)
+        }
+        draggableContainerShownTopConstraint.isActive = false
+        draggableContainerHiddenTopConstraint.isActive = true
+        draggableContainerHeightConstraint = draggableContainerView.heightAnchor.constraint(equalTo: mainView.heightAnchor,
+                                                                                            constant: 0) //TODO: 58: delegate
+        draggableContainerHeightConstraint.isActive = true
+        draggableContainerView.leadingAnchor.constraint(equalTo: mainView.leadingAnchor, constant: 0).isActive = true
+        draggableContainerView.trailingAnchor.constraint(equalTo: mainView.trailingAnchor, constant: 0).isActive = true
+        draggableContainerView.isRoundedTopCornersEnabled = isDraggableContainerRoundedTopCornersEnabled
+        draggableContainerView.topCornersRadius = draggableContainerTopCornersRadius
+    }
+
+    private func setupPanRecognizer(mainView: UIView) {
+        dragGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handleDragGesture))
+        dragGestureRecognizer.delegate = self
+        dragGestureRecognizer.isEnabled = true
+        mainView.addGestureRecognizer(dragGestureRecognizer)
+    }
+
+    private func updateAnchors() {
+        anchors = delegate?.draggableDetailsOverlayAnchors(self) ?? [.top(offset: 0)]
+        var newOffsets: [CGFloat] = []
+        for anchor in anchors {
+            let offset = offsetForAnchor(anchor)
+            // ignore very small steps
+            if !newOffsets.contains(where: { return abs($0 - offset) < 1.0 }) {
+                newOffsets.append(offset)
+            }
+        }
+        cachedAnchorOffsets = newOffsets.sorted(by: { $0 < $1 })
+    }
+
+    private func offsetForAnchor(_ anchor: Anchor) -> CGFloat {
+        switch anchor {
+        case .top(let uncoverableOffset):
+            return uncoverableOffset
+        case .middle(let containerHeight):
+            return max(0, view.bounds.height - containerHeight - bottomSafeAreaInset())
+        }
+    }
+
+    private func bottomSafeAreaInset() -> CGFloat {
+        if #available(iOS 11.0, *) {
+            return view.safeAreaInsets.bottom
+        } else {
+            return bottomLayoutGuide.length
+        }
+    }
+
+    private func setVisible(_ newVisible: Bool, animated: Bool, initialAnchor: Anchor) {
+        let initialOffset: CGFloat
+        if newVisible {
+            updateAnchors()
+            view.isHidden = false
+            let wantedOffset = offsetForAnchor(initialAnchor)
+            let closestOffset = cachedAnchorOffsets.min(by: { return abs($0 - wantedOffset) < abs($1 - wantedOffset)})
+            initialOffset = closestOffset ?? 0
+        } else {
+            initialOffset = 0
+        }
+        let animations = { () -> Void in
+            self.shadowBackgroundView.alpha = newVisible ? 1.0 : 0.0
+            self.draggableContainerHiddenTopConstraint.isActive = !newVisible
+            self.draggableContainerShownTopConstraint.isActive = newVisible
+            self.draggableContainerShownTopConstraint.constant = initialOffset
+        }
+        let completion = { (finished: Bool) -> Void in
+            if finished && !newVisible {
+                self.view.isHidden = true
+            }
+        }
+        if animated {
+            UIView.animate(withDuration: Constant.showHideAnimationDuration,
+                           delay: 0.0,
+                           options: [.beginFromCurrentState],
+                           animations: {
+                            animations()
+                            self.view.layoutIfNeeded()
+            },
+                           completion: completion)
+        } else {
+            animations()
+            completion(true)
+        }
+    }
+
+}
+
 //// MARK: - DraggableDetailsOverlayContainerInterface
 //
 //extension DraggableDetailsOverlayViewController: DraggableDetailsOverlayContainerInterface {
