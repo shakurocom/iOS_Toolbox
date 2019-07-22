@@ -15,6 +15,7 @@
 		2F03DBBD22097F65006E8404 /* HTTPClientParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F03DBB622097F64006E8404 /* HTTPClientParser.swift */; };
 		2F03DBBE22097F65006E8404 /* HTTPClientRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F03DBB722097F64006E8404 /* HTTPClientRequest.swift */; };
 		2F03DBBF22097F65006E8404 /* HTTPClientUserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F03DBB822097F64006E8404 /* HTTPClientUserSession.swift */; };
+		2F0434F222E5B12D00FAC9BF /* DecelerationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0434F122E5B12D00FAC9BF /* DecelerationHelper.swift */; };
 		2F0516BC2077B1CA00ECB7FF /* ExamplePullToRefreshContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5CED78205818C800BD508A /* ExamplePullToRefreshContentView.swift */; };
 		2F05E6A922CA1DCA00280D57 /* ExamplePullToRefreshStickyHeadersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F05E6A822CA1DCA00280D57 /* ExamplePullToRefreshStickyHeadersViewController.swift */; };
 		2F0CC9B3204931E900A896B2 /* TaskManagerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0CC9B2204931E900A896B2 /* TaskManagerError.swift */; };
@@ -131,6 +132,7 @@
 		2F03DBB622097F64006E8404 /* HTTPClientParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClientParser.swift; sourceTree = "<group>"; };
 		2F03DBB722097F64006E8404 /* HTTPClientRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClientRequest.swift; sourceTree = "<group>"; };
 		2F03DBB822097F64006E8404 /* HTTPClientUserSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClientUserSession.swift; sourceTree = "<group>"; };
+		2F0434F122E5B12D00FAC9BF /* DecelerationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecelerationHelper.swift; sourceTree = "<group>"; };
 		2F05E6A822CA1DCA00280D57 /* ExamplePullToRefreshStickyHeadersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamplePullToRefreshStickyHeadersViewController.swift; sourceTree = "<group>"; };
 		2F0CC9B2204931E900A896B2 /* TaskManagerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskManagerError.swift; sourceTree = "<group>"; };
 		2F0E296C22C213E300CEF04D /* UITableView+Reusable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+Reusable.swift"; sourceTree = "<group>"; };
@@ -318,6 +320,7 @@
 				2FFE8D3B22E1DC60005520F9 /* DraggableDetailsOverlayContainerView.swift */,
 				2FFE8D3D22E1F077005520F9 /* DraggableDetailsOverlayHandleView.swift */,
 				2F129C5F22E0B70F002B8FB0 /* TouchTransparentView.swift */,
+				2F0434F122E5B12D00FAC9BF /* DecelerationHelper.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -1071,6 +1074,7 @@
 				2FF279891FDE723800F0F769 /* AppDelegate.swift in Sources */,
 				2F4FA519203DB276003D57C0 /* ExampleViewControllerProtocol.swift in Sources */,
 				2F50281D2048133A0088418A /* Task.swift in Sources */,
+				2F0434F222E5B12D00FAC9BF /* DecelerationHelper.swift in Sources */,
 				2FF289441FDEB46C00F0F769 /* DeviceCamera.swift in Sources */,
 				2F10746B21AD841F002D07DB /* OperationGroup.swift in Sources */,
 				2FB6FEDC21AC2B72008D3FC0 /* CancellableOperation.swift in Sources */,

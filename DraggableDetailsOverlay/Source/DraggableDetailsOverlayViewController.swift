@@ -7,6 +7,7 @@ import Foundation
 import UIKit
 //TODO: 58: bounces
 //TODO: 58: handle
+//TODO: 58: hide by drag down offscreen
 //
 //internal protocol DraggableDetailsOverlayContainerInterface: class {
 //    func scrollViewDidScroll(_ scrollView: UIScrollView)
@@ -44,6 +45,7 @@ public class DraggableDetailsOverlayViewController: UIViewController {
         static let hiddenContainerOffset: CGFloat = 10
         static let showHideAnimationDuration: TimeInterval = 0.25
         static let snapAnimationDuration: TimeInterval = 0.2
+        static let decelerationRate: UIScrollView.DecelerationRate = .normal
     }
 
     public var isShadowEnabled: Bool = true { //TODO: 58: example
@@ -296,7 +298,7 @@ extension DraggableDetailsOverlayViewController: UIGestureRecognizerDelegate {
             return
         }
         let translationY: CGFloat = dragGestureRecognizer.translation(in: dragGestureRecognizer.view).y
-        let velocityY = dragGestureRecognizer.velocity(in: dragGestureRecognizer.view).y
+        let velocity = dragGestureRecognizer.velocity(in: dragGestureRecognizer.view)
         dragGestureRecognizer.setTranslation(CGPoint.zero, in: dragGestureRecognizer.view)
         switch recognizer.state {
         case .possible:
@@ -345,8 +347,10 @@ extension DraggableDetailsOverlayViewController: UIGestureRecognizerDelegate {
         case .ended,
              .cancelled,
              .failed:
-            //TODO: 58: velocity
-            let restOffset = closestAnchorOffsetForOffset(draggableContainerShownTopConstraint.constant)
+            let deceleratedOffset = DecelerationHelper.project(value: draggableContainerShownTopConstraint.constant,
+                                                               initialVelocity: velocity.y / 1000.0, // should be in milliseconds
+                                                               decelerationRate: Constant.decelerationRate.rawValue)
+            let restOffset = closestAnchorOffsetForOffset(deceleratedOffset)
             if draggableContainerShownTopConstraint.constant != restOffset {
                 animateToOffset(restOffset)
             }
