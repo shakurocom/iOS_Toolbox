@@ -497,10 +497,17 @@ private extension DraggableDetailsOverlayViewController {
             initialOffset = 0
         }
         let animations = { () -> Void in
-            self.shadowBackgroundView.alpha = newVisible ? 1.0 : 0.0
-            self.draggableContainerHiddenTopConstraint.isActive = !newVisible
-            self.draggableContainerShownTopConstraint.isActive = newVisible
-            self.draggableContainerShownTopConstraint.constant = initialOffset
+            if newVisible {
+                self.shadowBackgroundView.alpha = 1.0
+                self.draggableContainerHiddenTopConstraint.isActive = false
+                self.draggableContainerShownTopConstraint.constant = initialOffset
+                self.draggableContainerShownTopConstraint.isActive = true
+            } else {
+                self.shadowBackgroundView.alpha = 0.0
+                self.draggableContainerShownTopConstraint.isActive = false
+                self.draggableContainerHiddenTopConstraint.isActive = true
+
+            }
         }
         let completion = { (finished: Bool) -> Void in
             if finished && !newVisible {

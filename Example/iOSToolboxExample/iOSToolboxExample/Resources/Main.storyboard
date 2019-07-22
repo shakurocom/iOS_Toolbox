@@ -1484,7 +1484,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="xcD-Xd-XhF">
-                                <rect key="frame" x="0.0" y="70" width="375" height="267"/>
+                                <rect key="frame" x="0.0" y="50" width="375" height="267"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="kExampleDraggableDetailsContentCellID" id="3n1-Kl-y9d">
@@ -1498,7 +1498,7 @@
                                 </prototypes>
                             </tableView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="JdT-EZ-d1h">
-                                <rect key="frame" x="0.0" y="347" width="375" height="320"/>
+                                <rect key="frame" x="0.0" y="327" width="375" height="339"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="kExampleDraggableDetailsContentCellID" id="f9g-CO-iTR">
@@ -1512,7 +1512,7 @@
                                 </prototypes>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j1A-SF-X1h">
-                                <rect key="frame" x="259" y="25" width="100" height="40"/>
+                                <rect key="frame" x="259" y="5" width="100" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="M7s-F2-3Bi"/>
                                     <constraint firstAttribute="width" constant="100" id="X8p-2o-JVW"/>
@@ -1528,13 +1528,13 @@
                             <constraint firstItem="xcD-Xd-XhF" firstAttribute="height" secondItem="1uK-2w-lE9" secondAttribute="height" multiplier="0.4" id="4BU-2E-hfn"/>
                             <constraint firstItem="2Hj-AF-JQq" firstAttribute="trailing" secondItem="JdT-EZ-d1h" secondAttribute="trailing" id="GLw-HM-fir"/>
                             <constraint firstItem="2Hj-AF-JQq" firstAttribute="trailing" secondItem="xcD-Xd-XhF" secondAttribute="trailing" id="IzZ-mM-ss2"/>
-                            <constraint firstItem="j1A-SF-X1h" firstAttribute="top" secondItem="2Hj-AF-JQq" secondAttribute="top" constant="5" id="aI2-9g-Mv6"/>
+                            <constraint firstItem="j1A-SF-X1h" firstAttribute="top" secondItem="1uK-2w-lE9" secondAttribute="top" constant="5" id="aI2-9g-Mv6"/>
                             <constraint firstItem="JdT-EZ-d1h" firstAttribute="leading" secondItem="2Hj-AF-JQq" secondAttribute="leading" id="eFU-EY-Iym"/>
                             <constraint firstItem="JdT-EZ-d1h" firstAttribute="top" secondItem="xcD-Xd-XhF" secondAttribute="bottom" constant="10" id="fGq-Gc-Oob"/>
                             <constraint firstItem="2Hj-AF-JQq" firstAttribute="trailing" secondItem="j1A-SF-X1h" secondAttribute="trailing" constant="16" id="oF6-0x-kZJ"/>
                             <constraint firstItem="xcD-Xd-XhF" firstAttribute="top" secondItem="j1A-SF-X1h" secondAttribute="bottom" constant="5" id="q2G-Yc-rbH"/>
                             <constraint firstItem="xcD-Xd-XhF" firstAttribute="leading" secondItem="2Hj-AF-JQq" secondAttribute="leading" id="qur-sH-NMd"/>
-                            <constraint firstItem="2Hj-AF-JQq" firstAttribute="bottom" secondItem="JdT-EZ-d1h" secondAttribute="bottom" id="uKd-DR-yAV"/>
+                            <constraint firstAttribute="bottom" secondItem="JdT-EZ-d1h" secondAttribute="bottom" constant="1" id="uKd-DR-yAV"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="2Hj-AF-JQq"/>
                     </view>
