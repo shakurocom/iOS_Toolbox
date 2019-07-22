@@ -9,8 +9,6 @@ import UIKit
 //TODO: 58: bounces
 //TODO: 58: handle
 //TODO: 58: hide by drag down offscreen
-//TODO: 58: top uncoverable area
-//TODO: 58: max height
 //TODO: 58: is visible state
 //TODO: 58: forbid to skip next anchor on "deceleration"
 /**
@@ -21,6 +19,8 @@ public protocol DraggableDetailsOverlayViewControllerDelegate: class {
      An array of anchors, that overlay will use for snapping. Anchors pointing to effectively the same point will be reduced to singular anchor.
      */
     func draggableDetailsOverlayAnchors(_ overlay: DraggableDetailsOverlayViewController) -> [DraggableDetailsOverlayViewController.Anchor]
+    //TODO: 58: top uncoverable area
+    //TODO: 58: max height
     /**
      This will also be reported, when user draggs overlay beyond allowed anchors (and overlay do not actually moves).
      */
