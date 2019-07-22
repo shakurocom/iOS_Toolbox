@@ -5,36 +5,43 @@
 
 import Foundation
 import UIKit
+
 //TODO: 58: bounces
 //TODO: 58: handle
 //TODO: 58: hide by drag down offscreen
-//
-//internal protocol DraggableDetailsOverlayContainerInterface: class {
-//    func scrollViewDidScroll(_ scrollView: UIScrollView)
-//    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>)
-//    func checkVisibility(of subview: UIView) -> Bool
-//    func changeToState(_ newState: DraggableDetailsOverlayViewController.State, animated: Bool)
-//    func removeOverlayFromParentViewController()
-//}
-//
-//internal protocol DraggableDetailsOverlayNestedInterface {
-//    var containerController: DraggableDetailsOverlayContainerInterface? { get set }
-//
-//    func contentSizeForMiddleState() -> CGFloat
-//    func contentHeaderView() -> UIView
-//    func contentMainView() -> UIView
-//    func contentMainScrollView() -> UIScrollView?
-//
-//    func stateDidChange(newState: DraggableDetailsOverlayViewController.State)
-//}
-
+//TODO: 58: top uncoverable area
+//TODO: 58: max height
+//TODO: 58: is visible state
+//TODO: 58: configure deceleration rate
+//TODO: 58: forbid to skip next anchor on "deceleration"
+/**
+ Delegate of the draggable overlay. The one whole controls it.
+ */
 public protocol DraggableDetailsOverlayViewControllerDelegate: class {
     func draggableDetailsOverlayAnchors(_ overlay: DraggableDetailsOverlayViewController) -> [DraggableDetailsOverlayViewController.Anchor]
+    // TODO: 58: did drag
+    // TODO: 58: did end dragging
+}
+
+/**
+ Interface for controller, that will be displayed inside draggable overlay.
+ */
+public protocol DraggableDetailsOverlayNestedInterface {
+    /**
+     - parameter requirePreventOfScroll: `true` indicates that overlay is currently dragging.
+            Nested controller should prevent any content scrolling.
+            For better UX scrolling indicators should be disabled as well.
+            methods to be aware of are:
+            1) func scrollViewDidScroll(_:) - keep offset at saved value
+            2) func scrollViewWillEndDragging(_:,withVelocity:,targetContentOffset:) - set targetContentOffset.pointee to saved offset
+     */
+    func draggableDetailsOverlay(_ overlay: DraggableDetailsOverlayViewController, requirePreventOfScroll: Bool)
+    func draggableDetailsOverlayContentScrollViews(_ overlay: DraggableDetailsOverlayViewController) -> [UIScrollView]
 }
 
 public class DraggableDetailsOverlayViewController: UIViewController {
 
-    public typealias NestedConstroller = UIViewController
+    public typealias NestedConstroller = UIViewController & DraggableDetailsOverlayNestedInterface
 
     public enum Anchor {
         case top(offset: CGFloat)
@@ -44,7 +51,6 @@ public class DraggableDetailsOverlayViewController: UIViewController {
     private enum Constant {
         static let hiddenContainerOffset: CGFloat = 10
         static let showHideAnimationDuration: TimeInterval = 0.25
-        static let snapAnimationDuration: TimeInterval = 0.2
         static let decelerationRate: UIScrollView.DecelerationRate = .normal
     }
 
@@ -83,20 +89,47 @@ public class DraggableDetailsOverlayViewController: UIViewController {
         }
     }
 
-//    private enum Constant {
-//        static let springAnimationDuration: TimeInterval = 0.4
-//        static let plainAnimationDuration: TimeInterval = 0.2
-//    }
-//
-//    internal private(set) var state: State = .hidden
-//    private var availableStates: [State] = [.hidden, .onScreenBottom, .onScreenMiddle, .onScreenFull]
-    private var shadowBackgroundView: UIView!
+    /**
+     Duration of animation used, when user releases finger during drag.
+     Default value is 0.2 .
+     */
+    public var snapAnimationNormalDuration: TimeInterval = 0.2 //TODO: 58: example
 
+    /**
+     Use spring animation for snapping to anchors.
+     Default value is `true`.
+     */
+    public var snapAnimationUseSpring: Bool = true //TODO: 58: example
+
+    /**
+     Same as `snapAnimationUseSpring`, but explicitly for top anchor.
+     Default value is `false`.
+     */
+    public var snapAnimationTopAnchorUseSpring: Bool = false //TODO: 58: example
+
+    /**
+     Duration of animation used, when user releases finger during drag and container snaps to anchor.
+     Default value is 0.4 .
+     */
+    public var snapAnimationSpringDuration: TimeInterval = 0.4 //TODO: 58: example
+
+    /**
+     Parameter of spring animation (if enabled).
+     Default value is 0.7 .
+     */
+    public var snapAnimationSpringDamping: CGFloat = 0.7 //TODO: 58: example
+
+    /**
+     Parameter of spring animation (if enabled).
+     Default value is 1.5 .
+     */
+    public var snapAnimationSpringInitialVelocity: CGFloat = 1.5 //TODO: 58: example
+
+    private var shadowBackgroundView: UIView!
     private var draggableContainerView: DraggableDetailsOverlayContainerView!
     private var draggableContainerHiddenTopConstraint: NSLayoutConstraint!
     private var draggableContainerShownTopConstraint: NSLayoutConstraint!
     private var draggableContainerHeightConstraint: NSLayoutConstraint!
-
     private var dragGestureRecognizer: UIPanGestureRecognizer!
 
     private let nestedController: NestedConstroller
@@ -104,11 +137,16 @@ public class DraggableDetailsOverlayViewController: UIViewController {
 
     private var anchors: [Anchor] = []
     private var cachedAnchorOffsets: [CGFloat] = [0]
-    private var cachedAnchorOffsetsForHeight: CGFloat = 0 // height for which offsets were cached
+    /**
+     Height for which offsets were cached.
+     */
+    private var cachedAnchorOffsetsForHeight: CGFloat = 0
 
-//    private var isDragInScroll: Bool = false
-//    private var preventContentScroll: Bool = false
-//    private var currentContentScrollOffset: CGPoint = CGPoint.zero
+    /**
+     Scroll view from nested content, where pan started.
+     Downward drag is disabled if this scroll is not at the top of it's content.
+     */
+    private var currentPanStartingContentScrollView: UIScrollView?
 
     // MARK: - Initialization
 
@@ -159,139 +197,11 @@ public class DraggableDetailsOverlayViewController: UIViewController {
         setVisible(false, animated: animated, initialAnchor: .top(offset: 0))
     }
 
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//
-//        if let contentScrollView = nestedController.contentMainScrollView() {
-//            currentContentScrollOffset = contentScrollView.contentOffset
-//        }
-//
-//        updateLayout(state: .hidden, animated: false)
-//    }
-//
-//    // MARK: - Public
-//
-//    internal func changeToState(_ newState: State, animated: Bool) {
-//        state = newState
-//        updateLayout(state: newState, animated: animated, completion: {
-//            self.nestedController.stateDidChange(newState: self.state)
-//        })
-//    }
-//
-//    func offsetForState(_ targetState: State) -> CGFloat {
-//        let result: CGFloat
-//        switch targetState {
-//        case .hidden:
-//            result = view.bounds.height + 10 // just a little bigger
-//        case .onScreenBottom:
-//            result = view.bounds.height -
-//                dragHandleContainerView.bounds.height -
-//                contentHeaderContainerView.bounds.height -
-//                bottomSafeAreaInset()
-//        case .onScreenMiddle:
-//            result = max(view.bounds.height -
-//                dragHandleContainerView.bounds.height -
-//                contentHeaderContainerView.bounds.height -
-//                nestedController.contentSizeForMiddleState() -
-//                bottomSafeAreaInset(),
-//                         0.0)
-//        case .onScreenFull:
-//            result = topAncorOffset
-//        }
-//        return result
-//    }
-//
-//    // MARK: - Private
-//
-//    private func updateLayout(state: State, animated: Bool, completion: (() -> Void)? = nil) {
-//        draggableContainerTopConstraint.constant = offsetForState(state)
-//        if animated {
-//            draggableContainerView.isHidden = false
-//            if state == .onScreenMiddle || state == .onScreenBottom {
-//                UIView.animate(
-//                    withDuration: Constant.springAnimationDuration,
-//                    delay: 0.0,
-//                    usingSpringWithDamping: 0.7,
-//                    initialSpringVelocity: 1.5,
-//                    options: [.curveEaseInOut, .beginFromCurrentState, .allowUserInteraction],
-//                    animations: {
-//                        self.view.layoutIfNeeded()
-//                },
-//                    completion: { (_) in
-//                        completion?()
-//                })
-//            } else {
-//                UIView.animate(
-//                    withDuration: Constant.plainAnimationDuration,
-//                    delay: 0.0,
-//                    options: [.curveEaseOut, .beginFromCurrentState, .allowUserInteraction],
-//                    animations: {
-//                        self.view.layoutIfNeeded()
-//                },
-//                    completion: { (finished: Bool) -> Void in
-//                        if finished {
-//                            self.draggableContainerView.isHidden = self.state == .hidden
-//                        }
-//                        completion?()
-//                })
-//            }
-//        } else {
-//            draggableContainerView.isHidden = state == .hidden
-//            completion?()
-//        }
-//    }
-//
-//
-//    private func stateForOffset(_ offset: CGFloat) -> State {
-//        let states: [State] = availableStates
-//        for (index, state) in states.enumerated() {
-//            let offsetForCurrentState = offsetForState(state)
-//            if index == 0 {
-//                let borderPointBottom = offsetForCurrentState
-//                let borderPointTop = offsetForCurrentState - (offsetForCurrentState - offsetForState(states[index + 1])) / 2.0
-//                if offset > borderPointTop && offset <= borderPointBottom {
-//                    return state
-//                }
-//            } else if index == states.count - 1 {
-//                let borderPointBottom = offsetForCurrentState + (offsetForState(states[index - 1]) - offsetForCurrentState) / 2.0
-//                let borderPointTop = offsetForCurrentState
-//                if offset >= borderPointTop && offset < borderPointBottom {
-//                    return state
-//                }
-//            } else {
-//                let borderPointBottom = offsetForCurrentState + (offsetForState(states[index - 1]) - offsetForCurrentState) / 2.0
-//                let borderPointTop = offsetForCurrentState - (offsetForCurrentState - offsetForState(states[index + 1])) / 2.0
-//                if offset > borderPointTop && offset <= borderPointBottom {
-//                    return state
-//                }
-//            }
-//        }
-//        return .hidden
-//    }
-//
-//    private func setPreventContentScroll(_ newValue: Bool) {
-//        preventContentScroll = newValue
-//        guard let contentScrollView = nestedController.contentMainScrollView() else {
-//            return
-//        }
-//        contentScrollView.showsVerticalScrollIndicator = !newValue
-//        if newValue {
-//            currentContentScrollOffset = contentScrollView.contentOffset
-//        }
-//    }
-//
 }
 
 // MARK: - UIGestureRecognizerDelegate
 
 extension DraggableDetailsOverlayViewController: UIGestureRecognizerDelegate {
-
-//    private func isContentScrollAtTop() -> Bool {
-//        if let contentScrollview = nestedController.contentMainScrollView() {
-//            return contentScrollview.contentOffset.y <= -contentScrollview.contentInset.top
-//        }
-//        return true
-//    }
 
     @objc private func handleDragGesture(_ recognizer: UIGestureRecognizer) {
         guard recognizer === dragGestureRecognizer, !view.isHidden else {
@@ -305,44 +215,31 @@ extension DraggableDetailsOverlayViewController: UIGestureRecognizerDelegate {
             break
 
         case .began:
-//            if dragGestureRecognizer.numberOfTouches > 0, let contentScrollView = nestedController.contentMainScrollView() {
-//                let touchLocation = dragGestureRecognizer.location(ofTouch: 0, in: contentScrollView.superview)
-//                if contentScrollView.frame.contains(touchLocation) {
-//                    isDragInScroll = true
-//                    setPreventContentScroll(true)
-//                }
-//            }
-            //TODO: 58:
-            break
+            let contentScrollViews = nestedController.draggableDetailsOverlayContentScrollViews(self)
+            currentPanStartingContentScrollView = contentScrollViews.first(where: { (scroll) -> Bool in
+                let touchLocation = dragGestureRecognizer.location(ofTouch: 0, in: scroll.superview)
+                return scroll.frame.contains(touchLocation)
+            })
+            setPreventContentScroll(true)
 
         case .changed:
-//            if draggableContainerTopConstraint.constant != topAncorOffset || isContentScrollAtTop() || !isDragInScroll {
+            if isContentScrollAtTop(contentScrollView: currentPanStartingContentScrollView) || translationY < 0 {
                 let newOffset = draggableContainerShownTopConstraint.constant + translationY
                 let maxOffset = cachedAnchorOffsets.last ?? 0
                 let minOffset = cachedAnchorOffsets.first ?? 0
-//                let preventContentScroll: Bool
-                switch newOffset {
-                case ..<minOffset:
+                if newOffset < minOffset {
                     draggableContainerShownTopConstraint.constant = minOffset
-//                    preventContentScroll = false
-//
-                case minOffset...maxOffset:
+                    setPreventContentScroll(false)
+                } else if minOffset <= newOffset && newOffset <= maxOffset {
                     draggableContainerShownTopConstraint.constant = newOffset
-//                    preventContentScroll = true
-//
-                case maxOffset...:
+                    setPreventContentScroll(true)
+                } else { // newOffset > maxOffset
                     draggableContainerShownTopConstraint.constant = maxOffset
-//                    preventContentScroll = true
-//
-                default:
-                    //this should not be happening
-                    break
-//                    preventContentScroll = false
+                    setPreventContentScroll(false)
                 }
-//                setPreventContentScroll(preventContentScroll)
-//            } else {
-//                setPreventContentScroll(false)
-//            }
+            } else {
+                setPreventContentScroll(false)
+            }
 
         case .ended,
              .cancelled,
@@ -352,24 +249,13 @@ extension DraggableDetailsOverlayViewController: UIGestureRecognizerDelegate {
                                                                decelerationRate: Constant.decelerationRate.rawValue)
             let restOffset = closestAnchorOffsetForOffset(deceleratedOffset)
             if draggableContainerShownTopConstraint.constant != restOffset {
-                animateToOffset(restOffset)
+                let isSpring = restOffset == cachedAnchorOffsets.first ? snapAnimationTopAnchorUseSpring : snapAnimationUseSpring
+                animateToOffset(restOffset, isSpring: isSpring)
             }
-//            let canChangeState = state != .hidden && (state != bottomAncorState || velocityY < 0) &&
-//                (draggableContainerTopConstraint.constant != topAncorOffset || isContentScrollAtTop()) &&
-//                abs(velocityY) > Constant.changeStateVelocityThreshold
-//            let currentState = stateForOffset(draggableContainerTopConstraint.constant)
-//            if canChangeState, let currentStateIndex = availableStates.firstIndex(of: currentState) {
-//                let previousState: State = currentStateIndex - 1 >= 0 ? availableStates[currentStateIndex - 1] : currentState
-//                let nextState: State = currentStateIndex + 1 < availableStates.count ? availableStates[currentStateIndex + 1] : currentState
-//                let newState: State = velocityY < 0 ? nextState : previousState
-//                changeToState(newState, animated: true)
-//            } else {
-//                changeToState(stateForOffset(draggableContainerTopConstraint.constant), animated: true)
-//            }
-//            DispatchQueue.main.async(execute: {
-//                self.setPreventContentScroll(false)
-//            })
-//            isDragInScroll = false
+            currentPanStartingContentScrollView = nil
+            DispatchQueue.main.async(execute: {
+                self.setPreventContentScroll(false)
+            })
 
         @unknown default:
             break
@@ -506,7 +392,6 @@ private extension DraggableDetailsOverlayViewController {
                 self.shadowBackgroundView.alpha = 0.0
                 self.draggableContainerShownTopConstraint.isActive = false
                 self.draggableContainerHiddenTopConstraint.isActive = true
-
             }
         }
         let completion = { (finished: Bool) -> Void in
@@ -530,39 +415,36 @@ private extension DraggableDetailsOverlayViewController {
         }
     }
 
-    private func animateToOffset(_ targetOffset: CGFloat) {
-        UIView.animate(
-            withDuration: Constant.snapAnimationDuration,
-            delay: 0.0,
-            options: [.beginFromCurrentState],
-            animations: {
-                self.draggableContainerShownTopConstraint.constant = targetOffset
-                self.view.layoutIfNeeded()
-        },
-            completion: nil)
+    private func animateToOffset(_ targetOffset: CGFloat, isSpring: Bool) {
+        let animations = { () -> Void in
+            self.draggableContainerShownTopConstraint.constant = targetOffset
+            self.view.layoutIfNeeded()
+        }
+        if isSpring {
+            UIView.animate(withDuration: snapAnimationSpringDuration,
+                           delay: 0.0,
+                           usingSpringWithDamping: snapAnimationSpringDamping,
+                           initialSpringVelocity: snapAnimationSpringInitialVelocity,
+                           options: [.beginFromCurrentState],
+                           animations: animations,
+                           completion: nil)
+        }
+        UIView.animate(withDuration: snapAnimationNormalDuration,
+                       delay: 0.0,
+                       options: [.beginFromCurrentState],
+                       animations: animations,
+                       completion: nil)
+    }
+
+    private func setPreventContentScroll(_ newValue: Bool) {
+        nestedController.draggableDetailsOverlay(self, requirePreventOfScroll: newValue)
+    }
+
+    private func isContentScrollAtTop(contentScrollView: UIScrollView?) -> Bool {
+        guard let scroll = contentScrollView else {
+            return true
+        }
+        return scroll.contentOffset.y <= -scroll.contentInset.top
     }
 
 }
-
-//// MARK: - DraggableDetailsOverlayContainerInterface
-//
-//extension DraggableDetailsOverlayViewController: DraggableDetailsOverlayContainerInterface {
-//
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        if preventContentScroll {
-//            scrollView.contentOffset = currentContentScrollOffset
-//        }
-//    }
-//
-//    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-//        if preventContentScroll {
-//            targetContentOffset.pointee = currentContentScrollOffset
-//        }
-//    }
-//
-//    func checkVisibility(of subview: UIView) -> Bool {
-//        let frame = view.convert(subview.bounds, from: subview)
-//        return view.bounds.intersects(frame)
-//    }
-//
-//}
