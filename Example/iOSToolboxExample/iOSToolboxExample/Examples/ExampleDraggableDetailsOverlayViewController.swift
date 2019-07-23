@@ -163,6 +163,18 @@ extension ExampleDraggableDetailsOverlayViewController: DraggableDetailsOverlayV
         ]
     }
 
+    func draggableDetailsOverlayDidDrag(_ overlay: DraggableDetailsOverlayViewController) {
+        print("did drag")
+    }
+
+    func draggableDetailsOverlayDidEndDragging(_ overlay: DraggableDetailsOverlayViewController) {
+        print("did end dragging")
+    }
+
+    func draggableDetailsOverlayDidChangeIsVisible(_ overlay: DraggableDetailsOverlayViewController) {
+        print("did change is visible: \(overlay.isVisible)")
+    }
+
 }
 
 // MARK: ExampleViewControllerProtocol

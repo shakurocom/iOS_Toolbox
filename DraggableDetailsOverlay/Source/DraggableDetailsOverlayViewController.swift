@@ -9,7 +9,6 @@ import UIKit
 //TODO: 58: bounces
 //TODO: 58: handle
 //TODO: 58: hide by drag down offscreen
-//TODO: 58: is visible state
 //TODO: 58: forbid to skip next anchor on "deceleration"
 /**
  Delegate of the draggable overlay. The one whole controls it.
@@ -29,6 +28,7 @@ public protocol DraggableDetailsOverlayViewControllerDelegate: class {
      Content's scroll will still be prevented for another runloop.
      */
     func draggableDetailsOverlayDidEndDragging(_ overlay: DraggableDetailsOverlayViewController)
+    func draggableDetailsOverlayDidChangeIsVisible(_ overlay: DraggableDetailsOverlayViewController)
 }
 
 /**
@@ -64,6 +64,21 @@ public class DraggableDetailsOverlayViewController: UIViewController {
         static let anchorsCachingGranularity: CGFloat = 1.0
     }
 
+    /**
+     Is on/off screen?
+     Changes at the start of show() and at the end of hide().
+     */
+    public private(set) var isVisible: Bool = false {
+        didSet {
+            delegate?.draggableDetailsOverlayDidChangeIsVisible(self)
+        }
+    }
+
+    /**
+     Enable shadow background.
+     Shadow will block interaction with everything underneath.
+     Default value is `true`.
+     */
     public var isShadowEnabled: Bool = true { //TODO: 58: example
         didSet {
             guard isViewLoaded else { return }
@@ -120,6 +135,13 @@ public class DraggableDetailsOverlayViewController: UIViewController {
     public var snapCalculationUsesDeceleration: Bool = true //TODO: 58: example
 
     /**
+     If `false` - When user releases touch with some velocity,
+     decelerating behaviour can't snap to anchors other then current or immediate next/previous one.
+     Default value is `true`.
+     */
+    public var snapCalculationDecelerationCanSkipNextAnchor: Bool = true //TODO: 58: example
+
+    /**
      Deceleartion rate used for calculation of snap anchors.
      Default value is `UIScrollView.DecelerationRate.normal`
      */
@@ -173,6 +195,9 @@ public class DraggableDetailsOverlayViewController: UIViewController {
     private weak var delegate: DraggableDetailsOverlayViewControllerDelegate?
 
     private var anchors: [Anchor] = []
+    /**
+     Sorted top->bottom (lowest->highest).
+     */
     private var cachedAnchorOffsets: [CGFloat] = [0]
     /**
      Height for which offsets were cached.
@@ -287,16 +312,21 @@ extension DraggableDetailsOverlayViewController: UIGestureRecognizerDelegate {
              .failed:
             if isSnapToAnchorsEnabled {
                 let restOffset: CGFloat
-                if snapAnimationUsesDeceleration {
+                let currentOffset = draggableContainerShownTopConstraint.constant
+                if snapCalculationUsesDeceleration {
                     let deceleratedOffset = DecelerationHelper.project(
-                        value: draggableContainerShownTopConstraint.constant,
+                        value: currentOffset,
                         initialVelocity: velocity.y / 1000.0, /* because this should be in milliseconds */
                         decelerationRate: snapCalculationDecelerationRate.rawValue)
-                    restOffset = closestAnchorOffsetForOffset(deceleratedOffset)
+                    if snapCalculationDecelerationCanSkipNextAnchor {
+                        restOffset = closestAnchorOffset(targetOffset: deceleratedOffset)
+                    } else {
+                        restOffset = closestAnchorOffset(targetOffset: deceleratedOffset, currentOffset: currentOffset)
+                    }
                 } else {
-                    restOffset = draggableContainerShownTopConstraint.constant
+                    restOffset = currentOffset
                 }
-                if draggableContainerShownTopConstraint.constant != restOffset {
+                if currentOffset != restOffset {
                     let isSpring = restOffset == cachedAnchorOffsets.first ? snapAnimationTopAnchorUseSpring : snapAnimationUseSpring
                     animateToOffset(restOffset, isSpring: isSpring)
                 }
@@ -410,8 +440,25 @@ private extension DraggableDetailsOverlayViewController {
         }
     }
 
-    private func closestAnchorOffsetForOffset(_ targetOffset: CGFloat) -> CGFloat {
+    /// Calculates closest anchor regardless of current position.
+    private func closestAnchorOffset(targetOffset: CGFloat) -> CGFloat {
         return cachedAnchorOffsets.min(by: { return abs($0 - targetOffset) < abs($1 - targetOffset)}) ?? 0
+    }
+
+    /// Calculates closes anchor from current position (current or next or previous)
+    private func closestAnchorOffset(targetOffset: CGFloat, currentOffset: CGFloat) -> CGFloat {
+        let currentAnchor = cachedAnchorOffsets.first(where: { abs($0 - currentOffset) < Constant.anchorsCachingGranularity })
+        let nextAnchor: CGFloat?
+        let previousAnchor: CGFloat?
+        if let realCurrentAnchor = currentAnchor {
+            nextAnchor = cachedAnchorOffsets.first(where: { $0 > realCurrentAnchor })
+            previousAnchor = cachedAnchorOffsets.last(where: { $0 < realCurrentAnchor })
+        } else {
+            nextAnchor = cachedAnchorOffsets.first(where: { $0 > currentOffset })
+            previousAnchor = cachedAnchorOffsets.last(where: { $0 < currentOffset })
+        }
+        let anchors = [previousAnchor, currentAnchor, nextAnchor].compactMap({ $0 })
+        return anchors.min(by: { return abs($0 - targetOffset) < abs($1 - targetOffset)}) ?? 0
     }
 
     private func bottomSafeAreaInset() -> CGFloat {
@@ -425,10 +472,11 @@ private extension DraggableDetailsOverlayViewController {
     private func setVisible(_ newVisible: Bool, animated: Bool, initialAnchor: Anchor) {
         let initialOffset: CGFloat
         if newVisible {
+            isVisible = true
             updateAnchors()
             view.isHidden = false
             let wantedOffset = offsetForAnchor(initialAnchor)
-            initialOffset = isSnapToAnchorsEnabled ? closestAnchorOffsetForOffset(wantedOffset) : wantedOffset
+            initialOffset = isSnapToAnchorsEnabled ? closestAnchorOffset(targetOffset: wantedOffset) : wantedOffset
         } else {
             initialOffset = 0
         }
@@ -447,11 +495,12 @@ private extension DraggableDetailsOverlayViewController {
         let completion = { (finished: Bool) -> Void in
             if finished && !newVisible {
                 self.view.isHidden = true
+                self.isVisible = false
             }
         }
         if animated {
             UIView.animate(
-                withDuration: Constant.showHideAnimationDuration,
+                withDuration: showHideAnimationDuration,
                 delay: 0.0,
                 options: [.beginFromCurrentState],
                 animations: {
