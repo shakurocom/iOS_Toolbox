@@ -285,7 +285,7 @@ private extension PoliteCoreStorage {
     // MARK: Helpers
 
     func entityName<T: NSManagedObject>(_ entityType: T.Type) -> String {
-        let className = String(describing: entityType)
+        let className = NSStringFromClass(entityType)
         guard let entityName: String = classToEntityNameMap[className] else {
             fatalError("Entity name not found for class name \"\(className)\"")
         }

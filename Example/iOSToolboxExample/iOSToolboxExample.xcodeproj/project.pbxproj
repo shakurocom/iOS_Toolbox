@@ -108,6 +108,7 @@
 		CE484BF922D369CA0065258E /* CDExampleEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE484BF722D369CA0065258E /* CDExampleEntity+CoreDataClass.swift */; };
 		CE484BFA22D369CA0065258E /* CDExampleEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE484BF822D369CA0065258E /* CDExampleEntity+CoreDataProperties.swift */; };
 		CE484BFC22D36A5E0065258E /* ExampleEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE484BFB22D36A5E0065258E /* ExampleEntity.swift */; };
+		CE484BFE22D38D630065258E /* CDEntity+Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE484BFD22D38D630065258E /* CDEntity+Update.swift */; };
 		CE5AA49322CF2F8800A6A84C /* PredicateConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5AA48C22CF2F8800A6A84C /* PredicateConvertible.swift */; };
 		CE5AA49422CF2F8800A6A84C /* ManagedEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5AA48D22CF2F8800A6A84C /* ManagedEntity.swift */; };
 		CE5AA49522CF2F8800A6A84C /* PoliteCoreStorage+EntityIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5AA48E22CF2F8800A6A84C /* PoliteCoreStorage+EntityIdentifier.swift */; };
@@ -238,6 +239,7 @@
 		CE484BF722D369CA0065258E /* CDExampleEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDExampleEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		CE484BF822D369CA0065258E /* CDExampleEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDExampleEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		CE484BFB22D36A5E0065258E /* ExampleEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleEntity.swift; sourceTree = "<group>"; };
+		CE484BFD22D38D630065258E /* CDEntity+Update.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDEntity+Update.swift"; sourceTree = "<group>"; };
 		CE5AA48C22CF2F8800A6A84C /* PredicateConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PredicateConvertible.swift; sourceTree = "<group>"; };
 		CE5AA48D22CF2F8800A6A84C /* ManagedEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedEntity.swift; sourceTree = "<group>"; };
 		CE5AA48E22CF2F8800A6A84C /* PoliteCoreStorage+EntityIdentifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PoliteCoreStorage+EntityIdentifier.swift"; sourceTree = "<group>"; };
@@ -822,6 +824,7 @@
 				CE484BF822D369CA0065258E /* CDExampleEntity+CoreDataProperties.swift */,
 				CE484BF022D365CC0065258E /* ExampleCoreDataViewController.swift */,
 				CE484BFB22D36A5E0065258E /* ExampleEntity.swift */,
+				CE484BFD22D38D630065258E /* CDEntity+Update.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -1080,6 +1083,7 @@
 				2F0E297522C213E400CEF04D /* UITableView+Reusable.swift in Sources */,
 				2F32FBD02087315B00D61F25 /* ExampleStoryboardName.swift in Sources */,
 				2F6DCB602058155B00B5E128 /* ShakuroLogoPullToRefreshContentView.swift in Sources */,
+				CE484BFE22D38D630065258E /* CDEntity+Update.swift in Sources */,
 				2FEEDDAC1FE28F3A00C6BC0A /* ExamplePlaceholderTextViewViewController.swift in Sources */,
 				2F0E297C22C213E400CEF04D /* Data+Hash.swift in Sources */,
 				2FB494FF204577550068D380 /* TaskManager.swift in Sources */,
