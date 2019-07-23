@@ -6,29 +6,43 @@
 import Foundation
 import UIKit
 
-//TODO: 58: bounces
-//TODO: 58: handle
-//TODO: 58: hide by drag down offscreen
-//TODO: 58: forbid to skip next anchor on "deceleration"
 /**
  Delegate of the draggable overlay. The one whole controls it.
  */
 public protocol DraggableDetailsOverlayViewControllerDelegate: class {
+
     /**
      An array of anchors, that overlay will use for snapping. Anchors pointing to effectively the same point will be reduced to singular anchor.
      */
     func draggableDetailsOverlayAnchors(_ overlay: DraggableDetailsOverlayViewController) -> [DraggableDetailsOverlayViewController.Anchor]
-    //TODO: 58: top uncoverable area
-    //TODO: 58: max height
+
+    /**
+     Amount of background from the top, that overlay is not allowed to cover.
+     Return 0 to be able to cover every available space.
+     */
+    func draggableDetailsOverlayTopInset(_ overlay: DraggableDetailsOverlayViewController) -> CGFloat
+
+    /**
+     Maximum height of overlay.
+     Return `nil` if height should not be limited.
+     */
+    func draggableDetailsOverlayMaxHeight(_ overlay: DraggableDetailsOverlayViewController) -> CGFloat?
+
     /**
      This will also be reported, when user draggs overlay beyond allowed anchors (and overlay do not actually moves).
      */
     func draggableDetailsOverlayDidDrag(_ overlay: DraggableDetailsOverlayViewController)
+
     /**
      Content's scroll will still be prevented for another runloop.
      */
     func draggableDetailsOverlayDidEndDragging(_ overlay: DraggableDetailsOverlayViewController)
+
+    /**
+     Called on automatic and manual invoke of `show()` & `hide()`.
+     */
     func draggableDetailsOverlayDidChangeIsVisible(_ overlay: DraggableDetailsOverlayViewController)
+
 }
 
 /**
@@ -47,6 +61,10 @@ public protocol DraggableDetailsOverlayNestedInterface {
     func draggableDetailsOverlayContentScrollViews(_ overlay: DraggableDetailsOverlayViewController) -> [UIScrollView]
 }
 
+/**
+ Overlay that can be dragged to cover more or less of available space.
+ Can be configured to be "twitter-like". With limited content height.
+ */
 public class DraggableDetailsOverlayViewController: UIViewController {
 
     public typealias NestedConstroller = UIViewController & DraggableDetailsOverlayNestedInterface
@@ -115,8 +133,52 @@ public class DraggableDetailsOverlayViewController: UIViewController {
     }
 
     /**
-     Animation duration for `show()` & `hide()`.
-     Default value is 0.25 .
+     Container for drag-handle.
+     Handle is centered here.
+     Use 0 to hide handle.
+     Default value is `16`.
+     */
+    public var handleContainerHeight: CGFloat = 16 { //TODO: 58: example
+        didSet {
+            guard isViewLoaded else { return }
+            handleHeightConstraint.constant = handleContainerHeight
+        }
+    }
+
+    public var handleColor: UIColor = UIColor.lightGray { //TODO: 58: example
+        didSet {
+            guard isViewLoaded else { return }
+            handleView.handleView.backgroundColor = handleColor
+        }
+    }
+
+    /**
+     Size of drag-handle element.
+     Default value is `36 x 4`.
+     */
+    public var handleSize: CGSize = CGSize(width: 36, height: 4) { //TODO: 58: example
+        didSet {
+            guard isViewLoaded else { return }
+            handleView.handleWidthConstraint.constant = handleSize.width
+            handleView.handleHeightConstraint.constant = handleSize.height
+        }
+    }
+
+    /**
+     Corner radius value for drag-handle element.
+     Independent of it's height.
+     Default value is `2`.
+     */
+    public var handleCornerRadius: CGFloat = 2 { //TODO: 58: example
+        didSet {
+            guard isViewLoaded else { return }
+            handleView.handleView.layer.cornerRadius = handleCornerRadius
+        }
+    }
+
+    /**
+     Animation duration for `show()` & `hide()` & `updateLayout(animated:)`.
+     Default value is `0.25`.
      */
     public var showHideAnimationDuration: TimeInterval = 0.25 //TODO: 58: example
 
@@ -126,6 +188,25 @@ public class DraggableDetailsOverlayViewController: UIViewController {
      Default value `true`.
      */
     public var isSnapToAnchorsEnabled: Bool = true //TODO: 58: example
+
+    /**
+     If enabled, user can drag overlay below bottom
+     Default value `false`.
+     */
+    public var isDragOffScreenToHideEnabled: Bool = false //TODO: 58: example
+
+    /**
+     If enabled - user can over-drag overlay beyond most periferal anchors.
+     Over-drag is affected by `bounceDragDumpening`.
+     Default value is `false`.
+     */
+    public var isBounceEnabled: Bool = false //TODO: 58: example
+
+    /**
+     How much harder it is to over-drag (comparing to normal drag).
+     Default value is `0.5`.
+     */
+    public var bounceDragDumpening: CGFloat = 0.5 //TODO: 58: example
 
     /**
      If `false` - snapping anchor will be calculated from current position of overlay.
@@ -149,7 +230,7 @@ public class DraggableDetailsOverlayViewController: UIViewController {
 
     /**
      Duration of animation used, when user releases finger during drag.
-     Default value is 0.2 .
+     Default value is `0.2`.
      */
     public var snapAnimationNormalDuration: TimeInterval = 0.2 //TODO: 58: example
 
@@ -168,19 +249,19 @@ public class DraggableDetailsOverlayViewController: UIViewController {
 
     /**
      Duration of animation used, when user releases finger during drag and container snaps to anchor.
-     Default value is 0.4 .
+     Default value is `0.4`.
      */
     public var snapAnimationSpringDuration: TimeInterval = 0.4 //TODO: 58: example
 
     /**
      Parameter of spring animation (if enabled).
-     Default value is 0.7 .
+     Default value is `0.7`.
      */
     public var snapAnimationSpringDamping: CGFloat = 0.7 //TODO: 58: example
 
     /**
      Parameter of spring animation (if enabled).
-     Default value is 1.5 .
+     Default value is `1.5`.
      */
     public var snapAnimationSpringInitialVelocity: CGFloat = 1.5 //TODO: 58: example
 
@@ -189,6 +270,9 @@ public class DraggableDetailsOverlayViewController: UIViewController {
     private var draggableContainerHiddenTopConstraint: NSLayoutConstraint!
     private var draggableContainerShownTopConstraint: NSLayoutConstraint!
     private var draggableContainerHeightConstraint: NSLayoutConstraint!
+    private var contentContainerView: UIView!
+    private var handleView: DraggableDetailsOverlayHandleView!
+    private var handleHeightConstraint: NSLayoutConstraint!
     private var dragGestureRecognizer: UIPanGestureRecognizer!
 
     private let nestedController: NestedConstroller
@@ -199,10 +283,12 @@ public class DraggableDetailsOverlayViewController: UIViewController {
      Sorted top->bottom (lowest->highest).
      */
     private var cachedAnchorOffsets: [CGFloat] = [0]
+    private var screenBottomOffset: CGFloat = 0
+    private var cachedDraggableContainerHeight: CGFloat = 100
     /**
-     Height for which offsets were cached.
+     Height for which offsets/heights were cached/calculated.
      */
-    private var cachedAnchorOffsetsForHeight: CGFloat = 0
+    private var layoutCalculatedForHeight: CGFloat = 0
 
     /**
      Scroll view from nested content, where pan started.
@@ -229,24 +315,25 @@ public class DraggableDetailsOverlayViewController: UIViewController {
         mainView.clipsToBounds = true
         view = mainView
 
-        setupShadowBackgroundView(mainView: mainView)
-        setupDraggableContainer(mainView: mainView)
-        setupPanRecognizer(mainView: mainView)
+        updateAnchors()
+
+        setupShadowBackgroundView()
+        setupDraggableContainer()
+        setupHandle()
+        setupContentContainer()
+        setupPanRecognizer()
     }
 
     public override func viewDidLoad() {
         super.viewDidLoad()
-        addToContainerChildViewController(nestedController, targetContainerView: draggableContainerView)
+        addToContainerChildViewController(nestedController, targetContainerView: contentContainerView)
     }
 
     // MARK: - Events
 
     public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        if view.bounds.height != cachedAnchorOffsetsForHeight {
-            updateAnchors()
-            cachedAnchorOffsetsForHeight = view.bounds.height
-        }
+        updateLayout(animated: false, forced: false)
     }
 
     // MARK: - Public
@@ -260,6 +347,10 @@ public class DraggableDetailsOverlayViewController: UIViewController {
 
     public func hide(animated: Bool) {
         setVisible(false, animated: animated, initialAnchor: .top(offset: 0))
+    }
+
+    public func updateLayout(animated: Bool) {
+        updateLayout(animated: animated, forced: true)
     }
 
 }
@@ -292,15 +383,46 @@ extension DraggableDetailsOverlayViewController: UIGestureRecognizerDelegate {
                 let newOffset = draggableContainerShownTopConstraint.constant + translationY
                 let maxOffset = cachedAnchorOffsets.last ?? 0
                 let minOffset = cachedAnchorOffsets.first ?? 0
+                let newShadowAlpha: CGFloat
                 if newOffset < minOffset {
-                    draggableContainerShownTopConstraint.constant = minOffset
-                    setPreventContentScroll(false)
+                    if isBounceEnabled {
+                        let dumpenedNewOffset = draggableContainerShownTopConstraint.constant + translationY * bounceDragDumpening
+                        draggableContainerShownTopConstraint.constant = dumpenedNewOffset
+                        draggableContainerHeightConstraint.constant = -dumpenedNewOffset
+                        newShadowAlpha = 1.0
+                        setPreventContentScroll(true)
+                    } else {
+                        draggableContainerShownTopConstraint.constant = minOffset
+                        draggableContainerHeightConstraint.constant = cachedDraggableContainerHeight
+                        newShadowAlpha = 1.0
+                        setPreventContentScroll(false)
+                    }
                 } else if minOffset <= newOffset && newOffset <= maxOffset {
                     draggableContainerShownTopConstraint.constant = newOffset
+                    draggableContainerHeightConstraint.constant = cachedDraggableContainerHeight
+                    newShadowAlpha = 1.0
                     setPreventContentScroll(true)
                 } else { // newOffset > maxOffset
-                    draggableContainerShownTopConstraint.constant = maxOffset
-                    setPreventContentScroll(false)
+                    if isDragOffScreenToHideEnabled {
+                        draggableContainerShownTopConstraint.constant = newOffset
+                        draggableContainerHeightConstraint.constant = cachedDraggableContainerHeight
+                        newShadowAlpha = CGFloat.maximum((screenBottomOffset - newOffset) / (screenBottomOffset - maxOffset), 0.0)
+                        setPreventContentScroll(true)
+                    } else if isBounceEnabled {
+                        let dumpenedNewOffset = draggableContainerShownTopConstraint.constant + translationY * bounceDragDumpening
+                        draggableContainerShownTopConstraint.constant = dumpenedNewOffset
+                        draggableContainerHeightConstraint.constant = cachedDraggableContainerHeight
+                        newShadowAlpha = 1.0
+                        setPreventContentScroll(true)
+                    } else {
+                        draggableContainerShownTopConstraint.constant = maxOffset
+                        draggableContainerHeightConstraint.constant = cachedDraggableContainerHeight
+                        newShadowAlpha = 1.0
+                        setPreventContentScroll(false)
+                    }
+                }
+                if isShadowEnabled {
+                    shadowBackgroundView.alpha = newShadowAlpha
                 }
                 delegate?.draggableDetailsOverlayDidDrag(self)
             } else {
@@ -310,31 +432,44 @@ extension DraggableDetailsOverlayViewController: UIGestureRecognizerDelegate {
         case .ended,
              .cancelled,
              .failed:
-            if isSnapToAnchorsEnabled {
-                let restOffset: CGFloat
+            if isContentScrollAtTop(contentScrollView: currentPanStartingContentScrollView) || translationY < 0 {
                 let currentOffset = draggableContainerShownTopConstraint.constant
-                if snapCalculationUsesDeceleration {
-                    let deceleratedOffset = DecelerationHelper.project(
-                        value: currentOffset,
-                        initialVelocity: velocity.y / 1000.0, /* because this should be in milliseconds */
-                        decelerationRate: snapCalculationDecelerationRate.rawValue)
-                    if snapCalculationDecelerationCanSkipNextAnchor {
-                        restOffset = closestAnchorOffset(targetOffset: deceleratedOffset)
+                if isSnapToAnchorsEnabled {
+                    let restOffset: CGFloat
+                    let shouldHide: Bool
+                    if snapCalculationUsesDeceleration {
+                        let deceleratedOffset = DecelerationHelper.project(
+                            value: currentOffset,
+                            initialVelocity: velocity.y / 1000.0, /* because this should be in milliseconds */
+                            decelerationRate: snapCalculationDecelerationRate.rawValue)
+                        if snapCalculationDecelerationCanSkipNextAnchor {
+                            let closestAnchor = closestAnchorOffset(targetOffset: deceleratedOffset)
+                            restOffset = closestAnchor.anchorOffset
+                            shouldHide = closestAnchor.shouldHide
+                        } else {
+                            let closestAnchor = closestAnchorOffset(targetOffset: deceleratedOffset, currentOffset: currentOffset)
+                            restOffset = closestAnchor.anchorOffset
+                            shouldHide = closestAnchor.shouldHide
+                        }
                     } else {
-                        restOffset = closestAnchorOffset(targetOffset: deceleratedOffset, currentOffset: currentOffset)
+                        let closestAnchor = closestAnchorOffset(targetOffset: currentOffset)
+                        restOffset = closestAnchor.anchorOffset
+                        shouldHide = closestAnchor.shouldHide
                     }
-                } else {
-                    restOffset = currentOffset
+                    if isDragOffScreenToHideEnabled && shouldHide {
+                        hide(animated: currentOffset < screenBottomOffset)
+                    } else if currentOffset != restOffset {
+                        let isSpring = restOffset == cachedAnchorOffsets.first ? snapAnimationTopAnchorUseSpring : snapAnimationUseSpring
+                        animateToOffset(restOffset, isSpring: isSpring)
+                    }
+                } else if isDragOffScreenToHideEnabled && currentOffset >= screenBottomOffset {
+                    hide(animated: false)
                 }
-                if currentOffset != restOffset {
-                    let isSpring = restOffset == cachedAnchorOffsets.first ? snapAnimationTopAnchorUseSpring : snapAnimationUseSpring
-                    animateToOffset(restOffset, isSpring: isSpring)
-                }
+                currentPanStartingContentScrollView = nil
+                DispatchQueue.main.async(execute: { // to prevent deceleration behaviour in content's scroll
+                    self.setPreventContentScroll(false)
+                })
             }
-            currentPanStartingContentScrollView = nil
-            DispatchQueue.main.async(execute: { // to prevent deceleration behaviour in content's scroll
-                self.setPreventContentScroll(false)
-            })
             delegate?.draggableDetailsOverlayDidEndDragging(self)
 
         @unknown default:
@@ -351,7 +486,6 @@ extension DraggableDetailsOverlayViewController: UIGestureRecognizerDelegate {
 
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
                                   shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        //TODO: 58: add scroll to exmaple - test this
         if gestureRecognizer === dragGestureRecognizer || otherGestureRecognizer === dragGestureRecognizer {
             return true
         }
@@ -374,79 +508,119 @@ extension DraggableDetailsOverlayViewController: UIGestureRecognizerDelegate {
 
 private extension DraggableDetailsOverlayViewController {
 
-    private func setupShadowBackgroundView(mainView: UIView) {
-        shadowBackgroundView = UIView(frame: mainView.bounds)
+    private func setupShadowBackgroundView() {
+        shadowBackgroundView = UIView(frame: view.bounds)
         shadowBackgroundView.backgroundColor = shadowBackgroundColor
         shadowBackgroundView.translatesAutoresizingMaskIntoConstraints = false
-        mainView.addSubview(shadowBackgroundView)
-        shadowBackgroundView.topAnchor.constraint(equalTo: mainView.topAnchor).isActive = true
-        shadowBackgroundView.bottomAnchor.constraint(equalTo: mainView.bottomAnchor).isActive = true
-        shadowBackgroundView.leadingAnchor.constraint(equalTo: mainView.leadingAnchor).isActive = true
-        shadowBackgroundView.trailingAnchor.constraint(equalTo: mainView.trailingAnchor).isActive = true
+        view.addSubview(shadowBackgroundView)
+        shadowBackgroundView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        shadowBackgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        shadowBackgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        shadowBackgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         shadowBackgroundView.isHidden = !isShadowEnabled
+        shadowBackgroundView.alpha = 0.0
     }
 
-    private func setupDraggableContainer(mainView: UIView) {
-        draggableContainerView = DraggableDetailsOverlayContainerView(frame: mainView.bounds)
+    private func setupDraggableContainer() {
+        draggableContainerView = DraggableDetailsOverlayContainerView(frame: view.bounds)
         draggableContainerView.backgroundColor = draggableContainerBackgroundColor
         draggableContainerView.translatesAutoresizingMaskIntoConstraints = false
-        mainView.addSubview(draggableContainerView)
+        view.addSubview(draggableContainerView)
         if #available(iOS 11.0, *) {
-            draggableContainerShownTopConstraint = draggableContainerView.topAnchor.constraint(equalTo: mainView.safeAreaLayoutGuide.topAnchor)
-            draggableContainerHiddenTopConstraint = draggableContainerView.topAnchor.constraint(equalTo: mainView.bottomAnchor,
+            draggableContainerShownTopConstraint = draggableContainerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
+            draggableContainerHiddenTopConstraint = draggableContainerView.topAnchor.constraint(equalTo: view.bottomAnchor,
                                                                                                 constant: Constant.hiddenContainerOffset)
         } else {
             draggableContainerShownTopConstraint = draggableContainerView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor)
-            draggableContainerHiddenTopConstraint = draggableContainerView.topAnchor.constraint(equalTo: mainView.bottomAnchor,
+            draggableContainerHiddenTopConstraint = draggableContainerView.topAnchor.constraint(equalTo: view.bottomAnchor,
                                                                                                 constant: Constant.hiddenContainerOffset)
         }
         draggableContainerShownTopConstraint.isActive = false
         draggableContainerHiddenTopConstraint.isActive = true
-        draggableContainerHeightConstraint = draggableContainerView.heightAnchor.constraint(equalTo: mainView.heightAnchor,
-                                                                                            constant: 0) //TODO: 58: delegate
+
+        calculateHeightConstraint()
+        draggableContainerHeightConstraint = draggableContainerView.heightAnchor.constraint(equalTo: view.heightAnchor,
+                                                                                            constant: cachedDraggableContainerHeight)
         draggableContainerHeightConstraint.isActive = true
-        draggableContainerView.leadingAnchor.constraint(equalTo: mainView.leadingAnchor, constant: 0).isActive = true
-        draggableContainerView.trailingAnchor.constraint(equalTo: mainView.trailingAnchor, constant: 0).isActive = true
+        draggableContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
+        draggableContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
         draggableContainerView.isRoundedTopCornersEnabled = isDraggableContainerRoundedTopCornersEnabled
         draggableContainerView.topCornersRadius = draggableContainerTopCornersRadius
     }
 
-    private func setupPanRecognizer(mainView: UIView) {
+    private func setupHandle() {
+        handleView = DraggableDetailsOverlayHandleView(
+            frame: CGRect(x: 0, y: 0, width: draggableContainerView.bounds.width, height: handleContainerHeight),
+            handleColor: handleColor,
+            handleSize: handleSize,
+            handleCornerRadius: handleCornerRadius)
+        handleView.translatesAutoresizingMaskIntoConstraints = false
+        draggableContainerView.addSubview(handleView)
+        handleView.leadingAnchor.constraint(equalTo: draggableContainerView.leadingAnchor).isActive = true
+        handleView.trailingAnchor.constraint(equalTo: draggableContainerView.trailingAnchor).isActive = true
+        handleView.topAnchor.constraint(equalTo: draggableContainerView.topAnchor).isActive = true
+        handleHeightConstraint = handleView.heightAnchor.constraint(equalToConstant: handleContainerHeight)
+        handleHeightConstraint.isActive = true
+    }
+
+    private func setupContentContainer() {
+        contentContainerView = UIView(frame: CGRect(x: 0,
+                                                    y: 0,
+                                                    width: draggableContainerView.bounds.width,
+                                                    height: draggableContainerView.bounds.height - handleContainerHeight))
+        contentContainerView.backgroundColor = UIColor.clear
+        contentContainerView.translatesAutoresizingMaskIntoConstraints = false
+        draggableContainerView.addSubview(contentContainerView)
+        contentContainerView.leadingAnchor.constraint(equalTo: draggableContainerView.leadingAnchor).isActive = true
+        contentContainerView.trailingAnchor.constraint(equalTo: draggableContainerView.trailingAnchor).isActive = true
+        contentContainerView.topAnchor.constraint(equalTo: handleView.bottomAnchor).isActive = true
+        contentContainerView.bottomAnchor.constraint(equalTo: draggableContainerView.bottomAnchor).isActive = true
+    }
+
+    private func setupPanRecognizer() {
         dragGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handleDragGesture))
         dragGestureRecognizer.delegate = self
         dragGestureRecognizer.isEnabled = true
-        mainView.addGestureRecognizer(dragGestureRecognizer)
+        view.addGestureRecognizer(dragGestureRecognizer)
     }
 
     private func updateAnchors() {
         anchors = delegate?.draggableDetailsOverlayAnchors(self) ?? [.top(offset: 0)]
+        let topInset = calculateTopInset()
         var newOffsets: [CGFloat] = []
+        screenBottomOffset = view.bounds.height
         for anchor in anchors {
-            let offset = offsetForAnchor(anchor)
+            let offset = offsetForAnchor(anchor, topInset: topInset)
             // ignore very small steps
-            if !newOffsets.contains(where: { return abs($0 - offset) < Constant.anchorsCachingGranularity }) {
+            if !newOffsets.contains(where: { isOffsetsEqual($0, offset) }) && !isOffsetsEqual(screenBottomOffset, offset) {
                 newOffsets.append(offset)
             }
         }
         cachedAnchorOffsets = newOffsets.sorted(by: { $0 < $1 })
     }
 
-    private func offsetForAnchor(_ anchor: Anchor) -> CGFloat {
+    private func offsetForAnchor(_ anchor: Anchor, topInset: CGFloat) -> CGFloat {
         switch anchor {
         case .top(let uncoverableOffset):
-            return uncoverableOffset
+            return min(view.bounds.height, max(uncoverableOffset, topInset))
         case .middle(let containerHeight):
-            return max(0, view.bounds.height - containerHeight - bottomSafeAreaInset())
+            return min(view.bounds.height, max(topInset, view.bounds.height - containerHeight - bottomSafeAreaInset()))
         }
     }
 
-    /// Calculates closest anchor regardless of current position.
-    private func closestAnchorOffset(targetOffset: CGFloat) -> CGFloat {
-        return cachedAnchorOffsets.min(by: { return abs($0 - targetOffset) < abs($1 - targetOffset)}) ?? 0
+    /**
+     Calculates closest anchor regardless of current position.
+     */
+    private func closestAnchorOffset(targetOffset: CGFloat) -> (anchorOffset: CGFloat, shouldHide: Bool) {
+        let closestAnchor = cachedAnchorOffsets.min(by: { return abs($0 - targetOffset) < abs($1 - targetOffset)}) ?? 0
+        let shouldHide = abs(closestAnchor - targetOffset) > abs(screenBottomOffset - targetOffset)
+        return (closestAnchor, shouldHide)
     }
 
-    /// Calculates closes anchor from current position (current or next or previous)
-    private func closestAnchorOffset(targetOffset: CGFloat, currentOffset: CGFloat) -> CGFloat {
+    /**
+     Calculates closes anchor from current position (current or next or previous).
+     */
+    private func closestAnchorOffset(targetOffset: CGFloat, currentOffset: CGFloat) -> (anchorOffset: CGFloat, shouldHide: Bool) {
         let currentAnchor = cachedAnchorOffsets.first(where: { abs($0 - currentOffset) < Constant.anchorsCachingGranularity })
         let nextAnchor: CGFloat?
         let previousAnchor: CGFloat?
@@ -458,7 +632,9 @@ private extension DraggableDetailsOverlayViewController {
             previousAnchor = cachedAnchorOffsets.last(where: { $0 < currentOffset })
         }
         let anchors = [previousAnchor, currentAnchor, nextAnchor].compactMap({ $0 })
-        return anchors.min(by: { return abs($0 - targetOffset) < abs($1 - targetOffset)}) ?? 0
+        let closestAnchor = anchors.min(by: { return abs($0 - targetOffset) < abs($1 - targetOffset)}) ?? 0
+        let shouldHide = abs(closestAnchor - targetOffset) > abs(screenBottomOffset - targetOffset)
+        return (closestAnchor, shouldHide)
     }
 
     private func bottomSafeAreaInset() -> CGFloat {
@@ -469,14 +645,62 @@ private extension DraggableDetailsOverlayViewController {
         }
     }
 
+    private func calculateTopInset() -> CGFloat {
+        let topInsetFromMaxHeight: CGFloat
+        if let maxHeight = delegate?.draggableDetailsOverlayMaxHeight(self) {
+            topInsetFromMaxHeight = max(0, view.bounds.height - maxHeight)
+        } else {
+            topInsetFromMaxHeight = 0
+        }
+        return max(topInsetFromMaxHeight, delegate?.draggableDetailsOverlayTopInset(self) ?? 0)
+    }
+
+    /**
+     Value for height constraint.
+     It is used in overlay_height = view.bounds.height - this_value.
+     Should be negative value (for overlay to be smaller, than main view.
+     */
+    private func calculateHeightConstraint() {
+        let topInset = calculateTopInset()
+        let topAnchor = cachedAnchorOffsets.first ?? 0
+        cachedDraggableContainerHeight = -max(topInset, topAnchor)
+    }
+
+    private func isOffsetsEqual(_ left: CGFloat, _ right: CGFloat) -> Bool {
+        return abs(left - right) < Constant.anchorsCachingGranularity
+    }
+
+    private func updateLayout(animated: Bool, forced: Bool) {
+        guard view.bounds.height != layoutCalculatedForHeight || forced else {
+            return
+        }
+        updateAnchors()
+        calculateHeightConstraint()
+        if draggableContainerHeightConstraint.constant != cachedDraggableContainerHeight {
+            draggableContainerHeightConstraint.constant = cachedDraggableContainerHeight
+        }
+        if isVisible {
+            let newCurrentOffset = closestAnchorOffset(targetOffset: draggableContainerShownTopConstraint.constant)
+            if newCurrentOffset.anchorOffset != draggableContainerShownTopConstraint.constant {
+                if animated {
+                    animateToOffset(newCurrentOffset.anchorOffset, isSpring: false)
+                } else {
+                    draggableContainerShownTopConstraint.constant = newCurrentOffset.anchorOffset
+                }
+            }
+        }
+        layoutCalculatedForHeight = view.bounds.height
+    }
+
     private func setVisible(_ newVisible: Bool, animated: Bool, initialAnchor: Anchor) {
         let initialOffset: CGFloat
         if newVisible {
             isVisible = true
-            updateAnchors()
+            updateLayout(animated: false, forced: true)
             view.isHidden = false
-            let wantedOffset = offsetForAnchor(initialAnchor)
-            initialOffset = isSnapToAnchorsEnabled ? closestAnchorOffset(targetOffset: wantedOffset) : wantedOffset
+            let topInset = calculateTopInset()
+            let wantedOffset = offsetForAnchor(initialAnchor, topInset: topInset)
+            initialOffset = isSnapToAnchorsEnabled ? closestAnchorOffset(targetOffset: wantedOffset).anchorOffset : wantedOffset
         } else {
             initialOffset = 0
         }
@@ -516,7 +740,11 @@ private extension DraggableDetailsOverlayViewController {
 
     private func animateToOffset(_ targetOffset: CGFloat, isSpring: Bool) {
         let animations = { () -> Void in
+            if self.isShadowEnabled {
+                self.shadowBackgroundView.alpha = 1.0
+            }
             self.draggableContainerShownTopConstraint.constant = targetOffset
+            self.draggableContainerHeightConstraint.constant = self.cachedDraggableContainerHeight
             self.view.layoutIfNeeded()
         }
         if isSpring {

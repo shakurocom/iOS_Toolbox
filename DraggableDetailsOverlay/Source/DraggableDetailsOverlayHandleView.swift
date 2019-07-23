@@ -5,31 +5,36 @@
 
 import UIKit
 
-//DraggableDetailsOverlayHandleView
+internal class DraggableDetailsOverlayHandleView: UIView {
 
-//    private var dragHandleContainerView: UIView!
-//    private var dragHandleView: UIView!
-//internal struct DraggableDetailsOverlayStyle {
-//    internal var backgroundColor: UIColor = UIColor.white
-//    internal var cornerRadius: CGFloat = 0.0
-//    internal var handleContainerHeight: CGFloat = 10.0
-//    internal var handleSize: CGSize = CGSize(width: 50.0, height: 5.0)
-//    internal var handleColor: UIColor = UIColor.blue
-//}
-//    private func setupDragHandle() {
-//        dragHandleContainerView = UIView(frame: CGRect(x: 0, y: 0, width: draggableContainerView.bounds.width, height: style.handleContainerHeight))
-//        dragHandleContainerView.backgroundColor = style.backgroundColor
-//        dragHandleContainerView.translatesAutoresizingMaskIntoConstraints = true
-//        dragHandleContainerView.autoresizingMask = [.flexibleWidth, .flexibleBottomMargin]
-//        draggableContainerView.addSubview(dragHandleContainerView)
-//
-//        dragHandleView = UIView(frame: CGRect(x: 0, y: 0, width: style.handleSize.width, height: style.handleSize.height))
-//        dragHandleView.backgroundColor = style.handleColor
-//        dragHandleView.layer.cornerRadius = style.handleSize.height / 2.0
-//        dragHandleView.translatesAutoresizingMaskIntoConstraints = false
-//        dragHandleContainerView.addSubview(dragHandleView)
-//        dragHandleView.widthAnchor.constraint(equalToConstant: style.handleSize.width).isActive = true
-//        dragHandleView.heightAnchor.constraint(equalToConstant: style.handleSize.height).isActive = true
-//        dragHandleView.centerXAnchor.constraint(equalTo: dragHandleContainerView.centerXAnchor, constant: 0.0).isActive = true
-//        dragHandleView.centerYAnchor.constraint(equalTo: dragHandleContainerView.centerYAnchor, constant: 0.0).isActive = true
-//    }
+    internal private(set) var handleView: UIView!
+    internal private(set) var handleWidthConstraint: NSLayoutConstraint!
+    internal private(set) var handleHeightConstraint: NSLayoutConstraint!
+
+    internal override init(frame: CGRect) {
+        fatalError("use init(frame:, handleColor: , ... ) ")
+    }
+
+    internal required init?(coder aDecoder: NSCoder) {
+        fatalError("use init(frame:, handleColor: , ... ) ")
+    }
+
+    internal init(frame: CGRect, handleColor: UIColor, handleSize: CGSize, handleCornerRadius: CGFloat) {
+        super.init(frame: frame)
+        backgroundColor = UIColor.clear
+        clipsToBounds = true
+        handleView = UIView(frame: CGRect(x: 0, y: 0, width: handleSize.width, height: handleSize.height))
+        handleView.backgroundColor = handleColor
+        handleView.layer.masksToBounds = true
+        handleView.layer.cornerRadius = handleCornerRadius
+        handleView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(handleView)
+        handleWidthConstraint = handleView.widthAnchor.constraint(equalToConstant: handleSize.width)
+        handleWidthConstraint.isActive = true
+        handleHeightConstraint = handleView.heightAnchor.constraint(equalToConstant: handleSize.height)
+        handleHeightConstraint.isActive = true
+        handleView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        handleView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+    }
+
+}

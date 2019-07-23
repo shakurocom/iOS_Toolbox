@@ -111,10 +111,14 @@ extension ExampleDraggableDetailsContentViewController: DraggableDetailsOverlayN
 
 internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
 
+    @IBOutlet private var contentScrollView: UIScrollView!
     @IBOutlet private var sampleActionCountLabel: UILabel!
+    @IBOutlet private var topInsetTextField: UITextField!
+    @IBOutlet private var maxHeightTextField: UITextField!
 
     private var contentViewController: ExampleDraggableDetailsContentViewController!
     private var overlayViewController: DraggableDetailsOverlayViewController!
+    private var keyboardHandler: KeyboardHandler?
 
     private var example: Example?
     private var sampleActionCount: Int = 0
@@ -123,13 +127,32 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
         super.viewDidLoad()
 
         title = example?.title
+        contentScrollView.delegate = self
         sampleActionCountLabel.text = "\(sampleActionCount)"
+        topInsetTextField.delegate = self
+        maxHeightTextField.delegate = self
 
         contentViewController = ExampleDraggableDetailsContentViewController.instantiate()
         contentViewController.delegate = self
         overlayViewController = DraggableDetailsOverlayViewController(nestedController: contentViewController, delegate: self)
         self.addToContainerChildViewController(overlayViewController)
         overlayViewController.hide(animated: false)
+
+        keyboardHandler = KeyboardHandler(enableCurveHack: false, heightDidChange: { [weak self] (change: KeyboardHandler.KeyboardChange) in
+            guard let strongSelf = self else {
+                return
+            }
+            UIView.animate(
+                withDuration: change.animationDuration,
+                delay: 0.0,
+                animations: {
+                    UIView.setAnimationCurve(change.animationCurve)
+                    strongSelf.contentScrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: change.newHeight, right: 0)
+                    strongSelf.view.layoutIfNeeded()
+            },
+                completion: nil)
+        })
+        keyboardHandler?.isActive = true
     }
 
     @IBAction private func sampleActionButtonDidPress() {
@@ -138,6 +161,7 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
     }
 
     @IBAction private func showOverlayButtonDidPress() {
+        view.endEditing(true)
         overlayViewController.show(initialAnchor: .middle(height: 400), animated: true)
     }
 
@@ -146,9 +170,11 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
 // MARK: ExampleDraggableDetailsContentViewControllerDelegate
 
 extension ExampleDraggableDetailsOverlayViewController: ExampleDraggableDetailsContentViewControllerDelegate {
+
     func contentDidPressCloseButton() {
         overlayViewController.hide(animated: true)
     }
+
 }
 
 // MARK: DraggableDetailsOverlayViewControllerDelegate
@@ -163,6 +189,18 @@ extension ExampleDraggableDetailsOverlayViewController: DraggableDetailsOverlayV
         ]
     }
 
+    func draggableDetailsOverlayTopInset(_ overlay: DraggableDetailsOverlayViewController) -> CGFloat {
+        return CGFloat(topInset())
+    }
+
+    func draggableDetailsOverlayMaxHeight(_ overlay: DraggableDetailsOverlayViewController) -> CGFloat? {
+        if let value = maxHeight() {
+            return CGFloat(value)
+        } else {
+            return nil
+        }
+    }
+
     func draggableDetailsOverlayDidDrag(_ overlay: DraggableDetailsOverlayViewController) {
         print("did drag")
     }
@@ -173,6 +211,60 @@ extension ExampleDraggableDetailsOverlayViewController: DraggableDetailsOverlayV
 
     func draggableDetailsOverlayDidChangeIsVisible(_ overlay: DraggableDetailsOverlayViewController) {
         print("did change is visible: \(overlay.isVisible)")
+    }
+
+}
+
+// MARK: UITextFieldDelegate
+
+extension ExampleDraggableDetailsOverlayViewController: UITextFieldDelegate {
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        view.endEditing(false)
+        return false
+    }
+
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField === topInsetTextField {
+            textField.text = "\(topInset())"
+            overlayViewController.updateLayout(animated: true)
+        } else if textField === maxHeightTextField {
+            if let value = maxHeight() {
+                textField.text = "\(value)"
+            } else {
+                textField.text = nil
+            }
+            overlayViewController.updateLayout(animated: true)
+        }
+    }
+
+}
+
+// MARK: UIScrollViewDelegate
+
+extension ExampleDraggableDetailsOverlayViewController: UIScrollViewDelegate {
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView === contentScrollView {
+            view.endEditing(false)
+        }
+    }
+
+}
+
+// MARK: Private
+
+private extension ExampleDraggableDetailsOverlayViewController {
+
+    private func topInset() -> Int {
+        return Int(topInsetTextField.text ?? "0") ?? 0
+    }
+
+    private func maxHeight() -> Int? {
+        guard let text = maxHeightTextField.text else {
+            return nil
+        }
+        return Int(text)
     }
 
 }
