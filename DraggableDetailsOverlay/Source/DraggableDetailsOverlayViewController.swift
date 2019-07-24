@@ -43,6 +43,8 @@ public protocol DraggableDetailsOverlayViewControllerDelegate: class {
      */
     func draggableDetailsOverlayDidChangeIsVisible(_ overlay: DraggableDetailsOverlayViewController)
 
+    func draggableDetailsOverlayDidUpdatedLayout(_ overlay: DraggableDetailsOverlayViewController)
+
 }
 
 /**
@@ -681,6 +683,7 @@ private extension DraggableDetailsOverlayViewController {
             }
         }
         layoutCalculatedForHeight = view.bounds.height
+        delegate?.draggableDetailsOverlayDidUpdatedLayout(self)
     }
 
     private func setVisible(_ newVisible: Bool, animated: Bool, initialAnchor: Anchor) {
