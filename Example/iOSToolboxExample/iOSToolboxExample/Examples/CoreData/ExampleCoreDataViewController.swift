@@ -6,7 +6,7 @@
 import Foundation
 import UIKit
 
-internal class ExampleCoreDataViewController: UIViewController {
+internal class ExampleCoreDataViewController: UIViewController, ExampleViewControllerProtocol {
 
     typealias ChangeType = FetchedResultsController<CDExampleEntity, ManagedExampleEntity>.ChangeType
 
@@ -29,6 +29,17 @@ internal class ExampleCoreDataViewController: UIViewController {
         }
     }()
 
+    static func instantiate(example: Example) -> UIViewController {
+        let exampleVC: ExampleCoreDataViewController = ExampleStoryboardName.main.storyboard().instantiateViewController(withIdentifier: "ExampleCoreDataViewController")
+        exampleVC.example = example
+        let controller = exampleVC.storage.mainQueueFetchedResultsController(CDExampleEntity.self, sortTerm: [(sortKey: "updatedAt", ascending: false)]) { (request) in
+            // change fetchRequest properties here
+            debugPrint(request)
+        }
+        exampleVC.exampleFetchedResultController = FetchedResultsController<CDExampleEntity, ManagedExampleEntity>(fetchedResultsController: controller)
+        return exampleVC
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         title = example?.title
@@ -46,33 +57,10 @@ internal class ExampleCoreDataViewController: UIViewController {
             guard let actualSelf = self else {
                 return
             }
-//            let oldCount: Int = actualSelf.totalNumberOfItems
-//            actualSelf.totalNumberOfItems = controller.totalNumberOfItems()
-//            actualSelf.output?.interactorDidChangeContent(actualSelf,
-//                                                          oldTotalCount: oldCount,
-//                                                          newTotalCount: actualSelf.totalNumberOfItems,
-//                                                          changes: actualSelf.changes)
             actualSelf.applyChanges()
         }
         exampleFetchedResultController.performFetch()
         contentTableView.reloadData()
-    }
-
-}
-
-// MARK: - ExampleViewControllerProtocol
-
-extension ExampleCoreDataViewController: ExampleViewControllerProtocol {
-
-    static func instantiate(example: Example) -> UIViewController {
-        let exampleVC: ExampleCoreDataViewController = ExampleStoryboardName.main.storyboard().instantiateViewController(withIdentifier: "ExampleCoreDataViewController")
-        exampleVC.example = example
-        let controller = exampleVC.storage.mainQueueFetchedResultsController(CDExampleEntity.self, sortTerm: [(sortKey: "updatedAt", ascending: true)]) { (request) in
-            // change fetchRequest properties here
-            debugPrint(request)
-        }
-        exampleVC.exampleFetchedResultController = FetchedResultsController<CDExampleEntity, ManagedExampleEntity>(fetchedResultsController: controller)
-        return exampleVC
     }
 
 }

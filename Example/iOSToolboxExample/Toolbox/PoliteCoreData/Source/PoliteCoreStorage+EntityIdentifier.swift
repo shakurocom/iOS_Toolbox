@@ -6,15 +6,6 @@
 import Foundation
 import CoreData
 
-public class BaseEntity {
-
-    public let identifier: String
-
-    public init(identifier: String) {
-        self.identifier = identifier
-    }
-}
-
 public extension NSPredicate {
 
     class func objectWithIDPredicate(_ identifier: PredicateConvertible,
