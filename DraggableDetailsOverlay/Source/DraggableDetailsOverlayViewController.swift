@@ -355,6 +355,17 @@ public class DraggableDetailsOverlayViewController: UIViewController {
         updateLayout(animated: animated, forced: true)
     }
 
+    /**
+     Current vertical space between allowed area's top and draggable container's top.
+     Return's nil if view is not loaded or if overlay is hidden.
+     */
+    public func currentTopOffset() -> CGFloat? {
+        guard isViewLoaded, isVisible else {
+            return nil
+        }
+        return draggableContainerShownTopConstraint.constant
+    }
+
 }
 
 // MARK: - UIGestureRecognizerDelegate
