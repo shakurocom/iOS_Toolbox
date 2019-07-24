@@ -726,7 +726,7 @@ private extension DraggableDetailsOverlayViewController {
             UIView.animate(
                 withDuration: showHideAnimationDuration,
                 delay: 0.0,
-                options: [.beginFromCurrentState],
+                options: [.beginFromCurrentState, .curveEaseOut],
                 animations: {
                     animations()
                     self.view.layoutIfNeeded()
@@ -752,13 +752,13 @@ private extension DraggableDetailsOverlayViewController {
                            delay: 0.0,
                            usingSpringWithDamping: snapAnimationSpringDamping,
                            initialSpringVelocity: snapAnimationSpringInitialVelocity,
-                           options: [.beginFromCurrentState],
+                           options: [.beginFromCurrentState, .curveEaseOut],
                            animations: animations,
                            completion: nil)
         }
         UIView.animate(withDuration: snapAnimationNormalDuration,
                        delay: 0.0,
-                       options: [.beginFromCurrentState],
+                       options: [.beginFromCurrentState, .curveEaseOut],
                        animations: animations,
                        completion: nil)
     }
