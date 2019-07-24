@@ -47,6 +47,10 @@ public protocol DraggableDetailsOverlayViewControllerDelegate: class {
 
 /**
  Interface for controller, that will be displayed inside draggable overlay.
+ Content's layout notes:
+    - height of container for content is dynamic and will change with drag.
+    - minimum height is 0
+    - priority of container's bottom constraint is 999
  */
 public protocol DraggableDetailsOverlayNestedInterface {
     /**
@@ -269,7 +273,6 @@ public class DraggableDetailsOverlayViewController: UIViewController {
     private var draggableContainerView: DraggableDetailsOverlayContainerView!
     private var draggableContainerHiddenTopConstraint: NSLayoutConstraint!
     private var draggableContainerShownTopConstraint: NSLayoutConstraint!
-    private var draggableContainerHeightConstraint: NSLayoutConstraint!
     private var contentContainerView: UIView!
     private var handleView: DraggableDetailsOverlayHandleView!
     private var handleHeightConstraint: NSLayoutConstraint!
@@ -284,7 +287,6 @@ public class DraggableDetailsOverlayViewController: UIViewController {
      */
     private var cachedAnchorOffsets: [CGFloat] = [0]
     private var screenBottomOffset: CGFloat = 0
-    private var cachedDraggableContainerHeight: CGFloat = 100
     /**
      Height for which offsets/heights were cached/calculated.
      */
@@ -388,35 +390,29 @@ extension DraggableDetailsOverlayViewController: UIGestureRecognizerDelegate {
                     if isBounceEnabled {
                         let dumpenedNewOffset = draggableContainerShownTopConstraint.constant + translationY * bounceDragDumpening
                         draggableContainerShownTopConstraint.constant = dumpenedNewOffset
-                        draggableContainerHeightConstraint.constant = -dumpenedNewOffset
                         newShadowAlpha = 1.0
                         setPreventContentScroll(true)
                     } else {
                         draggableContainerShownTopConstraint.constant = minOffset
-                        draggableContainerHeightConstraint.constant = cachedDraggableContainerHeight
                         newShadowAlpha = 1.0
                         setPreventContentScroll(false)
                     }
                 } else if minOffset <= newOffset && newOffset <= maxOffset {
                     draggableContainerShownTopConstraint.constant = newOffset
-                    draggableContainerHeightConstraint.constant = cachedDraggableContainerHeight
                     newShadowAlpha = 1.0
                     setPreventContentScroll(true)
                 } else { // newOffset > maxOffset
                     if isDragOffScreenToHideEnabled {
                         draggableContainerShownTopConstraint.constant = newOffset
-                        draggableContainerHeightConstraint.constant = cachedDraggableContainerHeight
                         newShadowAlpha = CGFloat.maximum((screenBottomOffset - newOffset) / (screenBottomOffset - maxOffset), 0.0)
                         setPreventContentScroll(true)
                     } else if isBounceEnabled {
                         let dumpenedNewOffset = draggableContainerShownTopConstraint.constant + translationY * bounceDragDumpening
                         draggableContainerShownTopConstraint.constant = dumpenedNewOffset
-                        draggableContainerHeightConstraint.constant = cachedDraggableContainerHeight
                         newShadowAlpha = 1.0
                         setPreventContentScroll(true)
                     } else {
                         draggableContainerShownTopConstraint.constant = maxOffset
-                        draggableContainerHeightConstraint.constant = cachedDraggableContainerHeight
                         newShadowAlpha = 1.0
                         setPreventContentScroll(false)
                     }
@@ -537,13 +533,11 @@ private extension DraggableDetailsOverlayViewController {
         }
         draggableContainerShownTopConstraint.isActive = false
         draggableContainerHiddenTopConstraint.isActive = true
-
-        calculateHeightConstraint()
-        draggableContainerHeightConstraint = draggableContainerView.heightAnchor.constraint(equalTo: view.heightAnchor,
-                                                                                            constant: cachedDraggableContainerHeight)
-        draggableContainerHeightConstraint.isActive = true
         draggableContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
         draggableContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
+        let bottomConstraint = draggableContainerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
+        bottomConstraint.priority = UILayoutPriority(rawValue: 999)
+        bottomConstraint.isActive = true
         draggableContainerView.isRoundedTopCornersEnabled = isDraggableContainerRoundedTopCornersEnabled
         draggableContainerView.topCornersRadius = draggableContainerTopCornersRadius
     }
@@ -571,6 +565,7 @@ private extension DraggableDetailsOverlayViewController {
         contentContainerView.backgroundColor = UIColor.clear
         contentContainerView.translatesAutoresizingMaskIntoConstraints = false
         draggableContainerView.addSubview(contentContainerView)
+        contentContainerView.heightAnchor.constraint(greaterThanOrEqualToConstant: 0).isActive = true
         contentContainerView.leadingAnchor.constraint(equalTo: draggableContainerView.leadingAnchor).isActive = true
         contentContainerView.trailingAnchor.constraint(equalTo: draggableContainerView.trailingAnchor).isActive = true
         contentContainerView.topAnchor.constraint(equalTo: handleView.bottomAnchor).isActive = true
@@ -655,17 +650,6 @@ private extension DraggableDetailsOverlayViewController {
         return max(topInsetFromMaxHeight, delegate?.draggableDetailsOverlayTopInset(self) ?? 0)
     }
 
-    /**
-     Value for height constraint.
-     It is used in overlay_height = view.bounds.height - this_value.
-     Should be negative value (for overlay to be smaller, than main view.
-     */
-    private func calculateHeightConstraint() {
-        let topInset = calculateTopInset()
-        let topAnchor = cachedAnchorOffsets.first ?? 0
-        cachedDraggableContainerHeight = -max(topInset, topAnchor)
-    }
-
     private func isOffsetsEqual(_ left: CGFloat, _ right: CGFloat) -> Bool {
         return abs(left - right) < Constant.anchorsCachingGranularity
     }
@@ -675,10 +659,6 @@ private extension DraggableDetailsOverlayViewController {
             return
         }
         updateAnchors()
-        calculateHeightConstraint()
-        if draggableContainerHeightConstraint.constant != cachedDraggableContainerHeight {
-            draggableContainerHeightConstraint.constant = cachedDraggableContainerHeight
-        }
         if isVisible {
             let newCurrentOffset = closestAnchorOffset(targetOffset: draggableContainerShownTopConstraint.constant)
             if newCurrentOffset.anchorOffset != draggableContainerShownTopConstraint.constant {
@@ -744,7 +724,6 @@ private extension DraggableDetailsOverlayViewController {
                 self.shadowBackgroundView.alpha = 1.0
             }
             self.draggableContainerShownTopConstraint.constant = targetOffset
-            self.draggableContainerHeightConstraint.constant = self.cachedDraggableContainerHeight
             self.view.layoutIfNeeded()
         }
         if isSpring {
