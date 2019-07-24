@@ -124,17 +124,12 @@ public class DraggableDetailsOverlayViewController: UIViewController {
         }
     }
 
-    public var isDraggableContainerRoundedTopCornersEnabled: Bool = false { //TODO: 58: example
-        didSet {
-            guard isViewLoaded else { return }
-            draggableContainerView.isRoundedTopCornersEnabled = isDraggableContainerRoundedTopCornersEnabled
-        }
-    }
-
     public var draggableContainerTopCornersRadius: CGFloat = 5 { //TODO: 58: example
         didSet {
             guard isViewLoaded else { return }
-            draggableContainerView.topCornersRadius = draggableContainerTopCornersRadius
+            draggableContainerView.layer.cornerRadius = draggableContainerTopCornersRadius
+            draggableContainerBottomConstraint.constant = draggableContainerTopCornersRadius
+            contentContainerBottomConstraint.constant = -draggableContainerTopCornersRadius
         }
     }
 
@@ -272,10 +267,12 @@ public class DraggableDetailsOverlayViewController: UIViewController {
     public var snapAnimationSpringInitialVelocity: CGFloat = 1.5 //TODO: 58: example
 
     private var shadowBackgroundView: UIView!
-    private var draggableContainerView: DraggableDetailsOverlayContainerView!
+    private var draggableContainerView: UIView!
     private var draggableContainerHiddenTopConstraint: NSLayoutConstraint!
     private var draggableContainerShownTopConstraint: NSLayoutConstraint!
+    private var draggableContainerBottomConstraint: NSLayoutConstraint!
     private var contentContainerView: UIView!
+    private var contentContainerBottomConstraint: NSLayoutConstraint!
     private var handleView: DraggableDetailsOverlayHandleView!
     private var handleHeightConstraint: NSLayoutConstraint!
     private var dragGestureRecognizer: UIPanGestureRecognizer!
@@ -531,8 +528,10 @@ private extension DraggableDetailsOverlayViewController {
     }
 
     private func setupDraggableContainer() {
-        draggableContainerView = DraggableDetailsOverlayContainerView(frame: view.bounds)
+        draggableContainerView = UIView(frame: view.bounds)
         draggableContainerView.backgroundColor = draggableContainerBackgroundColor
+        draggableContainerView.layer.masksToBounds = true
+        draggableContainerView.layer.cornerRadius = draggableContainerTopCornersRadius
         draggableContainerView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(draggableContainerView)
         if #available(iOS 11.0, *) {
@@ -548,11 +547,10 @@ private extension DraggableDetailsOverlayViewController {
         draggableContainerHiddenTopConstraint.isActive = true
         draggableContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
         draggableContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
-        let bottomConstraint = draggableContainerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
-        bottomConstraint.priority = UILayoutPriority(rawValue: 999)
-        bottomConstraint.isActive = true
-        draggableContainerView.isRoundedTopCornersEnabled = isDraggableContainerRoundedTopCornersEnabled
-        draggableContainerView.topCornersRadius = draggableContainerTopCornersRadius
+        draggableContainerBottomConstraint = draggableContainerView.bottomAnchor.constraint(equalTo: view.bottomAnchor,
+                                                                                            constant: draggableContainerTopCornersRadius)
+        draggableContainerBottomConstraint.priority = UILayoutPriority(rawValue: 999)
+        draggableContainerBottomConstraint.isActive = true
     }
 
     private func setupHandle() {
@@ -582,7 +580,9 @@ private extension DraggableDetailsOverlayViewController {
         contentContainerView.leadingAnchor.constraint(equalTo: draggableContainerView.leadingAnchor).isActive = true
         contentContainerView.trailingAnchor.constraint(equalTo: draggableContainerView.trailingAnchor).isActive = true
         contentContainerView.topAnchor.constraint(equalTo: handleView.bottomAnchor).isActive = true
-        contentContainerView.bottomAnchor.constraint(equalTo: draggableContainerView.bottomAnchor).isActive = true
+        contentContainerBottomConstraint = contentContainerView.bottomAnchor.constraint(equalTo: draggableContainerView.bottomAnchor,
+                                                                                        constant: -draggableContainerTopCornersRadius)
+        contentContainerBottomConstraint.isActive = true
     }
 
     private func setupPanRecognizer() {

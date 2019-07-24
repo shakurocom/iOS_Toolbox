@@ -213,6 +213,10 @@ extension ExampleDraggableDetailsOverlayViewController: DraggableDetailsOverlayV
         print("did change is visible: \(overlay.isVisible)")
     }
 
+    func draggableDetailsOverlayDidUpdatedLayout(_ overlay: DraggableDetailsOverlayViewController) {
+        print("did update layout")
+    }
+
 }
 
 // MARK: UITextFieldDelegate
