@@ -8,6 +8,15 @@ import CoreData
 
 public extension NSPredicate {
 
+
+    /// Helper method for building predicates based on entity identifier, and additional predicate if needed
+    ///
+    /// - Parameters:
+    ///   - identifier: The identifier of entity, an object that adopts [PredicateConvertible](x-source-tag://PredicateConvertible)
+    ///   - identifierKey: The String key used to construct correct NSPredicate
+    ///   - format: The format string for additional predicate
+    ///   - argumentArray: The arguments for additional predicate
+    /// - Returns: The compound predicate "(identifierKey = identifier) AND (additional predicate format)"
     class func objectWithIDPredicate(_ identifier: PredicateConvertible,
                                      identifierKey: String = "identifier",
                                      andPredicateFormat format: String? = nil,

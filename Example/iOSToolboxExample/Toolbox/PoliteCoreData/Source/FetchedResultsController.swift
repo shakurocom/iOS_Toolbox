@@ -6,6 +6,7 @@
 import Foundation
 import CoreData
 
+/// - Tag: FetchedResultsController
 public final class FetchedResultsController<CDEntityType, ResultType>: NSObject where ResultType: ManagedEntity, ResultType.CDEntityType == CDEntityType {
 
     public enum ChangeType {
