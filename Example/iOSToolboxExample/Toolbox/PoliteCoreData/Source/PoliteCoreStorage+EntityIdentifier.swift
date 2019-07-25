@@ -34,6 +34,7 @@ public extension NSPredicate {
 public extension PoliteCoreStorage {
 
     /// Finds first entity that matches identifier and additional predicate, or creates new one if no entity found
+    /// See also: [findFirstOrCreate](x-source-tag://findFirstOrCreate)
     ///
     /// - Parameters:
     ///   - entityType: A type of entity to find
