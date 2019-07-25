@@ -48,7 +48,6 @@ public final class FetchedResultsController<CDEntityType, ResultType>: NSObject 
         fetchedResultsController.delegate = delegateProxy
     }
 
-
     /// Sets new sort descriptors, and performs fetch if needed
     ///
     /// - Parameters:
@@ -112,7 +111,6 @@ public final class FetchedResultsController<CDEntityType, ResultType>: NSObject 
         return ResultType(cdEntity: fetchedResultsController.object(at: indexPath))
     }
 
-
     /// Returns the IndexPath for the specified entity or nil if the entity does not exist.
     ///
     /// - Parameter entity: The entity for the requested IndexPath.
@@ -123,7 +121,6 @@ public final class FetchedResultsController<CDEntityType, ResultType>: NSObject 
         }
         return fetchedResultsController.indexPath(forObject: object)
     }
-
 
     /// Returns an entity for the specified URI representation of an object ID or nil if the object does not exist.
     ///

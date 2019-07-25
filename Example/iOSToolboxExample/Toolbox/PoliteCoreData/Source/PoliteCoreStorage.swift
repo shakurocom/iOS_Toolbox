@@ -121,7 +121,6 @@ public class PoliteCoreStorage {
 
 public extension PoliteCoreStorage {
 
-
     /// Performs block on private queue of saving context.
     ///
     /// - Parameters:
@@ -159,33 +158,38 @@ public extension PoliteCoreStorage {
 
 public extension PoliteCoreStorage {
 
-
     /// Returns an entity for the specified objectID or nil if the object does not exist.
+    /// See also [existingObjectWithID](x-source-tag://existingObjectWithID)
     ///
     /// - Parameter objectID: The NSManagedObjectID for the specified entity
     /// - Returns: An entity for the specified objectID or nil
+    /// - Warning: To use on main queue only!
     func existingObjectWithIDInMainQueueContext<T: NSManagedObject>(_ objectID: NSManagedObjectID) -> T? {
         return existingObjectWithID(objectID, inContext: mainQueueContext)
     }
 
     /// Returns an entity for the specified predicate or nil if the object does not exist.
+    /// See also [findFirst](x-source-tag://findFirst)
     ///
     /// - Parameters:
     ///   - entityType: A type of entity to find
     ///   - predicate: NSPredicate object that describes entity
     /// - Returns: First found entity or nil
+    /// - Warning: To use on main queue only!
     func findFirstInMainQueueContext<T: NSManagedObject>(_ entityType: T.Type,
                                                          withPredicate predicate: NSPredicate) -> T? {
         return findFirst(entityType, withPredicate: predicate, inContext: mainQueueContext)
     }
 
     /// Finds all entities with given type. Optionally filterred by predicate
+    /// See also [findAll](x-source-tag://findAll)
     ///
     /// - Parameters:
     ///   - entityType: A type of entity to find
     ///   - sortTerm: An array of sort keys
     ///   - predicate: predicate to filter by
     /// - Returns: Array of entities
+    /// - Warning: To use on main queue only!
     func findAllInMainQueueContext<T: NSManagedObject>(_ entityType: T.Type,
                                                        sortTerm: [(sortKey: String, ascending: Bool)] = [],
                                                        predicate: NSPredicate? = nil) -> [T]? {
@@ -202,6 +206,7 @@ public extension PoliteCoreStorage {
     ///   - cacheName: The name of the cache file the receiver should use. Pass nil to prevent caching.
     ///   - configureRequest: A closure that takes a NSFetchRequest as a parameter, can be used to customize the request.
     /// - Returns: A NSFetchedResultsController instance
+    /// - Warning: To use on main queue only!
     func mainQueueFetchedResultsController<T: NSManagedObject>(_ entityType: T.Type,
                                                                sortTerm: [(sortKey: String, ascending: Bool)],
                                                                predicate: NSPredicate? = nil,
@@ -224,11 +229,13 @@ public extension PoliteCoreStorage {
     }
 
     /// Returns the number of entities according to the given predicate.
+    /// See also [countForEntity](x-source-tag://countForEntity)
     ///
     /// - Parameters:
     ///   - entityType: A type of entity to fetch
     ///   - predicate: NSPredicate to filter by
     /// - Returns: Returns the number of entities.
+    /// - Warning: To use on main queue only!
     func countForEntityInMainQueueContext<T: NSManagedObject>(_ entityType: T.Type, predicate: NSPredicate? = nil) -> Int {
         return countForEntity(entityType, inContext: mainQueueContext, predicate: predicate)
     }
@@ -243,6 +250,7 @@ public extension PoliteCoreStorage {
     /// - Parameters:
     ///   - block: A closure that takes a context as a parameter.
     ///   - waitUntilFinished: block or do not block current thread
+    /// - Tag: fetchWithBlock
     func fetchWithBlock(_ block: @escaping ((_ context: NSManagedObjectContext) -> Void), waitUntilFinished: Bool) {
         let fetchContext: NSManagedObjectContext = concurrentFetchContext
         let fetchBlock = { () -> Void in
@@ -257,6 +265,13 @@ public extension PoliteCoreStorage {
         }
     }
 
+    /// Returns the object for the specified ID or nil if the object does not exist.
+    ///
+    /// - Parameters:
+    ///   - objectID: The Object ID for the requested object.
+    ///   - context: The target NSManagedObjectContext
+    /// - Returns: The object specified by objectID. If the object cannot be fetched, or does not exist, or cannot be faulted, it returns nil.
+    /// - Tag: existingObjectWithID
     func existingObjectWithID<T: NSManagedObject>(_ objectID: NSManagedObjectID, inContext context: NSManagedObjectContext) -> T? {
 
         assert(context !== mainQueueContext || Thread.current.isMainThread, "Access to mainQueueContext in BG thread")
@@ -271,12 +286,29 @@ public extension PoliteCoreStorage {
         return object
     }
 
+    /// Returns an entity for the specified predicate or nil if the object does not exist.
+    ///
+    /// - Parameters:
+    ///   - entityType: A type of entity to find
+    ///   - predicate: NSPredicate object that describes entity
+    ///   - context: The target context
+    /// - Returns: First found entity or nil
+    /// - Tag: findFirst
     func findFirst<T: NSManagedObject>(_ entityType: T.Type, withPredicate predicate: NSPredicate, inContext context: NSManagedObjectContext) -> T? {
         let request = requestWithEntityType(entityType, predicate: predicate)
         request.fetchLimit = 1
         return executeFetchRequest(request, inContext: context).first
     }
 
+    /// Finds all entities with given type. Optionally filterred by predicate
+    ///
+    /// - Parameters:
+    ///   - entityType: A type of entity to find
+    ///   - context: The target context
+    ///   - sortTerm: An array of sort keys
+    ///   - predicate: predicate to filter by
+    /// - Returns: Array of entities
+    /// - Tag: findAll
     func findAll<T: NSManagedObject>(_ entityType: T.Type,
                                      inContext context: NSManagedObjectContext,
                                      sortTerm: [(sortKey: String, ascending: Bool)] = [],
@@ -285,22 +317,18 @@ public extension PoliteCoreStorage {
         return executeFetchRequest(request, inContext: context)
     }
 
+    /// Returns the number of entities according to the given predicate.
+    ///
+    /// - Parameters:
+    ///   - entityType: A type of entity to fetch
+    ///   - context: The target context
+    ///   - predicate: NSPredicate to filter by
+    /// - Returns: Returns the number of entities.
+    /// - Tag: countForEntity
     func countForEntity<T: NSManagedObject>(_ entityType: T.Type, inContext context: NSManagedObjectContext, predicate: NSPredicate? = nil) -> Int {
         let request = requestWithEntityType(entityType, predicate: predicate)
         request.resultType = .managedObjectIDResultType
         return countForFetchRequest(request, inContext: context)
-    }
-
-    func obtainPermanentIDsForObject<T: NSManagedObject>(_ object: T) {
-        guard let context = object.managedObjectContext, object.objectID.isTemporaryID else {
-            return
-        }
-        assert(context !== mainQueueContext || Thread.current.isMainThread, "Access to mainQueueContext in BG thread")
-        do {
-            try context.obtainPermanentIDs(for: [object])
-        } catch {
-            //do nothing
-        }
     }
 }
 

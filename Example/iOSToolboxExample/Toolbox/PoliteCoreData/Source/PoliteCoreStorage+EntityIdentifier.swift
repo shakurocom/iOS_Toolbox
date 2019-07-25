@@ -8,7 +8,6 @@ import CoreData
 
 public extension NSPredicate {
 
-
     /// Helper method for building predicates based on entity identifier, and additional predicate if needed
     ///
     /// - Parameters:
@@ -51,7 +50,6 @@ public extension PoliteCoreStorage {
                                                    argumentArray: [Any]? = nil) -> T {
         return findFirstOrCreate(entityType, withPredicate: NSPredicate.objectWithIDPredicate(identifier, andPredicateFormat: format, argumentArray: argumentArray), inContext: context)
     }
-
 
     /// Finds first entity that matches identifier and additional predicate
     /// See also [findFirstByIdOrCreate](x-source-tag://PredicateConvertible) for more info

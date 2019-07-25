@@ -6,7 +6,6 @@
 import Foundation
 import CoreData
 
-
 /// Wrapper on NSFetchedResultsController, provides easy they to observe single entity.
 /// See: [FetchedResultsController](x-source-tag://FetchedResultsController) for more info
 /// - Tag: SingleObjectFetchedResultController
