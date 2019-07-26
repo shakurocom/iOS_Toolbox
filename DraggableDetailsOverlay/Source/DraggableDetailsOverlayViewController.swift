@@ -385,7 +385,7 @@ extension DraggableDetailsOverlayViewController: UIGestureRecognizerDelegate {
         case .began:
             let contentScrollViews = nestedController.draggableDetailsOverlayContentScrollViews(self)
             currentPanStartingContentScrollView = contentScrollViews.first(where: { (scroll) -> Bool in
-                let touchLocation = dragGestureRecognizer.location(ofTouch: 0, in: scroll.superview)
+                let touchLocation = dragGestureRecognizer.location(in: scroll.superview)
                 return scroll.frame.contains(touchLocation)
             })
             setPreventContentScroll(true)
