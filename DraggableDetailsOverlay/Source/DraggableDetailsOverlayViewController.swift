@@ -327,7 +327,7 @@ public class DraggableDetailsOverlayViewController: UIViewController {
 
     public override func viewDidLoad() {
         super.viewDidLoad()
-        addToContainerChildViewController(nestedController, targetContainerView: contentContainerView)
+        addChildViewController(nestedController, notifyAboutAppearanceTransition: false, targetContainerView: contentContainerView)
     }
 
     // MARK: - Events

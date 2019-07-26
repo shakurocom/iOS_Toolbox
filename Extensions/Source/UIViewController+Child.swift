@@ -10,21 +10,22 @@ extension UIViewController {
     /**
      Helper method to add child view controller.
      - parameter childViewController: target child view controller to be added.
+     - parameter notifyAbouAppearanceTransition: If true will perform beginAppearanceTransition() and endAppearanceTransition().
      - parameter targetContainerView: container view, where child should be added.
-            Should be in hierarchy of parent view controller's view.
-            If `nil` - parent's view will be used.
+     Should be in hierarchy of parent view controller's view.
+     If `nil` - parent's view will be used.
      - parameter belowSubview: child will be added just below this view (among it's siblings).
-            If `nil` - will be added as top subview.
+     If `nil` - will be added as top subview.
      - parameter animationDuration: duration of animation (if any).
      - parameter animations: block for transition animations.
-            If `nil` - whole process will not be animated.
+     If `nil` - whole process will not be animated.
      */
-    public func addToContainerChildViewController(_ childViewController: UIViewController,
-                                                  targetContainerView: UIView? = nil,
-                                                  belowSubview: UIView? = nil,
-                                                  //TODO: add flag about isOnScreen - do not begin/end if not on screen
-                                                  animationDuration: TimeInterval = 0.25,
-                                                  animations: ((_ containerView: UIView, _ childView: UIView) -> Void)? = nil) {
+    public func addChildViewController(_ childViewController: UIViewController,
+                                       notifyAboutAppearanceTransition: Bool,
+                                       targetContainerView: UIView? = nil,
+                                       belowSubview: UIView? = nil,
+                                       animationDuration: TimeInterval = 0.25,
+                                       animations: ((_ containerView: UIView, _ childView: UIView) -> Void)? = nil) {
         addChild(childViewController)
 
         let containerView: UIView = targetContainerView ?? view
@@ -33,7 +34,9 @@ extension UIViewController {
         childViewController.view.translatesAutoresizingMaskIntoConstraints = true
         childViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
-        childViewController.beginAppearanceTransition(true, animated: animations != nil)
+        if notifyAboutAppearanceTransition {
+            childViewController.beginAppearanceTransition(true, animated: animations != nil)
+        }
         if let belowSubviewActual = belowSubview {
             containerView.insertSubview(childViewController.view, belowSubview: belowSubviewActual)
         } else {
@@ -46,20 +49,33 @@ extension UIViewController {
                     realAnimations(containerView, childViewController.view)
             },
                 completion: { (_) -> Void in
-                    childViewController.endAppearanceTransition()
+                    if notifyAboutAppearanceTransition {
+                        childViewController.endAppearanceTransition()
+                    }
                     childViewController.didMove(toParent: self)
+
             })
         } else {
-            childViewController.endAppearanceTransition()
+            if notifyAboutAppearanceTransition {
+                childViewController.endAppearanceTransition()
+            }
             childViewController.didMove(toParent: self)
+
         }
     }
 
-    public func removeFromContainerChildViewController() {
+    /// Removes self from parent view controller
+    ///
+    /// - Parameter notifyAbouAppearanceTransition: If true will perform beginAppearanceTransition() and endAppearanceTransition().
+    public func removeFromParentViewController(notifyAboutAppearanceTransition: Bool) {
         willMove(toParent: nil)
-        beginAppearanceTransition(false, animated: false)
+        if notifyAboutAppearanceTransition {
+            beginAppearanceTransition(false, animated: false)
+        }
         view.removeFromSuperview()
-        endAppearanceTransition()
+        if notifyAboutAppearanceTransition {
+            endAppearanceTransition()
+        }
         removeFromParent()
     }
 

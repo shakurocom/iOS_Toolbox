@@ -135,7 +135,7 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
         contentViewController = ExampleDraggableDetailsContentViewController.instantiate()
         contentViewController.delegate = self
         overlayViewController = DraggableDetailsOverlayViewController(nestedController: contentViewController, delegate: self)
-        self.addToContainerChildViewController(overlayViewController)
+        self.addChildViewController(overlayViewController, notifyAboutAppearanceTransition: false)
         overlayViewController.hide(animated: false)
 
         keyboardHandler = KeyboardHandler(enableCurveHack: false, heightDidChange: { [weak self] (change: KeyboardHandler.KeyboardChange) in
