@@ -125,6 +125,8 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
     @IBOutlet private var handleHeightSlider: UISlider!
     @IBOutlet private var handleCornerRadiusSlider: UISlider!
 
+    @IBOutlet private var showHideAnimationDurationSlider: UISlider!
+
     private var contentViewController: ExampleDraggableDetailsContentViewController!
     private var overlayViewController: DraggableDetailsOverlayViewController!
     private var keyboardHandler: KeyboardHandler?
@@ -160,6 +162,7 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
         handleWidthSlider.value = Float(overlayViewController.handleSize.width)
         handleHeightSlider.value = Float(overlayViewController.handleSize.height)
         handleContainerHeightSlider.value = Float(overlayViewController.handleContainerHeight)
+        showHideAnimationDurationSlider.value = Float(overlayViewController.showHideAnimationDuration)
 
         keyboardHandler = KeyboardHandler(enableCurveHack: false, heightDidChange: { [weak self] (change: KeyboardHandler.KeyboardChange) in
             guard let strongSelf = self else {
@@ -202,6 +205,8 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
             overlayViewController.handleSize = CGSize(width: CGFloat(handleWidthSlider.value), height: CGFloat(handleHeightSlider.value))
         case handleContainerHeightSlider:
             overlayViewController.handleContainerHeight = CGFloat(handleContainerHeightSlider.value)
+        case showHideAnimationDurationSlider:
+            overlayViewController.showHideAnimationDuration = TimeInterval(showHideAnimationDurationSlider.value)
         default:
             break
         }

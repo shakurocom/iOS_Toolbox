@@ -139,14 +139,14 @@ public class DraggableDetailsOverlayViewController: UIViewController {
      Use 0 to hide handle.
      Default value is `16`.
      */
-    public var handleContainerHeight: CGFloat = 16 { //TODO: 58: example
+    public var handleContainerHeight: CGFloat = 16 {
         didSet {
             guard isViewLoaded else { return }
             handleHeightConstraint.constant = handleContainerHeight
         }
     }
 
-    public var handleColor: UIColor = UIColor.lightGray { //TODO: 58: example
+    public var handleColor: UIColor = UIColor.lightGray {
         didSet {
             guard isViewLoaded else { return }
             handleView.handleView.backgroundColor = handleColor
@@ -157,7 +157,7 @@ public class DraggableDetailsOverlayViewController: UIViewController {
      Size of drag-handle element.
      Default value is `36 x 4`.
      */
-    public var handleSize: CGSize = CGSize(width: 36, height: 4) { //TODO: 58: example
+    public var handleSize: CGSize = CGSize(width: 36, height: 4) {
         didSet {
             guard isViewLoaded else { return }
             handleView.handleWidthConstraint.constant = handleSize.width
@@ -170,7 +170,7 @@ public class DraggableDetailsOverlayViewController: UIViewController {
      Independent of it's height.
      Default value is `2`.
      */
-    public var handleCornerRadius: CGFloat = 2 { //TODO: 58: example
+    public var handleCornerRadius: CGFloat = 2 {
         didSet {
             guard isViewLoaded else { return }
             handleView.handleView.layer.cornerRadius = handleCornerRadius

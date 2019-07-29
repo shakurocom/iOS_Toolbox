@@ -1423,10 +1423,10 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1QV-ga-W7o" userLabel="View - scrollable content">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="904"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="1040"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="B35-GC-2M7">
-                                                <rect key="frame" x="16" y="16" width="343" height="872"/>
+                                                <rect key="frame" x="16" y="16" width="343" height="1008"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vuu-rc-lrO">
                                                         <rect key="frame" x="0.0" y="0.0" width="343" height="60"/>
@@ -1681,6 +1681,45 @@
                                                             <constraint firstItem="kJu-F4-CGZ" firstAttribute="leading" secondItem="GDZ-Fl-zLl" secondAttribute="leading" constant="8" id="ztB-bN-3Bp"/>
                                                         </constraints>
                                                     </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bSc-6m-mUI">
+                                                        <rect key="frame" x="0.0" y="888" width="343" height="120"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show/Hide duration" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0cd-5j-lgc">
+                                                                <rect key="frame" x="8" y="16" width="327" height="20.5"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <view contentMode="scaleToFill" placeholderIntrinsicWidth="327" placeholderIntrinsicHeight="39.5" translatesAutoresizingMaskIntoConstraints="NO" id="avp-L8-rCr">
+                                                                <rect key="frame" x="8" y="36.5" width="327" height="83.5"/>
+                                                                <subviews>
+                                                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="2" translatesAutoresizingMaskIntoConstraints="NO" id="P0y-sn-K7q">
+                                                                        <rect key="frame" x="-2" y="27" width="331" height="31"/>
+                                                                        <connections>
+                                                                            <action selector="sliderValueChanged:" destination="lht-4A-vse" eventType="valueChanged" id="3nq-vy-qMz"/>
+                                                                        </connections>
+                                                                    </slider>
+                                                                </subviews>
+                                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <constraints>
+                                                                    <constraint firstItem="P0y-sn-K7q" firstAttribute="leading" secondItem="avp-L8-rCr" secondAttribute="leading" id="4iR-kf-Zgd"/>
+                                                                    <constraint firstItem="P0y-sn-K7q" firstAttribute="centerY" secondItem="avp-L8-rCr" secondAttribute="centerY" id="Chz-qY-hqz"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="P0y-sn-K7q" secondAttribute="trailing" id="XdR-8z-eno"/>
+                                                                </constraints>
+                                                            </view>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="trailing" secondItem="avp-L8-rCr" secondAttribute="trailing" constant="8" id="0R9-do-IcP"/>
+                                                            <constraint firstAttribute="trailing" secondItem="0cd-5j-lgc" secondAttribute="trailing" constant="8" id="521-8i-GY2"/>
+                                                            <constraint firstAttribute="bottom" secondItem="avp-L8-rCr" secondAttribute="bottom" id="KjU-dy-rqa"/>
+                                                            <constraint firstItem="avp-L8-rCr" firstAttribute="leading" secondItem="bSc-6m-mUI" secondAttribute="leading" constant="8" id="NWy-7b-ePi"/>
+                                                            <constraint firstItem="avp-L8-rCr" firstAttribute="top" secondItem="0cd-5j-lgc" secondAttribute="bottom" id="Sf8-qX-6Te"/>
+                                                            <constraint firstItem="0cd-5j-lgc" firstAttribute="leading" secondItem="bSc-6m-mUI" secondAttribute="leading" constant="8" id="W7p-ic-Qa2"/>
+                                                            <constraint firstAttribute="height" constant="120" id="b8H-rp-9U3"/>
+                                                            <constraint firstItem="0cd-5j-lgc" firstAttribute="top" secondItem="bSc-6m-mUI" secondAttribute="top" constant="16" id="cbH-v9-sfe"/>
+                                                        </constraints>
+                                                    </view>
                                                 </subviews>
                                             </stackView>
                                         </subviews>
@@ -1734,6 +1773,7 @@
                         <outlet property="handleWidthSlider" destination="N2H-zb-7bO" id="YuT-8N-ghW"/>
                         <outlet property="shadowColorButton" destination="AAJ-El-VLM" id="R3D-VX-QJk"/>
                         <outlet property="shadowSwitch" destination="GTY-fh-q3e" id="M0P-P4-Fqb"/>
+                        <outlet property="showHideAnimationDurationSlider" destination="P0y-sn-K7q" id="hkB-1H-nTg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="unf-ur-rQy" userLabel="First Responder" sceneMemberID="firstResponder"/>
