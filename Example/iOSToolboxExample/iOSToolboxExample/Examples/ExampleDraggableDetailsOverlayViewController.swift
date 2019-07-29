@@ -159,6 +159,7 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
 
         handleWidthSlider.value = Float(overlayViewController.handleSize.width)
         handleHeightSlider.value = Float(overlayViewController.handleSize.height)
+        handleContainerHeightSlider.value = Float(overlayViewController.handleContainerHeight)
 
         keyboardHandler = KeyboardHandler(enableCurveHack: false, heightDidChange: { [weak self] (change: KeyboardHandler.KeyboardChange) in
             guard let strongSelf = self else {
@@ -191,17 +192,16 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
         }
     }
 
-     @IBAction private func sliderValueChanged(_ sender: UISlider) {
+    @IBAction private func sliderValueChanged(_ sender: UISlider) {
         switch sender {
         case draggableContainerTopCornersRadiusSlider:
             overlayViewController.draggableContainerTopCornersRadius = CGFloat(sender.value)
-
         case handleCornerRadiusSlider:
             overlayViewController.handleCornerRadius = CGFloat(sender.value)
-
         case handleWidthSlider, handleHeightSlider:
             overlayViewController.handleSize = CGSize(width: CGFloat(handleWidthSlider.value), height: CGFloat(handleHeightSlider.value))
-
+        case handleContainerHeightSlider:
+            overlayViewController.handleContainerHeight = CGFloat(handleContainerHeightSlider.value)
         default:
             break
         }
@@ -213,12 +213,12 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
     }
 
     @IBAction private func draggableContainerBackgroundColorButtonPressed(_ sender: UIButton) {
-        overlayViewController.draggableContainerBackgroundColor = UIColor.random(alpha: 0.5)
+        overlayViewController.draggableContainerBackgroundColor = UIColor.random(alpha: 1.0)
         draggableContainerBackgroundColorButton.setTitleColor(overlayViewController.draggableContainerBackgroundColor, for: .normal)
     }
 
     @IBAction private func handleColorButtonPressed(_ sender: UIButton) {
-        overlayViewController.handleColor = UIColor.random(alpha: 0.5)
+        overlayViewController.handleColor = UIColor.random(alpha: 1.0)
         handleColorButton.setTitleColor(overlayViewController.handleColor, for: .normal)
     }
 }

@@ -1423,10 +1423,10 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1QV-ga-W7o" userLabel="View - scrollable content">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="768"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="904"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="B35-GC-2M7">
-                                                <rect key="frame" x="16" y="16" width="343" height="736"/>
+                                                <rect key="frame" x="16" y="16" width="343" height="872"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vuu-rc-lrO">
                                                         <rect key="frame" x="0.0" y="0.0" width="343" height="60"/>
@@ -1642,6 +1642,45 @@
                                                             <constraint firstAttribute="trailing" secondItem="BWA-2E-3UV" secondAttribute="trailing" constant="8" id="jag-Ac-9w5"/>
                                                         </constraints>
                                                     </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GDZ-Fl-zLl">
+                                                        <rect key="frame" x="0.0" y="752" width="343" height="120"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="handleContainerHeight" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5rU-dC-yee">
+                                                                <rect key="frame" x="8" y="16" width="327" height="20.5"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <view contentMode="scaleToFill" placeholderIntrinsicWidth="327" placeholderIntrinsicHeight="39.5" translatesAutoresizingMaskIntoConstraints="NO" id="kJu-F4-CGZ">
+                                                                <rect key="frame" x="8" y="36.5" width="327" height="83.5"/>
+                                                                <subviews>
+                                                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="C4E-rp-vbp">
+                                                                        <rect key="frame" x="-2" y="27" width="331" height="31"/>
+                                                                        <connections>
+                                                                            <action selector="sliderValueChanged:" destination="lht-4A-vse" eventType="valueChanged" id="lyv-Vr-NT0"/>
+                                                                        </connections>
+                                                                    </slider>
+                                                                </subviews>
+                                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <constraints>
+                                                                    <constraint firstItem="C4E-rp-vbp" firstAttribute="centerY" secondItem="kJu-F4-CGZ" secondAttribute="centerY" id="Ttb-7k-h98"/>
+                                                                    <constraint firstItem="C4E-rp-vbp" firstAttribute="leading" secondItem="kJu-F4-CGZ" secondAttribute="leading" id="VMP-S0-YR8"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="C4E-rp-vbp" secondAttribute="trailing" id="aGQ-XN-HbQ"/>
+                                                                </constraints>
+                                                            </view>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstItem="5rU-dC-yee" firstAttribute="leading" secondItem="GDZ-Fl-zLl" secondAttribute="leading" constant="8" id="638-8M-2Vg"/>
+                                                            <constraint firstAttribute="trailing" secondItem="5rU-dC-yee" secondAttribute="trailing" constant="8" id="PE4-qd-eUW"/>
+                                                            <constraint firstItem="kJu-F4-CGZ" firstAttribute="top" secondItem="5rU-dC-yee" secondAttribute="bottom" id="PaX-aD-3QR"/>
+                                                            <constraint firstAttribute="trailing" secondItem="kJu-F4-CGZ" secondAttribute="trailing" constant="8" id="VPe-4x-PFm"/>
+                                                            <constraint firstItem="5rU-dC-yee" firstAttribute="top" secondItem="GDZ-Fl-zLl" secondAttribute="top" constant="16" id="cS1-f8-bJF"/>
+                                                            <constraint firstAttribute="height" constant="120" id="qlW-Em-ODl"/>
+                                                            <constraint firstAttribute="bottom" secondItem="kJu-F4-CGZ" secondAttribute="bottom" id="rPH-r9-VJX"/>
+                                                            <constraint firstItem="kJu-F4-CGZ" firstAttribute="leading" secondItem="GDZ-Fl-zLl" secondAttribute="leading" constant="8" id="ztB-bN-3Bp"/>
+                                                        </constraints>
+                                                    </view>
                                                 </subviews>
                                             </stackView>
                                         </subviews>
@@ -1689,6 +1728,7 @@
                         <outlet property="draggableContainerBackgroundColorButton" destination="nrg-uK-hcE" id="Jo0-dG-iS6"/>
                         <outlet property="draggableContainerTopCornersRadiusSlider" destination="l8b-03-mcY" id="Qtn-hP-aY3"/>
                         <outlet property="handleColorButton" destination="2LL-d8-f6f" id="d9H-6V-3dh"/>
+                        <outlet property="handleContainerHeightSlider" destination="C4E-rp-vbp" id="A0b-3Y-wd0"/>
                         <outlet property="handleCornerRadiusSlider" destination="fJp-fS-xBh" id="Isf-fL-a1a"/>
                         <outlet property="handleHeightSlider" destination="6bh-79-aOX" id="WQd-o2-E6v"/>
                         <outlet property="handleWidthSlider" destination="N2H-zb-7bO" id="YuT-8N-ghW"/>
