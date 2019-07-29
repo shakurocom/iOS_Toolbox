@@ -1605,13 +1605,13 @@
                                                             <view contentMode="scaleToFill" placeholderIntrinsicWidth="327" placeholderIntrinsicHeight="39.5" translatesAutoresizingMaskIntoConstraints="NO" id="BWA-2E-3UV">
                                                                 <rect key="frame" x="8" y="60" width="327" height="100"/>
                                                                 <subviews>
-                                                                    <slider opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="50" translatesAutoresizingMaskIntoConstraints="NO" id="N2H-zb-7bO">
+                                                                    <slider opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="300" translatesAutoresizingMaskIntoConstraints="NO" id="N2H-zb-7bO">
                                                                         <rect key="frame" x="6" y="16" width="315" height="31"/>
                                                                         <connections>
                                                                             <action selector="sliderValueChanged:" destination="lht-4A-vse" eventType="valueChanged" id="OuN-Li-gyB"/>
                                                                         </connections>
                                                                     </slider>
-                                                                    <slider opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="50" translatesAutoresizingMaskIntoConstraints="NO" id="6bh-79-aOX">
+                                                                    <slider opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="300" translatesAutoresizingMaskIntoConstraints="NO" id="6bh-79-aOX">
                                                                         <rect key="frame" x="6" y="54" width="315" height="31"/>
                                                                         <connections>
                                                                             <action selector="sliderValueChanged:" destination="lht-4A-vse" eventType="valueChanged" id="K58-NL-tt1"/>
@@ -1654,7 +1654,7 @@
                                                             <view contentMode="scaleToFill" placeholderIntrinsicWidth="327" placeholderIntrinsicHeight="39.5" translatesAutoresizingMaskIntoConstraints="NO" id="kJu-F4-CGZ">
                                                                 <rect key="frame" x="8" y="36.5" width="327" height="83.5"/>
                                                                 <subviews>
-                                                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="C4E-rp-vbp">
+                                                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="300" translatesAutoresizingMaskIntoConstraints="NO" id="C4E-rp-vbp">
                                                                         <rect key="frame" x="-2" y="27" width="331" height="31"/>
                                                                         <connections>
                                                                             <action selector="sliderValueChanged:" destination="lht-4A-vse" eventType="valueChanged" id="lyv-Vr-NT0"/>
