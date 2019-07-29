@@ -119,6 +119,12 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
     @IBOutlet private var draggableContainerBackgroundColorButton: UIButton!
     @IBOutlet private var draggableContainerTopCornersRadiusSlider: UISlider!
 
+    @IBOutlet private var handleColorButton: UIButton!
+    @IBOutlet private var handleContainerHeightSlider: UISlider!
+    @IBOutlet private var handleWidthSlider: UISlider!
+    @IBOutlet private var handleHeightSlider: UISlider!
+    @IBOutlet private var handleCornerRadiusSlider: UISlider!
+
     private var contentViewController: ExampleDraggableDetailsContentViewController!
     private var overlayViewController: DraggableDetailsOverlayViewController!
     private var keyboardHandler: KeyboardHandler?
@@ -137,14 +143,22 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
         self.addChildViewController(overlayViewController, notifyAboutAppearanceTransition: false)
         overlayViewController.show(initialAnchor: .middle(height: 400), animated: false)
 
+        contentScrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 400, right: 0)
+
         overlayViewController.isShadowEnabled = shadowSwitch.isOn
 
+        [shadowColorButton, draggableContainerBackgroundColorButton, handleColorButton].forEach { (button: UIButton) in
+            button.setTitleShadowColor(UIColor.black, for: .normal)
+        }
         shadowColorButton.setTitleColor(overlayViewController.shadowBackgroundColor, for: .normal)
-        shadowColorButton.setTitleShadowColor(UIColor.black, for: .normal)
-
-        draggableContainerBackgroundColorButton.setTitleShadowColor(UIColor.black, for: .normal)
         draggableContainerBackgroundColorButton.setTitleColor(overlayViewController.draggableContainerBackgroundColor, for: .normal)
+        handleColorButton.setTitleColor(overlayViewController.handleColor, for: .normal)
+
         draggableContainerTopCornersRadiusSlider.value = Float(overlayViewController.draggableContainerTopCornersRadius)
+        handleCornerRadiusSlider.value = Float(overlayViewController.handleCornerRadius)
+
+        handleWidthSlider.value = Float(overlayViewController.handleSize.width)
+        handleHeightSlider.value = Float(overlayViewController.handleSize.height)
 
         keyboardHandler = KeyboardHandler(enableCurveHack: false, heightDidChange: { [weak self] (change: KeyboardHandler.KeyboardChange) in
             guard let strongSelf = self else {
@@ -181,27 +195,31 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
         switch sender {
         case draggableContainerTopCornersRadiusSlider:
             overlayViewController.draggableContainerTopCornersRadius = CGFloat(sender.value)
+
+        case handleCornerRadiusSlider:
+            overlayViewController.handleCornerRadius = CGFloat(sender.value)
+
+        case handleWidthSlider, handleHeightSlider:
+            overlayViewController.handleSize = CGSize(width: CGFloat(handleWidthSlider.value), height: CGFloat(handleHeightSlider.value))
+
         default:
             break
         }
     }
 
     @IBAction private func changeShadowColor(_ sender: UIButton) {
-        let range: ClosedRange<CGFloat> = 0...1
-        overlayViewController.shadowBackgroundColor = UIColor(red: CGFloat.random(in: range),
-                                                              green: CGFloat.random(in: range),
-                                                              blue: CGFloat.random(in: range),
-                                                              alpha: 0.5)
+        overlayViewController.shadowBackgroundColor = UIColor.random(alpha: 0.5)
         shadowColorButton.setTitleColor(overlayViewController.shadowBackgroundColor.withAlphaComponent(1.0), for: .normal)
     }
 
     @IBAction private func draggableContainerBackgroundColorButtonPressed(_ sender: UIButton) {
-        let range: ClosedRange<CGFloat> = 0...1
-        overlayViewController.draggableContainerBackgroundColor = UIColor(red: CGFloat.random(in: range),
-                                                              green: CGFloat.random(in: range),
-                                                              blue: CGFloat.random(in: range),
-                                                              alpha: 1.0)
+        overlayViewController.draggableContainerBackgroundColor = UIColor.random(alpha: 0.5)
         draggableContainerBackgroundColorButton.setTitleColor(overlayViewController.draggableContainerBackgroundColor, for: .normal)
+    }
+
+    @IBAction private func handleColorButtonPressed(_ sender: UIButton) {
+        overlayViewController.handleColor = UIColor.random(alpha: 0.5)
+        handleColorButton.setTitleColor(overlayViewController.handleColor, for: .normal)
     }
 }
 
@@ -291,6 +309,16 @@ extension ExampleDraggableDetailsOverlayViewController: UIScrollViewDelegate {
 }
 
 // MARK: Private
+
+private extension UIColor {
+    static func random(alpha: CGFloat = 1.0) -> UIColor {
+        let range: ClosedRange<CGFloat> = 0...1
+        return UIColor(red: CGFloat.random(in: range),
+                       green: CGFloat.random(in: range),
+                       blue: CGFloat.random(in: range),
+                       alpha: alpha)
+    }
+}
 
 private extension ExampleDraggableDetailsOverlayViewController {
 

@@ -103,28 +103,28 @@ public class DraggableDetailsOverlayViewController: UIViewController {
      Shadow will block interaction with everything underneath.
      Default value is `true`.
      */
-    public var isShadowEnabled: Bool = true { //TODO: 58: example
+    public var isShadowEnabled: Bool = true {
         didSet {
             guard isViewLoaded else { return }
             shadowBackgroundView.isHidden = !isShadowEnabled
         }
     }
 
-    public var shadowBackgroundColor: UIColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5) { //TODO: 58: example
+    public var shadowBackgroundColor: UIColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5) {
         didSet {
             guard isViewLoaded else { return }
             shadowBackgroundView.backgroundColor = shadowBackgroundColor
         }
     }
 
-    public var draggableContainerBackgroundColor: UIColor = UIColor.white { //TODO: 58: example
+    public var draggableContainerBackgroundColor: UIColor = UIColor.white {
         didSet {
             guard isViewLoaded else { return }
             draggableContainerView.backgroundColor = draggableContainerBackgroundColor
         }
     }
 
-    public var draggableContainerTopCornersRadius: CGFloat = 5 { //TODO: 58: example
+    public var draggableContainerTopCornersRadius: CGFloat = 5 {
         didSet {
             guard isViewLoaded else { return }
             draggableContainerView.layer.cornerRadius = draggableContainerTopCornersRadius
