@@ -240,31 +240,31 @@ public class DraggableDetailsOverlayViewController: UIViewController {
      Spring is not used in `show()`.
      Default value is `true`.
      */
-    public var snapAnimationUseSpring: Bool = true //TODO: 58: example
+    public var snapAnimationUseSpring: Bool = true
 
     /**
      Same as `snapAnimationUseSpring`, but explicitly for top anchor.
      Default value is `false`.
      */
-    public var snapAnimationTopAnchorUseSpring: Bool = false //TODO: 58: example
+    public var snapAnimationTopAnchorUseSpring: Bool = false
 
     /**
      Duration of animation used, when user releases finger during drag and container snaps to anchor.
      Default value is `0.4`.
      */
-    public var snapAnimationSpringDuration: TimeInterval = 0.4 //TODO: 58: example
+    public var snapAnimationSpringDuration: TimeInterval = 0.4
 
     /**
      Parameter of spring animation (if enabled).
      Default value is `0.7`.
      */
-    public var snapAnimationSpringDamping: CGFloat = 0.7 //TODO: 58: example
+    public var snapAnimationSpringDamping: CGFloat = 0.7
 
     /**
      Parameter of spring animation (if enabled).
      Default value is `1.5`.
      */
-    public var snapAnimationSpringInitialVelocity: CGFloat = 1.5 //TODO: 58: example
+    public var snapAnimationSpringInitialVelocity: CGFloat = 1.5
 
     private var shadowBackgroundView: UIView!
     private var draggableContainerView: UIView!

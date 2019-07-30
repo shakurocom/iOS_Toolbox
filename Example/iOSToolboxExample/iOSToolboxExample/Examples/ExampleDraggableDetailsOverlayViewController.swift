@@ -117,15 +117,31 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
     @IBOutlet private var shadowColorButton: UIButton!
 
     @IBOutlet private var draggableContainerBackgroundColorButton: UIButton!
-    @IBOutlet private var draggableContainerTopCornersRadiusSlider: UISlider!
 
     @IBOutlet private var handleColorButton: UIButton!
 
+    @IBOutlet private var draggableContainerTopCornersRadiusSlider: UISlider!
     @IBOutlet private var handleContainerHeightSlider: UISlider!
     @IBOutlet private var handleWidthSlider: UISlider!
     @IBOutlet private var handleHeightSlider: UISlider!
     @IBOutlet private var handleCornerRadiusSlider: UISlider!
     @IBOutlet private var showHideAnimationDurationSlider: UISlider!
+    @IBOutlet private var bounceDragDumpeningSlider: UISlider!
+    @IBOutlet private var snapAnimationNormalDurationSlider: UISlider!
+    @IBOutlet private var snapAnimationSpringDurationSlider: UISlider!
+    @IBOutlet private var snapAnimationSpringDampingSlider: UISlider!
+    @IBOutlet private var snapAnimationSpringInitialVelocitySlider: UISlider!
+
+    @IBOutlet private var draggableContainerTopCornersRadiusLabel: UILabel!
+    @IBOutlet private var handleContainerHeightLabel: UILabel!
+    @IBOutlet private var handleSizeLabel: UILabel!
+    @IBOutlet private var handleCornerRadiusLabel: UILabel!
+    @IBOutlet private var showHideAnimationDurationLabel: UILabel!
+    @IBOutlet private var bounceDragDumpeningLabel: UILabel!
+    @IBOutlet private var snapAnimationNormalDurationLabel: UILabel!
+    @IBOutlet private var snapAnimationSpringDurationLabel: UILabel!
+    @IBOutlet private var snapAnimationSpringDampingLabel: UILabel!
+    @IBOutlet private var snapAnimationSpringInitialVelocityLabel: UILabel!
 
     @IBOutlet private var isSnapToAnchorsEnabledSwitch: UISwitch!
 
@@ -133,8 +149,6 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
     @IBOutlet private var isBounceEnabledSwitch: UISwitch!
     @IBOutlet private var snapCalculationUsesDecelerationSwitch: UISwitch!
     @IBOutlet private var snapCalculationDecelerationCanSkipNextAnchorSwitch: UISwitch!
-
-    @IBOutlet private var bounceDragDumpeningSlider: UISlider!
 
     @IBOutlet private var snapCalculationDecelerationRateSegmentedControl: UISegmentedControl!
 
@@ -181,6 +195,11 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
         showHideAnimationDurationSlider.value = Float(overlayViewController.showHideAnimationDuration)
         bounceDragDumpeningSlider.value = Float(overlayViewController.bounceDragDumpening)
 
+        snapAnimationNormalDurationSlider.value = Float(overlayViewController.snapAnimationNormalDuration)
+        snapAnimationSpringDurationSlider.value = Float(overlayViewController.snapAnimationSpringDuration)
+        snapAnimationSpringDampingSlider.value = Float(overlayViewController.snapAnimationSpringDamping)
+        snapAnimationSpringInitialVelocitySlider.value = Float(overlayViewController.snapAnimationSpringInitialVelocity)
+
         overlayViewController.snapCalculationDecelerationRate = snapCalculationDecelerationRateSegmentedControl.selectedSegmentIndex == 0 ? .normal : .fast
 
         keyboardHandler = KeyboardHandler(enableCurveHack: false, heightDidChange: { [weak self] (change: KeyboardHandler.KeyboardChange) in
@@ -198,6 +217,7 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
                 completion: nil)
         })
         keyboardHandler?.isActive = true
+        updateSliderLabels()
     }
 
     @IBAction private func showOverlayButtonDidPress() {
@@ -247,9 +267,18 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
             overlayViewController.showHideAnimationDuration = TimeInterval(showHideAnimationDurationSlider.value)
         case bounceDragDumpeningSlider:
             overlayViewController.bounceDragDumpening = CGFloat(bounceDragDumpeningSlider.value)
+        case snapAnimationNormalDurationSlider:
+            overlayViewController.snapAnimationNormalDuration = TimeInterval(snapAnimationNormalDurationSlider.value)
+        case snapAnimationSpringDurationSlider:
+            overlayViewController.snapAnimationSpringDuration = TimeInterval(snapAnimationSpringDurationSlider.value)
+        case snapAnimationSpringDampingSlider:
+            overlayViewController.snapAnimationSpringDamping = CGFloat(snapAnimationSpringDampingSlider.value)
+        case snapAnimationSpringInitialVelocitySlider:
+            overlayViewController.snapAnimationSpringInitialVelocity = CGFloat(snapAnimationSpringInitialVelocitySlider.value)
         default:
             break
         }
+        updateSliderLabels()
     }
 
     @IBAction private func changeShadowColor(_ sender: UIButton) {
@@ -316,31 +345,6 @@ extension ExampleDraggableDetailsOverlayViewController: DraggableDetailsOverlayV
 
 }
 
-// MARK: UITextFieldDelegate
-
-extension ExampleDraggableDetailsOverlayViewController: UITextFieldDelegate {
-
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        view.endEditing(false)
-        return false
-    }
-
-//    func textFieldDidEndEditing(_ textField: UITextField) {
-//        if textField === topInsetTextField {
-//            textField.text = "\(topInset())"
-//            overlayViewController.updateLayout(animated: true)
-//        } else if textField === maxHeightTextField {
-//            if let value = maxHeight() {
-//                textField.text = "\(value)"
-//            } else {
-//                textField.text = nil
-//            }
-//            overlayViewController.updateLayout(animated: true)
-//        }
-//    }
-
-}
-
 // MARK: UIScrollViewDelegate
 
 extension ExampleDraggableDetailsOverlayViewController: UIScrollViewDelegate {
@@ -366,18 +370,18 @@ private extension UIColor {
 }
 
 private extension ExampleDraggableDetailsOverlayViewController {
-
-//    private func topInset() -> Int {
-//        return Int(topInsetTextField.text ?? "0") ?? 0
-//    }
-//
-//    private func maxHeight() -> Int? {
-//        guard let text = maxHeightTextField.text else {
-//            return nil
-//        }
-//        return Int(text)
-//    }
-
+    func updateSliderLabels() {
+        draggableContainerTopCornersRadiusLabel.text = String(format: "%.1f", draggableContainerTopCornersRadiusSlider.value)
+        handleContainerHeightLabel.text = String(format: "%.1f", handleContainerHeightSlider.value)
+        handleSizeLabel.text = String(format: "W: %.1f; H: %.1f", handleWidthSlider.value, handleHeightSlider.value)
+        handleCornerRadiusLabel.text = String(format: "%.1f", handleCornerRadiusSlider.value)
+        showHideAnimationDurationLabel.text = String(format: "%.2f", showHideAnimationDurationSlider.value)
+        bounceDragDumpeningLabel.text = String(format: "%.2f", bounceDragDumpeningSlider.value)
+        snapAnimationNormalDurationLabel.text = String(format: "%.2f", snapAnimationNormalDurationSlider.value)
+        snapAnimationSpringDurationLabel.text = String(format: "%.2f", snapAnimationSpringDurationSlider.value)
+        snapAnimationSpringDampingLabel.text = String(format: "%.2f", snapAnimationSpringDampingSlider.value)
+        snapAnimationSpringInitialVelocityLabel.text = String(format: "%.2f", snapAnimationSpringInitialVelocitySlider.value)
+    }
 }
 
 // MARK: ExampleViewControllerProtocol
