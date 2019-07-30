@@ -15,4 +15,5 @@ public protocol ManagedEntity {
     var objectID: NSManagedObjectID {get}
 
     init(cdEntity: CDEntityType)
+
 }

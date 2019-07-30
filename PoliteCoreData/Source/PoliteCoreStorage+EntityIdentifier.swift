@@ -67,4 +67,5 @@ public extension PoliteCoreStorage {
                                            argumentArray: [Any]? = nil) -> T? {
         return findFirst(entityType, withPredicate: NSPredicate.objectWithIDPredicate(identifier, andPredicateFormat: format, argumentArray: argumentArray), inContext: context)
     }
+
 }

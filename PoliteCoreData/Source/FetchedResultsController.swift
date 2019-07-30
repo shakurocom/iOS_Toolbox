@@ -155,6 +155,7 @@ public final class FetchedResultsController<CDEntityType, ResultType: ManagedEnt
 // MARK: - Private NSFetchedResultsControllerDelegate
 
 private final class HiddenDelegateProxy<CDEntityType, ResultType: ManagedEntity>: NSObject, NSFetchedResultsControllerDelegate where ResultType.CDEntityType == CDEntityType {
+
     weak var target: FetchedResultsController<CDEntityType, ResultType>?
 
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
@@ -222,4 +223,5 @@ private final class HiddenDelegateProxy<CDEntityType, ResultType: ManagedEntity>
         }
         actualTarget.didChangeContent?(actualTarget)
     }
+
 }

@@ -34,6 +34,7 @@ public final class SingleObjectFetchedResultController<CDEntityType, ResultType:
         fetchedResultsController.performFetch(predicate: predicate)
         updateResult()
     }
+
 }
 
 // MARK: - Private
@@ -67,4 +68,5 @@ private extension SingleObjectFetchedResultController {
         }
         result = fetchedResultsController.itemAtIndexPath(resultIndexPath)
     }
+
 }

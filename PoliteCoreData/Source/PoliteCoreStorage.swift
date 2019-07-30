@@ -152,6 +152,7 @@ public extension PoliteCoreStorage {
         }
         return createEntityInContext(entityType, context: context)
     }
+
 }
 
 // MARK: Main Queue
@@ -239,6 +240,7 @@ public extension PoliteCoreStorage {
     func countForEntityInMainQueueContext<T: NSManagedObject>(_ entityType: T.Type, predicate: NSPredicate? = nil) -> Int {
         return countForEntity(entityType, inContext: mainQueueContext, predicate: predicate)
     }
+
 }
 
 // MARK: General
@@ -330,6 +332,7 @@ public extension PoliteCoreStorage {
         request.resultType = .managedObjectIDResultType
         return countForFetchRequest(request, inContext: context)
     }
+
 }
 
 // MARK: - Private
