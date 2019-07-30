@@ -18,18 +18,18 @@ class ExampleEntity {
         self.identifier = identifier
     }
 
-    init(cdEntity: CDExampleEntity) {
-        createdAt = Date(timeIntervalSince1970: cdEntity.createdAt)
-        updatedAt = Date(timeIntervalSince1970: cdEntity.updatedAt)
-        identifier = cdEntity.identifier ?? UUID().uuidString
+    init(entity: CDExampleEntity) {
+        createdAt = Date(timeIntervalSince1970: entity.createdAt)
+        updatedAt = Date(timeIntervalSince1970: entity.updatedAt)
+        identifier = entity.identifier ?? UUID().uuidString
     }
 }
 
 final class ManagedExampleEntity: ExampleEntity, ManagedEntity {
     let objectID: NSManagedObjectID
 
-    override init(cdEntity: CDExampleEntity) {
-        objectID = cdEntity.objectID
-        super.init(cdEntity: cdEntity)
+    override init(entity: CDExampleEntity) {
+        objectID = entity.objectID
+        super.init(entity: entity)
     }
 }

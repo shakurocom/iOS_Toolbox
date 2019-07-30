@@ -115,7 +115,7 @@ public final class FetchedResultsController<EntityType, ResultType: ManagedEntit
     /// - Parameter indexPath: An index path in the fetch results.
     /// - Returns: The fetched entity at a given indexPath.
     public func itemAtIndexPath(_ indexPath: IndexPath) -> ResultType {
-        return ResultType(cdEntity: fetchedResultsController.object(at: indexPath))
+        return ResultType(entity: fetchedResultsController.object(at: indexPath))
     }
 
     /// Returns the IndexPath for the specified entity or nil if the entity does not exist.
@@ -138,7 +138,7 @@ public final class FetchedResultsController<EntityType, ResultType: ManagedEntit
             let object: EntityType = (try? fetchedResultsController.managedObjectContext.existingObject(with: objectID)) as? EntityType else {
                 return nil
         }
-        return ResultType(cdEntity: object)
+        return ResultType(entity: object)
     }
 
     /// Calls the given closure on each element in the section specified by index.
