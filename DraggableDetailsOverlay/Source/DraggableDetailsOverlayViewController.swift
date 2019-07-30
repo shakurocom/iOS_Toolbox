@@ -188,7 +188,7 @@ public class DraggableDetailsOverlayViewController: UIViewController {
      Affects drag and show().
      Default value `true`.
      */
-    public var isSnapToAnchorsEnabled: Bool = true //TODO: 58: example
+    public var isSnapToAnchorsEnabled: Bool = true
 
     /**
      If enabled, user can drag overlay below bottom

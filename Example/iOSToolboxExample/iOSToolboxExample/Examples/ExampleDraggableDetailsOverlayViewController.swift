@@ -129,6 +129,11 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
 
     @IBOutlet private var isSnapToAnchorsEnabledSwitch: UISwitch!
 
+    @IBOutlet private var isDragOffScreenToHideEnabledSwitch: UISwitch!
+    @IBOutlet private var isBounceEnabledSwitch: UISwitch!
+    @IBOutlet private var snapCalculationUsesDecelerationSwitch: UISwitch!
+    @IBOutlet private var snapCalculationDecelerationCanSkipNextAnchorSwitch: UISwitch!
+
     private var contentViewController: ExampleDraggableDetailsContentViewController!
     private var overlayViewController: DraggableDetailsOverlayViewController!
     private var keyboardHandler: KeyboardHandler?
@@ -151,6 +156,10 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
 
         overlayViewController.isShadowEnabled = shadowSwitch.isOn
         overlayViewController.isSnapToAnchorsEnabled = isSnapToAnchorsEnabledSwitch.isOn
+        isDragOffScreenToHideEnabledSwitch.isOn = overlayViewController.isDragOffScreenToHideEnabled
+        isBounceEnabledSwitch.isOn = overlayViewController.isBounceEnabled
+        snapCalculationUsesDecelerationSwitch.isOn = overlayViewController.snapCalculationUsesDeceleration
+        snapCalculationDecelerationCanSkipNextAnchorSwitch.isOn = overlayViewController.snapCalculationDecelerationCanSkipNextAnchor
 
         [shadowColorButton, draggableContainerBackgroundColorButton, handleColorButton].forEach { (button: UIButton) in
             button.setTitleShadowColor(UIColor.black, for: .normal)
@@ -195,6 +204,14 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
             overlayViewController.isShadowEnabled = shadowSwitch.isOn
         case isSnapToAnchorsEnabledSwitch:
             overlayViewController.isSnapToAnchorsEnabled = isSnapToAnchorsEnabledSwitch.isOn
+        case isDragOffScreenToHideEnabledSwitch:
+            overlayViewController.isDragOffScreenToHideEnabled = isDragOffScreenToHideEnabledSwitch.isOn
+        case isBounceEnabledSwitch:
+            overlayViewController.isBounceEnabled = isBounceEnabledSwitch.isOn
+        case snapCalculationUsesDecelerationSwitch:
+            overlayViewController.snapCalculationUsesDeceleration = snapCalculationUsesDecelerationSwitch.isOn
+        case snapCalculationDecelerationCanSkipNextAnchorSwitch:
+            overlayViewController.snapCalculationDecelerationCanSkipNextAnchor = snapCalculationDecelerationCanSkipNextAnchorSwitch.isOn
         default:
             break
         }
