@@ -120,6 +120,9 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
 
     @IBOutlet private var handleColorButton: UIButton!
 
+    @IBOutlet private var overlayTopInsetSlider: UISlider!
+    @IBOutlet private var overlayMaxHeightSlider: UISlider!
+
     @IBOutlet private var draggableContainerTopCornersRadiusSlider: UISlider!
     @IBOutlet private var handleContainerHeightSlider: UISlider!
     @IBOutlet private var handleWidthSlider: UISlider!
@@ -142,6 +145,8 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
     @IBOutlet private var snapAnimationSpringDurationLabel: UILabel!
     @IBOutlet private var snapAnimationSpringDampingLabel: UILabel!
     @IBOutlet private var snapAnimationSpringInitialVelocityLabel: UILabel!
+    @IBOutlet private var overlayTopInsetLabel: UILabel!
+    @IBOutlet private var overlayMaxHeightLabel: UILabel!
 
     @IBOutlet private var isSnapToAnchorsEnabledSwitch: UISwitch!
 
@@ -225,6 +230,17 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
         updateSliderLabels()
     }
 
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        let maxValue: Float = Float(view.bounds.size.height)
+        if maxValue != overlayTopInsetSlider.maximumValue || maxValue != overlayMaxHeightSlider.maximumValue {
+            overlayTopInsetSlider.maximumValue = maxValue
+            overlayMaxHeightSlider.maximumValue = maxValue
+            overlayViewController.updateLayout(animated: false)
+            updateSliderLabels()
+        }
+    }
+
     @IBAction private func showOverlayButtonDidPress() {
         view.endEditing(true)
         overlayViewController.show(initialAnchor: .middle(height: 400), animated: true)
@@ -284,6 +300,8 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
             overlayViewController.snapAnimationSpringDamping = CGFloat(snapAnimationSpringDampingSlider.value)
         case snapAnimationSpringInitialVelocitySlider:
             overlayViewController.snapAnimationSpringInitialVelocity = CGFloat(snapAnimationSpringInitialVelocitySlider.value)
+        case overlayMaxHeightSlider, overlayTopInsetSlider:
+            overlayViewController.updateLayout(animated: true)
         default:
             break
         }
@@ -329,11 +347,11 @@ extension ExampleDraggableDetailsOverlayViewController: DraggableDetailsOverlayV
     }
 
     func draggableDetailsOverlayTopInset(_ overlay: DraggableDetailsOverlayViewController) -> CGFloat {
-        return 0
+        return CGFloat(overlayTopInsetSlider.value)
     }
 
     func draggableDetailsOverlayMaxHeight(_ overlay: DraggableDetailsOverlayViewController) -> CGFloat? {
-        return nil
+        return CGFloat(overlayMaxHeightSlider.value)
     }
 
     func draggableDetailsOverlayDidDrag(_ overlay: DraggableDetailsOverlayViewController) {
@@ -390,6 +408,8 @@ private extension ExampleDraggableDetailsOverlayViewController {
         snapAnimationSpringDurationLabel.text = String(format: "%.2f", snapAnimationSpringDurationSlider.value)
         snapAnimationSpringDampingLabel.text = String(format: "%.2f", snapAnimationSpringDampingSlider.value)
         snapAnimationSpringInitialVelocityLabel.text = String(format: "%.2f", snapAnimationSpringInitialVelocitySlider.value)
+        overlayTopInsetLabel.text = String(format: "%.1f", overlayTopInsetSlider.value)
+        overlayMaxHeightLabel.text = String(format: "%.1f", overlayMaxHeightSlider.value)
     }
 }
 
