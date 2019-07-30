@@ -23,15 +23,15 @@ public final class SingleObjectFetchedResultController<CDEntityType, ResultType:
         setup()
     }
 
-    public func performFetch() {
+    public func performFetch() throws {
         willChange?(self)
-        fetchedResultsController.performFetch()
+        try fetchedResultsController.performFetch()
         updateResult()
     }
 
-    public func performFetch(predicate: NSPredicate) {
+    public func performFetch(predicate: NSPredicate) throws {
         willChange?(self)
-        fetchedResultsController.performFetch(predicate: predicate)
+        try fetchedResultsController.performFetch(predicate: predicate)
         updateResult()
     }
 

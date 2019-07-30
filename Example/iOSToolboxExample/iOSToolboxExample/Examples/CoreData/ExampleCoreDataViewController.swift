@@ -59,7 +59,11 @@ internal class ExampleCoreDataViewController: UIViewController, ExampleViewContr
             }
             actualSelf.applyChanges()
         }
-        exampleFetchedResultController.performFetch()
+        do {
+            try exampleFetchedResultController.performFetch()
+        } catch let error {
+            assertionFailure("\(type(of: self)) - \(#function): . \(error)")
+        }
         contentTableView.reloadData()
     }
 

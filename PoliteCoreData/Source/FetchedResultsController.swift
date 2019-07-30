@@ -48,7 +48,7 @@ public final class FetchedResultsController<CDEntityType, ResultType: ManagedEnt
         fetchedResultsController.delegate = delegateProxy
     }
 
-    /// Sets new sort descriptors, and performs fetch if needed
+    /// Sets new sort descriptors. Call performFetch() to apply
     ///
     /// - Parameters:
     ///   - term: An array of sort keys
@@ -64,24 +64,31 @@ public final class FetchedResultsController<CDEntityType, ResultType: ManagedEnt
         }
         fetchedResultsController.fetchRequest.sortDescriptors = sortDescriptors
         if shouldPerformFetch {
-            performFetch()
+            do {
+                try performFetch()
+            } catch let error {
+                assertionFailure("\(type(of: self)) - \(#function): . \(error)")
+            }
         }
     }
 
     /// Calls performFetch() method of NSFetchedResultsController
-    public func performFetch() {
-        _ = try? fetchedResultsController.performFetch()
+    ///
+    /// - Throws: An error in cases of failure.
+    public func performFetch() throws {
+        try fetchedResultsController.performFetch()
     }
 
     /// Sets new predicate, deletes cache and calls performFetch() method of NSFetchedResultsController
     ///
     /// - Parameter predicate: New predicate for using in fetch request
-    public func performFetch(predicate: NSPredicate) {
+    /// - Throws: An error in cases of failure.
+    public func performFetch(predicate: NSPredicate) throws {
         if let cacheName = fetchedResultsController.cacheName {
             NSFetchedResultsController<CDEntityType>.deleteCache(withName: cacheName)
         }
         fetchedResultsController.fetchRequest.predicate = predicate
-        performFetch()
+        try performFetch()
     }
 
     /// Computes total number of items across all sections
