@@ -1423,10 +1423,10 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1QV-ga-W7o" userLabel="View - scrollable content">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="1040"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="1116"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="B35-GC-2M7">
-                                                <rect key="frame" x="16" y="16" width="343" height="1008"/>
+                                                <rect key="frame" x="16" y="16" width="343" height="1084"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vuu-rc-lrO">
                                                         <rect key="frame" x="0.0" y="0.0" width="343" height="60"/>
@@ -1720,6 +1720,33 @@
                                                             <constraint firstItem="0cd-5j-lgc" firstAttribute="top" secondItem="bSc-6m-mUI" secondAttribute="top" constant="16" id="cbH-v9-sfe"/>
                                                         </constraints>
                                                     </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gNt-St-M2i">
+                                                        <rect key="frame" x="0.0" y="1024" width="343" height="60"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="isSnapToAnchorsEnabledSwitch" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c5R-bs-lwZ">
+                                                                <rect key="frame" x="8" y="0.0" width="270" height="60"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="J1R-ri-iJJ">
+                                                                <rect key="frame" x="286" y="14.5" width="51" height="31"/>
+                                                                <connections>
+                                                                    <action selector="switchValueChanged:" destination="lht-4A-vse" eventType="valueChanged" id="sec-aX-Bc3"/>
+                                                                </connections>
+                                                            </switch>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstItem="J1R-ri-iJJ" firstAttribute="leading" secondItem="c5R-bs-lwZ" secondAttribute="trailing" constant="8" id="5vl-XW-RXb"/>
+                                                            <constraint firstItem="J1R-ri-iJJ" firstAttribute="centerY" secondItem="gNt-St-M2i" secondAttribute="centerY" id="BeX-cd-XfZ"/>
+                                                            <constraint firstAttribute="height" constant="60" id="L0P-bn-c8b"/>
+                                                            <constraint firstAttribute="bottom" secondItem="c5R-bs-lwZ" secondAttribute="bottom" id="O64-JX-Ksk"/>
+                                                            <constraint firstAttribute="trailing" secondItem="J1R-ri-iJJ" secondAttribute="trailing" constant="8" id="a0x-4E-F5h"/>
+                                                            <constraint firstItem="c5R-bs-lwZ" firstAttribute="top" secondItem="gNt-St-M2i" secondAttribute="top" id="mKs-6c-85e"/>
+                                                            <constraint firstItem="c5R-bs-lwZ" firstAttribute="leading" secondItem="gNt-St-M2i" secondAttribute="leading" constant="8" id="uUM-ij-vkr"/>
+                                                        </constraints>
+                                                    </view>
                                                 </subviews>
                                             </stackView>
                                         </subviews>
@@ -1771,6 +1798,7 @@
                         <outlet property="handleCornerRadiusSlider" destination="fJp-fS-xBh" id="Isf-fL-a1a"/>
                         <outlet property="handleHeightSlider" destination="6bh-79-aOX" id="WQd-o2-E6v"/>
                         <outlet property="handleWidthSlider" destination="N2H-zb-7bO" id="YuT-8N-ghW"/>
+                        <outlet property="isSnapToAnchorsEnabledSwitch" destination="J1R-ri-iJJ" id="DzS-pv-uFX"/>
                         <outlet property="shadowColorButton" destination="AAJ-El-VLM" id="R3D-VX-QJk"/>
                         <outlet property="shadowSwitch" destination="GTY-fh-q3e" id="M0P-P4-Fqb"/>
                         <outlet property="showHideAnimationDurationSlider" destination="P0y-sn-K7q" id="hkB-1H-nTg"/>

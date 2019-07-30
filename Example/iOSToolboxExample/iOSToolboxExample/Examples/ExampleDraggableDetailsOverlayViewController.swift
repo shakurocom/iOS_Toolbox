@@ -127,6 +127,8 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
 
     @IBOutlet private var showHideAnimationDurationSlider: UISlider!
 
+    @IBOutlet private var isSnapToAnchorsEnabledSwitch: UISwitch!
+
     private var contentViewController: ExampleDraggableDetailsContentViewController!
     private var overlayViewController: DraggableDetailsOverlayViewController!
     private var keyboardHandler: KeyboardHandler?
@@ -148,6 +150,7 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
         contentScrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 400, right: 0)
 
         overlayViewController.isShadowEnabled = shadowSwitch.isOn
+        overlayViewController.isSnapToAnchorsEnabled = isSnapToAnchorsEnabledSwitch.isOn
 
         [shadowColorButton, draggableContainerBackgroundColorButton, handleColorButton].forEach { (button: UIButton) in
             button.setTitleShadowColor(UIColor.black, for: .normal)
@@ -190,6 +193,8 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
         switch sender {
         case shadowSwitch:
             overlayViewController.isShadowEnabled = shadowSwitch.isOn
+        case isSnapToAnchorsEnabledSwitch:
+            overlayViewController.isSnapToAnchorsEnabled = isSnapToAnchorsEnabledSwitch.isOn
         default:
             break
         }

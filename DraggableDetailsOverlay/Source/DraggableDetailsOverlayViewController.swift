@@ -181,7 +181,7 @@ public class DraggableDetailsOverlayViewController: UIViewController {
      Animation duration for `show()` & `hide()` & `updateLayout(animated:)`.
      Default value is `0.25`.
      */
-    public var showHideAnimationDuration: TimeInterval = 0.25 //TODO: 58: example
+    public var showHideAnimationDuration: TimeInterval = 0.25
 
     /**
      If enabled - overlay will be snap-animated to nearest anchor.
