@@ -1423,10 +1423,10 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1QV-ga-W7o" userLabel="View - scrollable content">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="2236"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="2388"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="B35-GC-2M7">
-                                                <rect key="frame" x="16" y="16" width="343" height="2204"/>
+                                                <rect key="frame" x="16" y="16" width="343" height="2356"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vuu-rc-lrO">
                                                         <rect key="frame" x="0.0" y="0.0" width="343" height="60"/>
@@ -2026,8 +2026,62 @@
                                                             <constraint firstAttribute="height" constant="120" id="s1p-DY-Ad5"/>
                                                         </constraints>
                                                     </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ffm-Gg-uUh">
+                                                        <rect key="frame" x="0.0" y="1812" width="343" height="60"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="snapAnimationUseSpring" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xtS-xG-SsQ">
+                                                                <rect key="frame" x="8" y="0.0" width="270" height="60"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="751" verticalHuggingPriority="752" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EOO-fv-1gH">
+                                                                <rect key="frame" x="286" y="14.5" width="51" height="31"/>
+                                                                <connections>
+                                                                    <action selector="switchValueChanged:" destination="lht-4A-vse" eventType="valueChanged" id="bsz-tb-WLJ"/>
+                                                                </connections>
+                                                            </switch>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstItem="xtS-xG-SsQ" firstAttribute="top" secondItem="ffm-Gg-uUh" secondAttribute="top" id="AE8-jc-fQg"/>
+                                                            <constraint firstAttribute="bottom" secondItem="xtS-xG-SsQ" secondAttribute="bottom" id="FSK-pZ-S4r"/>
+                                                            <constraint firstAttribute="height" constant="60" id="RNa-4X-oVh"/>
+                                                            <constraint firstItem="EOO-fv-1gH" firstAttribute="leading" secondItem="xtS-xG-SsQ" secondAttribute="trailing" constant="8" id="RtL-G2-lBI"/>
+                                                            <constraint firstItem="xtS-xG-SsQ" firstAttribute="leading" secondItem="ffm-Gg-uUh" secondAttribute="leading" constant="8" id="kv4-dG-xns"/>
+                                                            <constraint firstAttribute="trailing" secondItem="EOO-fv-1gH" secondAttribute="trailing" constant="8" id="qg8-Zr-nVu"/>
+                                                            <constraint firstItem="EOO-fv-1gH" firstAttribute="centerY" secondItem="ffm-Gg-uUh" secondAttribute="centerY" id="twE-1X-RJC"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dl0-fs-hW2">
+                                                        <rect key="frame" x="0.0" y="1888" width="343" height="60"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="snapAnimationTopAnchorUseSpring" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Ko-Oh-sHf">
+                                                                <rect key="frame" x="8" y="0.0" width="270" height="60"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="751" verticalHuggingPriority="751" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Zr-S0-RY4">
+                                                                <rect key="frame" x="286" y="14.5" width="51" height="31"/>
+                                                                <connections>
+                                                                    <action selector="switchValueChanged:" destination="lht-4A-vse" eventType="valueChanged" id="wnI-Eg-f1C"/>
+                                                                </connections>
+                                                            </switch>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="bottom" secondItem="7Ko-Oh-sHf" secondAttribute="bottom" id="5Lh-NO-EbK"/>
+                                                            <constraint firstItem="7Ko-Oh-sHf" firstAttribute="top" secondItem="Dl0-fs-hW2" secondAttribute="top" id="INU-L5-jDb"/>
+                                                            <constraint firstItem="5Zr-S0-RY4" firstAttribute="centerY" secondItem="Dl0-fs-hW2" secondAttribute="centerY" id="Sxl-lt-7PN"/>
+                                                            <constraint firstAttribute="height" constant="60" id="aAB-Yk-WIO"/>
+                                                            <constraint firstItem="7Ko-Oh-sHf" firstAttribute="leading" secondItem="Dl0-fs-hW2" secondAttribute="leading" constant="8" id="jgi-5N-XFA"/>
+                                                            <constraint firstAttribute="trailing" secondItem="5Zr-S0-RY4" secondAttribute="trailing" constant="8" id="mxl-Tk-3YD"/>
+                                                            <constraint firstItem="5Zr-S0-RY4" firstAttribute="leading" secondItem="7Ko-Oh-sHf" secondAttribute="trailing" constant="8" id="vek-Ny-53B"/>
+                                                        </constraints>
+                                                    </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H0f-zD-0ee">
-                                                        <rect key="frame" x="0.0" y="1812" width="343" height="120"/>
+                                                        <rect key="frame" x="0.0" y="1964" width="343" height="120"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="snapAnimationSpringDuration" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="laN-74-ygS">
                                                                 <rect key="frame" x="8" y="16" width="327" height="20.5"/>
@@ -2073,7 +2127,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nfJ-mL-atI">
-                                                        <rect key="frame" x="0.0" y="1948" width="343" height="120"/>
+                                                        <rect key="frame" x="0.0" y="2100" width="343" height="120"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="snapAnimationSpringDamping" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pw8-WJ-yED">
                                                                 <rect key="frame" x="8" y="16" width="327" height="20.5"/>
@@ -2119,7 +2173,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="psh-HQ-lEO">
-                                                        <rect key="frame" x="0.0" y="2084" width="343" height="120"/>
+                                                        <rect key="frame" x="0.0" y="2236" width="343" height="120"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="snapAnimationSpringInitialVelocity" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zl1-b0-cAk">
                                                                 <rect key="frame" x="8" y="16" width="327" height="20.5"/>
@@ -2236,6 +2290,8 @@
                         <outlet property="snapAnimationSpringDurationSlider" destination="7Ik-Fc-Rnb" id="90E-I2-WMy"/>
                         <outlet property="snapAnimationSpringInitialVelocityLabel" destination="tUt-jW-7k2" id="NmU-WY-Xh5"/>
                         <outlet property="snapAnimationSpringInitialVelocitySlider" destination="OQ7-ay-UEG" id="ZnX-aA-Ejp"/>
+                        <outlet property="snapAnimationTopAnchorUseSpringSwitch" destination="5Zr-S0-RY4" id="Mby-7u-AYS"/>
+                        <outlet property="snapAnimationUseSpringSwitch" destination="EOO-fv-1gH" id="Jqt-7v-jF0"/>
                         <outlet property="snapCalculationDecelerationCanSkipNextAnchorSwitch" destination="NCt-tH-8qj" id="Q54-IX-jHQ"/>
                         <outlet property="snapCalculationDecelerationRateSegmentedControl" destination="wdF-3i-YUc" id="fik-hb-XBj"/>
                         <outlet property="snapCalculationUsesDecelerationSwitch" destination="zlD-74-XYK" id="mTQ-Et-eKe"/>

@@ -150,6 +150,9 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
     @IBOutlet private var snapCalculationUsesDecelerationSwitch: UISwitch!
     @IBOutlet private var snapCalculationDecelerationCanSkipNextAnchorSwitch: UISwitch!
 
+    @IBOutlet private var snapAnimationUseSpringSwitch: UISwitch!
+    @IBOutlet private var snapAnimationTopAnchorUseSpringSwitch: UISwitch!
+
     @IBOutlet private var snapCalculationDecelerationRateSegmentedControl: UISegmentedControl!
 
     private var contentViewController: ExampleDraggableDetailsContentViewController!
@@ -178,6 +181,8 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
         isBounceEnabledSwitch.isOn = overlayViewController.isBounceEnabled
         snapCalculationUsesDecelerationSwitch.isOn = overlayViewController.snapCalculationUsesDeceleration
         snapCalculationDecelerationCanSkipNextAnchorSwitch.isOn = overlayViewController.snapCalculationDecelerationCanSkipNextAnchor
+        snapAnimationUseSpringSwitch.isOn = overlayViewController.snapAnimationUseSpring
+        snapAnimationTopAnchorUseSpringSwitch.isOn = overlayViewController.snapAnimationTopAnchorUseSpring
 
         [shadowColorButton, draggableContainerBackgroundColorButton, handleColorButton].forEach { (button: UIButton) in
             button.setTitleShadowColor(UIColor.black, for: .normal)
@@ -239,6 +244,10 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
             overlayViewController.snapCalculationUsesDeceleration = snapCalculationUsesDecelerationSwitch.isOn
         case snapCalculationDecelerationCanSkipNextAnchorSwitch:
             overlayViewController.snapCalculationDecelerationCanSkipNextAnchor = snapCalculationDecelerationCanSkipNextAnchorSwitch.isOn
+        case snapAnimationTopAnchorUseSpringSwitch:
+            overlayViewController.snapAnimationTopAnchorUseSpring = snapAnimationTopAnchorUseSpringSwitch.isOn
+        case snapAnimationUseSpringSwitch:
+            overlayViewController.snapAnimationUseSpring = snapAnimationUseSpringSwitch.isOn
         default:
             break
         }
