@@ -6,7 +6,7 @@
 import Foundation
 import CoreData
 
-/// Wrapper on NSFetchedResultsController, provides easy they to observe collection of entities.
+/// Wrapper on NSFetchedResultsController, provides easy way to observe collection of entities.
 /// See also: [SingleObjectFetchedResultController](x-source-tag://SingleObjectFetchedResultController)
 /// - Tag: FetchedResultsController
 public final class FetchedResultsController<CDEntityType, ResultType>: NSObject where ResultType: ManagedEntity, ResultType.CDEntityType == CDEntityType {
