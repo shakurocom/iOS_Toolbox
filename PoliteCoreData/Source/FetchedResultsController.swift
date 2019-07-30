@@ -9,7 +9,7 @@ import CoreData
 /// Wrapper on NSFetchedResultsController, provides easy way to observe collection of entities.
 /// See also: [SingleObjectFetchedResultController](x-source-tag://SingleObjectFetchedResultController)
 /// - Tag: FetchedResultsController
-public final class FetchedResultsController<CDEntityType, ResultType: ManagedEntity>: NSObject where ResultType.CDEntityType == CDEntityType {
+public final class FetchedResultsController<EntityType, ResultType: ManagedEntity>: NSObject where ResultType.EntityType == EntityType {
 
     public enum ChangeType {
         case insert(indexPath: IndexPath)
@@ -25,23 +25,23 @@ public final class FetchedResultsController<CDEntityType, ResultType: ManagedEnt
      Notifies that section and object changes are about to be processed and notifications will be sent.
      Is equivalent to NSFetchedResultsControllerDelegate controllerWillChangeContent
      */
-    public var willChangeContent: ((_ controller: FetchedResultsController<CDEntityType, ResultType>) -> Void)?
+    public var willChangeContent: ((_ controller: FetchedResultsController<EntityType, ResultType>) -> Void)?
 
     /**
      Notifies that all section and object changes have been sent.
      Is equivalent to NSFetchedResultsControllerDelegate controllerDidChangeContent
      */
-    public var didChangeContent: ((_ controller: FetchedResultsController<CDEntityType, ResultType>) -> Void)?
+    public var didChangeContent: ((_ controller: FetchedResultsController<EntityType, ResultType>) -> Void)?
 
     /**
      Notifies about particular changes such as add, remove, move, or update.
      */
-    public var didChangeFetchedResults: ((_ controller: FetchedResultsController<CDEntityType, ResultType>, _ type: ChangeType) -> Void)?
+    public var didChangeFetchedResults: ((_ controller: FetchedResultsController<EntityType, ResultType>, _ type: ChangeType) -> Void)?
 
-    private let fetchedResultsController: NSFetchedResultsController<CDEntityType>
-    private let delegateProxy = HiddenDelegateProxy<CDEntityType, ResultType>()
+    private let fetchedResultsController: NSFetchedResultsController<EntityType>
+    private let delegateProxy = HiddenDelegateProxy<EntityType, ResultType>()
 
-    public init(fetchedResultsController: NSFetchedResultsController<CDEntityType>) {
+    public init(fetchedResultsController: NSFetchedResultsController<EntityType>) {
         self.fetchedResultsController = fetchedResultsController
         super.init()
         delegateProxy.target = self
@@ -85,7 +85,7 @@ public final class FetchedResultsController<CDEntityType, ResultType: ManagedEnt
     /// - Throws: An error in cases of failure.
     public func performFetch(predicate: NSPredicate) throws {
         if let cacheName = fetchedResultsController.cacheName {
-            NSFetchedResultsController<CDEntityType>.deleteCache(withName: cacheName)
+            NSFetchedResultsController<EntityType>.deleteCache(withName: cacheName)
         }
         fetchedResultsController.fetchRequest.predicate = predicate
         try performFetch()
@@ -123,7 +123,7 @@ public final class FetchedResultsController<CDEntityType, ResultType: ManagedEnt
     /// - Parameter entity: The entity for the requested IndexPath.
     /// - Returns: The IndexPath for the specified entity or nil
     public func indexPath(entity: ResultType) -> IndexPath? {
-        guard let object: CDEntityType = (try? fetchedResultsController.managedObjectContext.existingObject(with: entity.objectID)) as? CDEntityType else {
+        guard let object: EntityType = (try? fetchedResultsController.managedObjectContext.existingObject(with: entity.objectID)) as? EntityType else {
             return nil
         }
         return fetchedResultsController.indexPath(forObject: object)
@@ -135,7 +135,7 @@ public final class FetchedResultsController<CDEntityType, ResultType: ManagedEnt
     /// - Returns: An entity specified by URL or nil.
     public func itemWithURL(_ url: URL) -> ResultType? {
         guard let objectID = fetchedResultsController.managedObjectContext.persistentStoreCoordinator?.managedObjectID(forURIRepresentation: url),
-            let object: CDEntityType = (try? fetchedResultsController.managedObjectContext.existingObject(with: objectID)) as? CDEntityType else {
+            let object: EntityType = (try? fetchedResultsController.managedObjectContext.existingObject(with: objectID)) as? EntityType else {
                 return nil
         }
         return ResultType(cdEntity: object)
@@ -161,9 +161,9 @@ public final class FetchedResultsController<CDEntityType, ResultType: ManagedEnt
 
 // MARK: - Private NSFetchedResultsControllerDelegate
 
-private final class HiddenDelegateProxy<CDEntityType, ResultType: ManagedEntity>: NSObject, NSFetchedResultsControllerDelegate where ResultType.CDEntityType == CDEntityType {
+private final class HiddenDelegateProxy<EntityType, ResultType: ManagedEntity>: NSObject, NSFetchedResultsControllerDelegate where ResultType.EntityType == EntityType {
 
-    weak var target: FetchedResultsController<CDEntityType, ResultType>?
+    weak var target: FetchedResultsController<EntityType, ResultType>?
 
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
                     didChange anObject: Any,

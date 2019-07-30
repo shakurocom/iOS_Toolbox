@@ -10,10 +10,10 @@ import CoreData
 /// - Used by [FetchedResultsController](x-source-tag://FetchedResultsController)
 public protocol ManagedEntity {
 
-    associatedtype CDEntityType where CDEntityType: NSManagedObject
+    associatedtype EntityType where EntityType: NSManagedObject
 
     var objectID: NSManagedObjectID {get}
 
-    init(cdEntity: CDEntityType)
+    init(entity: EntityType)
 
 }

@@ -9,17 +9,17 @@ import CoreData
 /// Wrapper on NSFetchedResultsController, provides easy way to observe single entity.
 /// See: [FetchedResultsController](x-source-tag://FetchedResultsController) for more info
 /// - Tag: SingleObjectFetchedResultController
-public final class SingleObjectFetchedResultController<CDEntityType, ResultType: ManagedEntity> where ResultType.CDEntityType == CDEntityType {
+public final class SingleObjectFetchedResultController<EntityType, ResultType: ManagedEntity> where ResultType.EntityType == EntityType {
 
-    public var willChange: ((_ controller: SingleObjectFetchedResultController<CDEntityType, ResultType>) -> Void)?
-    public var didChange: ((_ controller: SingleObjectFetchedResultController<CDEntityType, ResultType>) -> Void)?
+    public var willChange: ((_ controller: SingleObjectFetchedResultController<EntityType, ResultType>) -> Void)?
+    public var didChange: ((_ controller: SingleObjectFetchedResultController<EntityType, ResultType>) -> Void)?
 
     private(set) var result: ResultType?
-    private let fetchedResultsController: FetchedResultsController<CDEntityType, ResultType>
+    private let fetchedResultsController: FetchedResultsController<EntityType, ResultType>
     private let resultIndexPath: IndexPath = IndexPath(row: 0, section: 0)
 
-    public init(fetchedResultsController: NSFetchedResultsController<CDEntityType>) {
-        self.fetchedResultsController = FetchedResultsController<CDEntityType, ResultType>(fetchedResultsController: fetchedResultsController)
+    public init(fetchedResultsController: NSFetchedResultsController<EntityType>) {
+        self.fetchedResultsController = FetchedResultsController<EntityType, ResultType>(fetchedResultsController: fetchedResultsController)
         setup()
     }
 
