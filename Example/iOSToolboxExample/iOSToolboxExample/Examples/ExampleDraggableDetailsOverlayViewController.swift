@@ -120,11 +120,11 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
     @IBOutlet private var draggableContainerTopCornersRadiusSlider: UISlider!
 
     @IBOutlet private var handleColorButton: UIButton!
+
     @IBOutlet private var handleContainerHeightSlider: UISlider!
     @IBOutlet private var handleWidthSlider: UISlider!
     @IBOutlet private var handleHeightSlider: UISlider!
     @IBOutlet private var handleCornerRadiusSlider: UISlider!
-
     @IBOutlet private var showHideAnimationDurationSlider: UISlider!
 
     @IBOutlet private var isSnapToAnchorsEnabledSwitch: UISwitch!
@@ -133,6 +133,10 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
     @IBOutlet private var isBounceEnabledSwitch: UISwitch!
     @IBOutlet private var snapCalculationUsesDecelerationSwitch: UISwitch!
     @IBOutlet private var snapCalculationDecelerationCanSkipNextAnchorSwitch: UISwitch!
+
+    @IBOutlet private var bounceDragDumpeningSlider: UISlider!
+
+    @IBOutlet private var snapCalculationDecelerationRateSegmentedControl: UISegmentedControl!
 
     private var contentViewController: ExampleDraggableDetailsContentViewController!
     private var overlayViewController: DraggableDetailsOverlayViewController!
@@ -175,6 +179,9 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
         handleHeightSlider.value = Float(overlayViewController.handleSize.height)
         handleContainerHeightSlider.value = Float(overlayViewController.handleContainerHeight)
         showHideAnimationDurationSlider.value = Float(overlayViewController.showHideAnimationDuration)
+        bounceDragDumpeningSlider.value = Float(overlayViewController.bounceDragDumpening)
+
+        overlayViewController.snapCalculationDecelerationRate = snapCalculationDecelerationRateSegmentedControl.selectedSegmentIndex == 0 ? .normal : .fast
 
         keyboardHandler = KeyboardHandler(enableCurveHack: false, heightDidChange: { [weak self] (change: KeyboardHandler.KeyboardChange) in
             guard let strongSelf = self else {
@@ -217,6 +224,15 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
         }
     }
 
+    @IBAction private func segmentedControlValueChanged(_ sender: UISegmentedControl) {
+        switch sender {
+        case snapCalculationDecelerationRateSegmentedControl:
+            overlayViewController.snapCalculationDecelerationRate = snapCalculationDecelerationRateSegmentedControl.selectedSegmentIndex == 0 ? .normal : .fast
+        default:
+            break
+        }
+    }
+
     @IBAction private func sliderValueChanged(_ sender: UISlider) {
         switch sender {
         case draggableContainerTopCornersRadiusSlider:
@@ -229,6 +245,8 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
             overlayViewController.handleContainerHeight = CGFloat(handleContainerHeightSlider.value)
         case showHideAnimationDurationSlider:
             overlayViewController.showHideAnimationDuration = TimeInterval(showHideAnimationDurationSlider.value)
+        case bounceDragDumpeningSlider:
+            overlayViewController.bounceDragDumpening = CGFloat(bounceDragDumpeningSlider.value)
         default:
             break
         }

@@ -194,46 +194,46 @@ public class DraggableDetailsOverlayViewController: UIViewController {
      If enabled, user can drag overlay below bottom
      Default value `false`.
      */
-    public var isDragOffScreenToHideEnabled: Bool = false //TODO: 58: example
+    public var isDragOffScreenToHideEnabled: Bool = false
 
     /**
      If enabled - user can over-drag overlay beyond most periferal anchors.
      Over-drag is affected by `bounceDragDumpening`.
      Default value is `false`.
      */
-    public var isBounceEnabled: Bool = false //TODO: 58: example
+    public var isBounceEnabled: Bool = false
 
     /**
      How much harder it is to over-drag (comparing to normal drag).
      Default value is `0.5`.
      */
-    public var bounceDragDumpening: CGFloat = 0.5 //TODO: 58: example
+    public var bounceDragDumpening: CGFloat = 0.5
 
     /**
      If `false` - snapping anchor will be calculated from current position of overlay.
      If `true` - current position + touch velocity will be used.
      Default value is `true`.
      */
-    public var snapCalculationUsesDeceleration: Bool = true //TODO: 58: example
+    public var snapCalculationUsesDeceleration: Bool = true
 
     /**
      If `false` - When user releases touch with some velocity,
      decelerating behaviour can't snap to anchors other then current or immediate next/previous one.
      Default value is `true`.
      */
-    public var snapCalculationDecelerationCanSkipNextAnchor: Bool = true //TODO: 58: example
+    public var snapCalculationDecelerationCanSkipNextAnchor: Bool = true
 
     /**
      Deceleartion rate used for calculation of snap anchors.
      Default value is `UIScrollView.DecelerationRate.normal`
      */
-    public var snapCalculationDecelerationRate: UIScrollView.DecelerationRate = .normal //TODO: 58: example
+    public var snapCalculationDecelerationRate: UIScrollView.DecelerationRate = .normal
 
     /**
      Duration of animation used, when user releases finger during drag.
      Default value is `0.2`.
      */
-    public var snapAnimationNormalDuration: TimeInterval = 0.2 //TODO: 58: example
+    public var snapAnimationNormalDuration: TimeInterval = 0.2
 
     /**
      Use spring animation for snapping to anchors.
