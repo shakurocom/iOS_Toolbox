@@ -17,7 +17,7 @@ public extension NSManagedObject {
     ///   - value: A value to apply
     /// - Returns: Bool value, indicating if value applied or there is no changes
      /// - Tag: applyValueOptional
-    static func applyValue<Value, Root>(to root: Root, path: ReferenceWritableKeyPath<Root, Value?>, value: Value?) -> Bool where Value: Equatable {
+    static func applyValue<Value: Equatable, Root>(to root: Root, path: ReferenceWritableKeyPath<Root, Value?>, value: Value?) -> Bool {
         if root[keyPath: path] != value {
             root[keyPath: path] = value
             return true
@@ -35,7 +35,7 @@ public extension NSManagedObject {
     ///   - value: A value to apply
     /// - Returns: A Bool value, indicating if value applied or there is no changes
     /// - Tag: applyValue
-    static func applyValue<Value, Root>(to root: Root, path: ReferenceWritableKeyPath<Root, Value>, value: Value) -> Bool where Value: Equatable {
+    static func applyValue<Value: Equatable, Root>(to root: Root, path: ReferenceWritableKeyPath<Root, Value>, value: Value) -> Bool {
         if root[keyPath: path] != value {
             root[keyPath: path] = value
             return true

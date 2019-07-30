@@ -9,7 +9,7 @@ import CoreData
 /// Wrapper on NSFetchedResultsController, provides easy way to observe single entity.
 /// See: [FetchedResultsController](x-source-tag://FetchedResultsController) for more info
 /// - Tag: SingleObjectFetchedResultController
-public final class SingleObjectFetchedResultController<CDEntityType, ResultType> where ResultType: ManagedEntity, ResultType.CDEntityType == CDEntityType {
+public final class SingleObjectFetchedResultController<CDEntityType, ResultType: ManagedEntity> where ResultType.CDEntityType == CDEntityType {
 
     public var willChange: ((_ controller: SingleObjectFetchedResultController<CDEntityType, ResultType>) -> Void)?
     public var didChange: ((_ controller: SingleObjectFetchedResultController<CDEntityType, ResultType>) -> Void)?

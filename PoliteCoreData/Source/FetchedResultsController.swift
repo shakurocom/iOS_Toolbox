@@ -9,7 +9,7 @@ import CoreData
 /// Wrapper on NSFetchedResultsController, provides easy way to observe collection of entities.
 /// See also: [SingleObjectFetchedResultController](x-source-tag://SingleObjectFetchedResultController)
 /// - Tag: FetchedResultsController
-public final class FetchedResultsController<CDEntityType, ResultType>: NSObject where ResultType: ManagedEntity, ResultType.CDEntityType == CDEntityType {
+public final class FetchedResultsController<CDEntityType, ResultType: ManagedEntity>: NSObject where ResultType.CDEntityType == CDEntityType {
 
     public enum ChangeType {
         case insert(indexPath: IndexPath)
@@ -154,7 +154,7 @@ public final class FetchedResultsController<CDEntityType, ResultType>: NSObject 
 
 // MARK: - Private NSFetchedResultsControllerDelegate
 
-private final class HiddenDelegateProxy<CDEntityType, ResultType>: NSObject, NSFetchedResultsControllerDelegate where ResultType: ManagedEntity, ResultType.CDEntityType == CDEntityType {
+private final class HiddenDelegateProxy<CDEntityType, ResultType: ManagedEntity>: NSObject, NSFetchedResultsControllerDelegate where ResultType.CDEntityType == CDEntityType {
     weak var target: FetchedResultsController<CDEntityType, ResultType>?
 
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
