@@ -4,7 +4,6 @@
 //
 
 import Foundation
-//TODO: make non-static
 /**
  Simple validator of email address designed to be used on client side.
  Very lax validation:
@@ -17,16 +16,34 @@ import Foundation
  */
 public class EMailValidator {
 
-    public static func predicate() -> NSPredicate {
-        return NSPredicate(format: "SELF MATCHES %@", "^\\S.*@(\\S+\\.)+\\S{2}\\S*$")
-    }
 
-    private let predicate: NSPredicate = EMailValidator.predicate()
+    /// The NSPredicate used to validate email string
+    public let predicate: NSPredicate = NSPredicate(format: "SELF MATCHES %@", "^\\S.*@(\\S+\\.)+\\S{2}\\S*$")
 
     public init() { }
 
-    public func validate(emailString: String) -> Bool {
-        return predicate.evaluate(with: emailString)
+
+    /// Returns true if email is valid, false otherwise
+    /// See also: [validate(email: String, shouldTrim: Bool) -> String?](x-source-tag://EMailValidator.validate)
+    ///
+    /// - Parameter email: An email string to validate
+    /// - Tag: EMailValidator.isValid
+    public func isValid(email: String) -> Bool {
+        return predicate.evaluate(with: email)
+    }
+
+    /// - Tag: EMailValidator.validate
+
+    /// Returns valid email string or nil
+    /// See also: [isValid(email: String) -> Bool ](x-source-tag://EMailValidator.isValid)
+    ///
+    /// - Parameters:
+    ///   - email:  An email string to validate
+    ///   - shouldTrim: Pass true to trim white spaces and newline before validation.
+    /// - Returns: Valid email or nil
+    public func validate(email: String, shouldTrim: Bool) -> String? {
+        let candidate = shouldTrim ? email.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) : email
+        return isValid(email: candidate) ? candidate : nil
     }
 
 }

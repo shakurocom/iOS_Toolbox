@@ -39,12 +39,12 @@ internal class ExampleEMailValidatorViewController: UIViewController {
             validationResultLabel.text = ""
             return
         }
-        if emailValidator.validate(emailString: email) {
+        if let validEmail = emailValidator.validate(email: email, shouldTrim: true) {
             validationResultLabel.textColor = UIColor.green
-            validationResultLabel.text = "valid"
+            validationResultLabel.text = "\(validEmail) - valid"
         } else {
             validationResultLabel.textColor = UIColor.red
-            validationResultLabel.text = "invalid"
+            validationResultLabel.text = "\(email) - invalid"
         }
     }
 

@@ -110,7 +110,7 @@ internal class ExampleHTTPClientViewController: UIViewController {
             "format": "plain",
             "rnd": "new"
         ]
-        requestOptions.completionHandler = { (parsedResponse, _) in
+        _ = randomOrgClient?.sendRequest(options: requestOptions, completion: { (parsedResponse, _) in
             DispatchQueue.main.async(execute: {
                 let stringsValue: String
                 switch parsedResponse {
@@ -123,8 +123,7 @@ internal class ExampleHTTPClientViewController: UIViewController {
                 }
                 self.updateUI(newState: ExampleHTTPClientViewController.State.data(strings: stringsValue))
             })
-        }
-        _ = randomOrgClient?.sendRequest(options: requestOptions)
+        })
     }
 
     // MARK: Private
