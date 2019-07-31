@@ -35,27 +35,30 @@ class EMailValidatorTests: XCTestCase {
             "exa@mple@gmail.com "
         ]
 
+        let validEmailsIfTrim = [
+            "   example@gmail.com ",
+            " @@gmail.com ",
+            "  123@gmail.com  ",
+            "exa@gmail1.com ",
+            "\n  exa@gmail.com1 \n "]
+
         continueAfterFailure = true
 
         let validator = EMailValidator()
-        var notPassedEmails = [String]()
 
-        // good
-        for email in validEmails {
-            if !validator.validate(emailString: email) {
-                notPassedEmails.append(email)
-            }
-        }
+        // Valid
+        let notPassedEmails = validEmails.filter({!validator.isValid(email: $0)})
         XCTAssert(notPassedEmails.count == 0, "valid emails not passed validation: \(notPassedEmails)")
 
+        let notPassedTrimmedEmails = validEmailsIfTrim.filter({validator.validate(email: $0, shouldTrim: true) == nil})
+        XCTAssert(notPassedTrimmedEmails.count == 0, "valid emails not passed validation: \(notPassedTrimmedEmails)")
+
         // bad
-        var passedEmails = [String]()
-        for email in invalidEmails {
-            if validator.validate(emailString: email) {
-                passedEmails.append(email)
-            }
-        }
+        let passedEmails = invalidEmails.filter({validator.isValid(email: $0)})
         XCTAssert(passedEmails.count == 0, "invalid emails passed validation: \(passedEmails)")
+
+        let passedNotTrimmedEmails = validEmailsIfTrim.filter({validator.validate(email: $0, shouldTrim: false) != nil})
+        XCTAssert(passedNotTrimmedEmails.count == 0, "invalid emails passed validation: \(passedNotTrimmedEmails)")
     }
 
 }

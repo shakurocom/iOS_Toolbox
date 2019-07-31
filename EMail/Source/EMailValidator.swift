@@ -4,7 +4,6 @@
 //
 
 import Foundation
-//TODO: make non-static
 /**
  Simple validator of email address designed to be used on client side.
  Very lax validation:
@@ -17,16 +16,17 @@ import Foundation
  */
 public class EMailValidator {
 
-    public static func predicate() -> NSPredicate {
-        return NSPredicate(format: "SELF MATCHES %@", "^\\S.*@(\\S+\\.)+\\S{2}\\S*$")
-    }
-
-    private let predicate: NSPredicate = EMailValidator.predicate()
+    public let predicate: NSPredicate = NSPredicate(format: "SELF MATCHES %@", "^\\S.*@(\\S+\\.)+\\S{2}\\S*$")
 
     public init() { }
 
-    public func validate(emailString: String) -> Bool {
-        return predicate.evaluate(with: emailString)
+    public func isValid(email: String) -> Bool {
+        return predicate.evaluate(with: email)
+    }
+
+    public func validate(email: String, shouldTrim: Bool) -> String? {
+        let candidate = shouldTrim ? email.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) : email
+        return isValid(email: candidate) ? candidate : nil
     }
 
 }
