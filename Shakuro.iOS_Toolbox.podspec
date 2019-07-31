@@ -31,6 +31,14 @@ Pod::Spec.new do |s|
 
     end
 
+    s.subspec 'DraggableDetailsOverlay' do |sp|
+
+        sp.dependency 'Shakuro.iOS_Toolbox/Extensions'
+        sp.source_files = 'DraggableDetailsOverlay/Source/**/*'
+        sp.frameworks = 'UIKit'
+
+    end
+
     s.subspec 'EMail' do |sp|
 
         sp.source_files = 'EMail/Source/**/*'
@@ -40,6 +48,7 @@ Pod::Spec.new do |s|
 
     s.subspec 'EventHandler' do |sp|
 
+        sp.dependency 'Shakuro.iOS_Toolbox/Extensions'
         sp.source_files = 'EventHandler/Source/**/*'
         sp.frameworks = 'Foundation'
 
@@ -121,6 +130,7 @@ Pod::Spec.new do |s|
     s.subspec 'TaskManager' do |sp|
 
         sp.dependency 'Shakuro.iOS_Toolbox/CommonTypes'
+        sp.dependency 'Shakuro.iOS_Toolbox/Extensions'
         sp.source_files = 'TaskManager/Source/**/*'
         sp.frameworks = 'Foundation'
 
