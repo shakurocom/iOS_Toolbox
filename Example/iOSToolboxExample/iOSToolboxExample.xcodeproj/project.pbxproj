@@ -15,6 +15,7 @@
 		2F03DBBD22097F65006E8404 /* HTTPClientParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F03DBB622097F64006E8404 /* HTTPClientParser.swift */; };
 		2F03DBBE22097F65006E8404 /* HTTPClientRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F03DBB722097F64006E8404 /* HTTPClientRequest.swift */; };
 		2F03DBBF22097F65006E8404 /* HTTPClientUserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F03DBB822097F64006E8404 /* HTTPClientUserSession.swift */; };
+		2F0434F222E5B12D00FAC9BF /* DecelerationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0434F122E5B12D00FAC9BF /* DecelerationHelper.swift */; };
 		2F0516BC2077B1CA00ECB7FF /* ExamplePullToRefreshContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5CED78205818C800BD508A /* ExamplePullToRefreshContentView.swift */; };
 		2F05E6A922CA1DCA00280D57 /* ExamplePullToRefreshStickyHeadersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F05E6A822CA1DCA00280D57 /* ExamplePullToRefreshStickyHeadersViewController.swift */; };
 		2F0CC9B3204931E900A896B2 /* TaskManagerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0CC9B2204931E900A896B2 /* TaskManagerError.swift */; };
@@ -33,6 +34,10 @@
 		2F10B16E21C0F8FB00701871 /* SettingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F10B16D21C0F8FB00701871 /* SettingItem.swift */; };
 		2F10B17221C0FA0D00701871 /* ExampleSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F10B17121C0FA0D00701871 /* ExampleSettingsViewController.swift */; };
 		2F11C93C2201817F0003B754 /* RawCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F11C93B2201817F0003B754 /* RawCodable.swift */; };
+		2F129C5C22E0A015002B8FB0 /* DraggableDetailsOverlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F129C5B22E0A015002B8FB0 /* DraggableDetailsOverlayViewController.swift */; };
+		2F129C5E22E0A0E0002B8FB0 /* ExampleDraggableDetailsOverlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F129C5D22E0A0E0002B8FB0 /* ExampleDraggableDetailsOverlayViewController.swift */; };
+		2F129C6022E0B70F002B8FB0 /* TouchTransparentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F129C5F22E0B70F002B8FB0 /* TouchTransparentView.swift */; };
+		2F129C6222E0BA5B002B8FB0 /* UIViewController+Child.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F129C6122E0BA5B002B8FB0 /* UIViewController+Child.swift */; };
 		2F2C33E21FE173A900976FA2 /* ExampleKeyboardHandlerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2C33E11FE173A900976FA2 /* ExampleKeyboardHandlerViewController.swift */; };
 		2F2C33E41FE177C500976FA2 /* ExampleKeychainWrapperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2C33E31FE177C500976FA2 /* ExampleKeychainWrapperViewController.swift */; };
 		2F2C8BFC21AE7A1600413ED3 /* OperationPrototype.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2C8BFB21AE7A1600413ED3 /* OperationPrototype.swift */; };
@@ -102,6 +107,7 @@
 		2FFD4C952253908500B07EB6 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 2FFD4C942253908500B07EB6 /* README.md */; };
 		2FFD4C972253908E00B07EB6 /* Shakuro.iOS_Toolbox.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 2FFD4C962253908E00B07EB6 /* Shakuro.iOS_Toolbox.podspec */; };
 		2FFD4C9B22539BFE00B07EB6 /* AsyncResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFD4C9A22539BFE00B07EB6 /* AsyncResult.swift */; };
+		2FFE8D3E22E1F077005520F9 /* DraggableDetailsOverlayHandleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFE8D3D22E1F077005520F9 /* DraggableDetailsOverlayHandleView.swift */; };
 		5F2BE42F76A6C745178C14A5 /* Pods_iOSToolboxExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 009702E9AD272B72DEC6FC66 /* Pods_iOSToolboxExample.framework */; };
 /* End PBXBuildFile section */
 
@@ -125,6 +131,7 @@
 		2F03DBB622097F64006E8404 /* HTTPClientParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClientParser.swift; sourceTree = "<group>"; };
 		2F03DBB722097F64006E8404 /* HTTPClientRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClientRequest.swift; sourceTree = "<group>"; };
 		2F03DBB822097F64006E8404 /* HTTPClientUserSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClientUserSession.swift; sourceTree = "<group>"; };
+		2F0434F122E5B12D00FAC9BF /* DecelerationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecelerationHelper.swift; sourceTree = "<group>"; };
 		2F05E6A822CA1DCA00280D57 /* ExamplePullToRefreshStickyHeadersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamplePullToRefreshStickyHeadersViewController.swift; sourceTree = "<group>"; };
 		2F0CC9B2204931E900A896B2 /* TaskManagerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskManagerError.swift; sourceTree = "<group>"; };
 		2F0E296C22C213E300CEF04D /* UITableView+Reusable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+Reusable.swift"; sourceTree = "<group>"; };
@@ -142,6 +149,10 @@
 		2F10B16D21C0F8FB00701871 /* SettingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingItem.swift; sourceTree = "<group>"; };
 		2F10B17121C0FA0D00701871 /* ExampleSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleSettingsViewController.swift; sourceTree = "<group>"; };
 		2F11C93B2201817F0003B754 /* RawCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawCodable.swift; sourceTree = "<group>"; };
+		2F129C5B22E0A015002B8FB0 /* DraggableDetailsOverlayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DraggableDetailsOverlayViewController.swift; sourceTree = "<group>"; };
+		2F129C5D22E0A0E0002B8FB0 /* ExampleDraggableDetailsOverlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleDraggableDetailsOverlayViewController.swift; sourceTree = "<group>"; };
+		2F129C5F22E0B70F002B8FB0 /* TouchTransparentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchTransparentView.swift; sourceTree = "<group>"; };
+		2F129C6122E0BA5B002B8FB0 /* UIViewController+Child.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Child.swift"; sourceTree = "<group>"; };
 		2F2C33E11FE173A900976FA2 /* ExampleKeyboardHandlerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleKeyboardHandlerViewController.swift; sourceTree = "<group>"; };
 		2F2C33E31FE177C500976FA2 /* ExampleKeychainWrapperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleKeychainWrapperViewController.swift; sourceTree = "<group>"; };
 		2F2C87BA22C36DF5004F3254 /* ExceptionCatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExceptionCatcher.h; sourceTree = "<group>"; };
@@ -219,6 +230,7 @@
 		2FFD4C942253908500B07EB6 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../README.md; sourceTree = "<group>"; };
 		2FFD4C962253908E00B07EB6 /* Shakuro.iOS_Toolbox.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Shakuro.iOS_Toolbox.podspec; path = ../../Shakuro.iOS_Toolbox.podspec; sourceTree = "<group>"; };
 		2FFD4C9A22539BFE00B07EB6 /* AsyncResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncResult.swift; sourceTree = "<group>"; };
+		2FFE8D3D22E1F077005520F9 /* DraggableDetailsOverlayHandleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableDetailsOverlayHandleView.swift; sourceTree = "<group>"; };
 		8460D0405FC3E3B4F135CBAF /* Pods-iOSToolboxExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSToolboxExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iOSToolboxExample/Pods-iOSToolboxExample.debug.xcconfig"; sourceTree = "<group>"; };
 		BC61A924359D6E16CFD7D6E6 /* Pods-iOSToolboxExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSToolboxExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-iOSToolboxExample/Pods-iOSToolboxExample.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -286,6 +298,26 @@
 				2F03DBB622097F64006E8404 /* HTTPClientParser.swift */,
 				2F03DBB722097F64006E8404 /* HTTPClientRequest.swift */,
 				2F03DBB822097F64006E8404 /* HTTPClientUserSession.swift */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		2F129C5922E0A015002B8FB0 /* DraggableDetailsOverlay */ = {
+			isa = PBXGroup;
+			children = (
+				2F129C5A22E0A015002B8FB0 /* Source */,
+			);
+			name = DraggableDetailsOverlay;
+			path = ../../../DraggableDetailsOverlay;
+			sourceTree = "<group>";
+		};
+		2F129C5A22E0A015002B8FB0 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				2F129C5B22E0A015002B8FB0 /* DraggableDetailsOverlayViewController.swift */,
+				2FFE8D3D22E1F077005520F9 /* DraggableDetailsOverlayHandleView.swift */,
+				2F129C5F22E0B70F002B8FB0 /* TouchTransparentView.swift */,
+				2F0434F122E5B12D00FAC9BF /* DecelerationHelper.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -554,6 +586,7 @@
 				2F2DBABC205A87D4000AFC0F /* ExampleLabelsViewController.swift */,
 				2F76AB422148170E0094A7B1 /* ExampleEMailValidatorViewController.swift */,
 				2F10B17121C0FA0D00701871 /* ExampleSettingsViewController.swift */,
+				2F129C5D22E0A0E0002B8FB0 /* ExampleDraggableDetailsOverlayViewController.swift */,
 			);
 			path = Examples;
 			sourceTree = "<group>";
@@ -563,6 +596,7 @@
 			children = (
 				2FFD4C9822539BFE00B07EB6 /* CommonTypes */,
 				2FF279A51FDE855B00F0F769 /* Device */,
+				2F129C5922E0A015002B8FB0 /* DraggableDetailsOverlay */,
 				2F76AB33214814AF0094A7B1 /* EMail */,
 				2F03DBAC22097F4F006E8404 /* EventHandler */,
 				2F2C87B822C36DF5004F3254 /* Exceptions */,
@@ -621,6 +655,7 @@
 				2F0E296E22C213E300CEF04D /* UIDevice+Uptime.swift */,
 				2F0E297022C213E400CEF04D /* UIStoryboard+Instantiate.swift */,
 				2F0E296C22C213E300CEF04D /* UITableView+Reusable.swift */,
+				2F129C6122E0BA5B002B8FB0 /* UIViewController+Child.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -1001,6 +1036,7 @@
 				2FF58C2C21D7545D003C534E /* TaskOperationWrapper.swift in Sources */,
 				2F0CC9B3204931E900A896B2 /* TaskManagerError.swift in Sources */,
 				2FF279C31FDEB43D00F0F769 /* KeyboardHandler.swift in Sources */,
+				2F129C5E22E0A0E0002B8FB0 /* ExampleDraggableDetailsOverlayViewController.swift in Sources */,
 				2F03DBBD22097F65006E8404 /* HTTPClientParser.swift in Sources */,
 				2FF2798B1FDE723800F0F769 /* ExampleSelectorViewController.swift in Sources */,
 				2F03DBBB22097F65006E8404 /* HTTPClientError.swift in Sources */,
@@ -1008,6 +1044,7 @@
 				2FF289481FDEB46C00F0F769 /* VideoCamera.swift in Sources */,
 				2FF2894E1FDEB6FB00F0F769 /* ExampleImageProcessorViewController.swift in Sources */,
 				2FF289491FDEB46C00F0F769 /* VideoCameraConfiguration.swift in Sources */,
+				2F129C6222E0BA5B002B8FB0 /* UIViewController+Child.swift in Sources */,
 				2F03DBB922097F65006E8404 /* HTTPClient.swift in Sources */,
 				2FF289451FDEB46C00F0F769 /* DeviceCameraPreviewView.swift in Sources */,
 				2F03DBBA22097F65006E8404 /* HTTPClientAPIEndPoint.swift in Sources */,
@@ -1034,6 +1071,7 @@
 				2FF279891FDE723800F0F769 /* AppDelegate.swift in Sources */,
 				2F4FA519203DB276003D57C0 /* ExampleViewControllerProtocol.swift in Sources */,
 				2F50281D2048133A0088418A /* Task.swift in Sources */,
+				2F0434F222E5B12D00FAC9BF /* DecelerationHelper.swift in Sources */,
 				2FF289441FDEB46C00F0F769 /* DeviceCamera.swift in Sources */,
 				2F10746B21AD841F002D07DB /* OperationGroup.swift in Sources */,
 				2FB6FEDC21AC2B72008D3FC0 /* CancellableOperation.swift in Sources */,
@@ -1047,6 +1085,7 @@
 				2F5C2EE320318B880031CD2D /* ExamplePullToRefreshViewController.swift in Sources */,
 				2F10746921AD7A91002D07DB /* RetryHandler.swift in Sources */,
 				2F2C8BFC21AE7A1600413ED3 /* OperationPrototype.swift in Sources */,
+				2FFE8D3E22E1F077005520F9 /* DraggableDetailsOverlayHandleView.swift in Sources */,
 				2F76AB38214814AF0094A7B1 /* EMailValidator.swift in Sources */,
 				2FF2799D1FDE732000F0F769 /* Example.swift in Sources */,
 				2FC2268F2201E80F0057C63B /* NSNumberRepresentable.swift in Sources */,
@@ -1057,8 +1096,10 @@
 				2FB05A2C204E8F16003B80CC /* OperationPriority.swift in Sources */,
 				2F0E297A22C213E400CEF04D /* Array+Chunks.swift in Sources */,
 				2FB495012045A5460068D380 /* ExampleTaskManagerViewController.swift in Sources */,
+				2F129C5C22E0A015002B8FB0 /* DraggableDetailsOverlayViewController.swift in Sources */,
 				2F10B16E21C0F8FB00701871 /* SettingItem.swift in Sources */,
 				2FB05A2E204E9061003B80CC /* DependentOperation.swift in Sources */,
+				2F129C6022E0B70F002B8FB0 /* TouchTransparentView.swift in Sources */,
 				2F10B17221C0FA0D00701871 /* ExampleSettingsViewController.swift in Sources */,
 				2FF279A31FDE84AF00F0F769 /* ExampleDeviceTypeViewController.swift in Sources */,
 				2FF279CB1FDEB45100F0F769 /* PlaceholderTextView.swift in Sources */,

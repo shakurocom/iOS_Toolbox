@@ -4,7 +4,7 @@
 //
 
 import Foundation
-
+//TODO: make non-static
 /**
  Simple validator of email address designed to be used on client side.
  Very lax validation:
