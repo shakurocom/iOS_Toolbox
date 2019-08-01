@@ -24,6 +24,13 @@ Pod::Spec.new do |s|
 
     end
 
+    s.subspec 'ContainerViewController' do |sp|
+
+        sp.source_files = 'ContainerViewController/Source/**/*'
+        sp.frameworks = 'UIKit'
+
+    end
+
     s.subspec 'Device' do |sp|
 
         sp.source_files = 'Device/Source/**/*'

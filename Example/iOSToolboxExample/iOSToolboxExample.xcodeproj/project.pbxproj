@@ -110,6 +110,7 @@
 		2FFE8D3E22E1F077005520F9 /* DraggableDetailsOverlayHandleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFE8D3D22E1F077005520F9 /* DraggableDetailsOverlayHandleView.swift */; };
 		5F2BE42F76A6C745178C14A5 /* Pods_iOSToolboxExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 009702E9AD272B72DEC6FC66 /* Pods_iOSToolboxExample.framework */; };
 		CE3F4E3522F2D5BB002FC6C4 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F4E3422F2D5BA002FC6C4 /* ContainerViewController.swift */; };
+		CE3F4E3722F30770002FC6C4 /* ExampleContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F4E3622F30770002FC6C4 /* ExampleContainerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -235,6 +236,7 @@
 		8460D0405FC3E3B4F135CBAF /* Pods-iOSToolboxExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSToolboxExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iOSToolboxExample/Pods-iOSToolboxExample.debug.xcconfig"; sourceTree = "<group>"; };
 		BC61A924359D6E16CFD7D6E6 /* Pods-iOSToolboxExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSToolboxExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-iOSToolboxExample/Pods-iOSToolboxExample.release.xcconfig"; sourceTree = "<group>"; };
 		CE3F4E3422F2D5BA002FC6C4 /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
+		CE3F4E3622F30770002FC6C4 /* ExampleContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleContainerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -589,6 +591,7 @@
 				2F76AB422148170E0094A7B1 /* ExampleEMailValidatorViewController.swift */,
 				2F10B17121C0FA0D00701871 /* ExampleSettingsViewController.swift */,
 				2F129C5D22E0A0E0002B8FB0 /* ExampleDraggableDetailsOverlayViewController.swift */,
+				CE3F4E3622F30770002FC6C4 /* ExampleContainerViewController.swift */,
 			);
 			path = Examples;
 			sourceTree = "<group>";
@@ -596,7 +599,7 @@
 		2FF279A41FDE852D00F0F769 /* Toolbox */ = {
 			isa = PBXGroup;
 			children = (
-				CE3F4E3222F2D5BA002FC6C4 /* CustomContainerViewController */,
+				CE3F4E3222F2D5BA002FC6C4 /* ContainerViewController */,
 				2FFD4C9822539BFE00B07EB6 /* CommonTypes */,
 				2FF279A51FDE855B00F0F769 /* Device */,
 				2F129C5922E0A015002B8FB0 /* DraggableDetailsOverlay */,
@@ -826,13 +829,13 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		CE3F4E3222F2D5BA002FC6C4 /* CustomContainerViewController */ = {
+		CE3F4E3222F2D5BA002FC6C4 /* ContainerViewController */ = {
 			isa = PBXGroup;
 			children = (
 				CE3F4E3322F2D5BA002FC6C4 /* Source */,
 			);
-			name = CustomContainerViewController;
-			path = ../../../CustomContainerViewController;
+			name = ContainerViewController;
+			path = ../../../ContainerViewController;
 			sourceTree = "<group>";
 		};
 		CE3F4E3322F2D5BA002FC6C4 /* Source */ = {
@@ -1082,6 +1085,7 @@
 				2F0E297D22C213E400CEF04D /* UIApplication+BundleIdentifier.swift in Sources */,
 				2FF2894A1FDEB46C00F0F769 /* VideoCameraError.swift in Sources */,
 				2F86E3A8204814C50045070C /* OperationCallback.swift in Sources */,
+				CE3F4E3722F30770002FC6C4 /* ExampleContainerViewController.swift in Sources */,
 				2F5CED7B20581A2900BD508A /* ExamplePullToRefreshShakuroLogoViewController.swift in Sources */,
 				2F2C33E41FE177C500976FA2 /* ExampleKeychainWrapperViewController.swift in Sources */,
 				2FB05A30204E9430003B80CC /* TaskOperation.swift in Sources */,

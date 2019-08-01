@@ -1,51 +1,56 @@
+//
+// Copyright (c) 2019 Shakuro (https://shakuro.com/)
+//
+//
+
 import UIKit
 
-extension UIViewController {
+public extension UIViewController {
     var containerViewController: ContainerViewController? {
         return parent as? ContainerViewController
     }
 }
 
-protocol ContainerViewControllerPresenting: class {
+public protocol ContainerViewControllerPresenting: class {
     func present(_ controller: UIViewController, style: ContainerViewController.TransitionStyle, animated: Bool)
 }
 
-protocol ContainerViewTransitionAnimator {
+public protocol ContainerViewControllerTransitionAnimator {
     func animate(fromView: UIView?, toView: UIView, contentView: UIView, didFinish: @escaping () -> Void)
 }
 
 /// A container view controller with animated transition support
-class ContainerViewController: UIViewController, ContainerViewControllerPresenting {
+public class ContainerViewController: UIViewController, ContainerViewControllerPresenting {
 
-    enum TransitionStyle {
+    public enum TransitionStyle {
         case push
         case pop
-        case crossDissolve
-        case custom(animator: ContainerViewTransitionAnimator)
+        case fade
+        case custom(animator: ContainerViewControllerTransitionAnimator)
     }
 
-    private(set) var currentViewController: UIViewController?
-    private(set) var isOnScreen: Bool = false
+    public private(set) var currentViewController: UIViewController?
+    public private(set) var isOnScreen: Bool = false
 
-    @IBOutlet private(set) var contentView: UIView!
+    @IBOutlet public private(set) var contentView: UIView!
 
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         view.clipsToBounds = true
         contentView.clipsToBounds = true
     }
 
-    override func viewDidAppear(_ animated: Bool) {
+    public  override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         isOnScreen = true
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
+    public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         isOnScreen = false
     }
 
-    final func present(_ controller: UIViewController, style: TransitionStyle, animated: Bool) {
+    public final func present(_ controller: UIViewController, style: TransitionStyle, animated: Bool) {
         guard controller !== currentViewController else {
             return
         }
@@ -89,19 +94,17 @@ class ContainerViewController: UIViewController, ContainerViewControllerPresenti
         }
 
         if animated {
-            guard let actualFromView = fromView else {
-                animateCrossDissolve(fromView: fromView, toView: toView, didFinish: finishTransition)
-                return
-            }
-            switch style {
-            case .push:
+            switch (style, fromView) {
+            case (.push, .some(let actualFromView)):
                 animatePushPop(fromView: actualFromView, toView: toView, push: true, didFinish: finishTransition)
-            case .pop:
+            case (.pop, .some(let actualFromView)):
                 animatePushPop(fromView: actualFromView, toView: toView, push: false, didFinish: finishTransition)
-            case .crossDissolve:
-                animateCrossDissolve(fromView: actualFromView, toView: toView, didFinish: finishTransition)
-            case .custom(let animator):
-                animator.animate(fromView: actualFromView, toView: toView, contentView: contentView, didFinish: finishTransition)
+            case (.fade, _):
+                animateFade(fromView: nil, toView: toView, didFinish: finishTransition)
+            case (.custom(let animator), _):
+                animator.animate(fromView: fromView, toView: toView, contentView: contentView, didFinish: finishTransition)
+            default:
+                animateFade(fromView: nil, toView: toView, didFinish: finishTransition)
             }
         } else {
             finishTransition()
@@ -110,8 +113,8 @@ class ContainerViewController: UIViewController, ContainerViewControllerPresenti
 
     // MARK: - Override
 
-    func willPresentViewController(_ controller: UIViewController, animated: Bool) {}
-    func didPresentViewController(_ controller: UIViewController, animated: Bool) {}
+    public func willPresentViewController(_ controller: UIViewController, animated: Bool) {}
+    public func didPresentViewController(_ controller: UIViewController, animated: Bool) {}
 
 }
 
@@ -141,7 +144,7 @@ private extension ContainerViewController {
         })
     }
 
-    func animateCrossDissolve(fromView: UIView?, toView: UIView, didFinish: @escaping () -> Void) {
+    func animateFade(fromView: UIView?, toView: UIView, didFinish: @escaping () -> Void) {
         toView.alpha = 0.0
         UIView.animate(withDuration: 0.25, animations: {
             fromView?.alpha = 0.0

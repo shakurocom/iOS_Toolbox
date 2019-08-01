@@ -41,7 +41,8 @@ internal extension Example {
             Example(title: "Labels", viewControllerType: ExampleLabelsViewController.self),
             Example(title: "EMailValidator", viewControllerType: ExampleEMailValidatorViewController.self),
             Example(title: "Settings", viewControllerType: ExampleSettingsViewController.self),
-            Example(title: "Draggable overlay", viewControllerType: ExampleDraggableDetailsOverlayViewController.self)
+            Example(title: "Draggable overlay", viewControllerType: ExampleDraggableDetailsOverlayViewController.self),
+            Example(title: "Container View Controller", viewControllerType: ExampleContainerViewController.self)
         ]
     }
 

@@ -1271,6 +1271,66 @@
             </objects>
             <point key="canvasLocation" x="1697" y="8276"/>
         </scene>
+        <!--Example Container View Controller-->
+        <scene sceneID="zZG-gx-wQu">
+            <objects>
+                <viewController storyboardIdentifier="ExampleContainerViewController" id="SrD-7z-MV5" customClass="ExampleContainerViewController" customModule="iOSToolboxExample" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="e8F-mo-6er">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="orH-tv-ogU">
+                                <rect key="frame" x="0.0" y="64" width="375" height="80"/>
+                                <subviews>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" momentary="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9Og-wY-7FQ">
+                                        <rect key="frame" x="8" y="26" width="359" height="29"/>
+                                        <segments>
+                                            <segment title="Push"/>
+                                            <segment title="Pop"/>
+                                            <segment title="Fade"/>
+                                            <segment title="Custom"/>
+                                        </segments>
+                                        <connections>
+                                            <action selector="segmentedControlValueChanged:" destination="SrD-7z-MV5" eventType="valueChanged" id="CpN-6p-C5o"/>
+                                        </connections>
+                                    </segmentedControl>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="9Og-wY-7FQ" firstAttribute="centerY" secondItem="orH-tv-ogU" secondAttribute="centerY" id="0n2-F0-aga"/>
+                                    <constraint firstAttribute="trailing" secondItem="9Og-wY-7FQ" secondAttribute="trailing" constant="8" id="9w6-ZQ-9sy"/>
+                                    <constraint firstItem="9Og-wY-7FQ" firstAttribute="leading" secondItem="orH-tv-ogU" secondAttribute="leading" constant="8" id="hdF-Qk-lTf"/>
+                                    <constraint firstAttribute="height" constant="80" id="hpr-pF-ZRB"/>
+                                    <constraint firstItem="9Og-wY-7FQ" firstAttribute="centerX" secondItem="orH-tv-ogU" secondAttribute="centerX" id="mnv-1K-9kA"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E2e-zh-afw">
+                                <rect key="frame" x="0.0" y="144" width="375" height="523"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="E2e-zh-afw" firstAttribute="top" secondItem="orH-tv-ogU" secondAttribute="bottom" id="3YO-H2-P0R"/>
+                            <constraint firstAttribute="bottom" secondItem="E2e-zh-afw" secondAttribute="bottom" id="SYo-8y-ffM"/>
+                            <constraint firstItem="MkJ-29-ZGu" firstAttribute="trailing" secondItem="E2e-zh-afw" secondAttribute="trailing" id="h3U-mQ-uiI"/>
+                            <constraint firstItem="MkJ-29-ZGu" firstAttribute="trailing" secondItem="orH-tv-ogU" secondAttribute="trailing" id="iAl-3O-yKb"/>
+                            <constraint firstItem="orH-tv-ogU" firstAttribute="top" secondItem="MkJ-29-ZGu" secondAttribute="top" id="ie7-f4-zLG"/>
+                            <constraint firstItem="orH-tv-ogU" firstAttribute="leading" secondItem="MkJ-29-ZGu" secondAttribute="leading" id="nhT-77-iVu"/>
+                            <constraint firstItem="E2e-zh-afw" firstAttribute="leading" secondItem="MkJ-29-ZGu" secondAttribute="leading" id="rRM-27-jPj"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="MkJ-29-ZGu"/>
+                    </view>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="contentView" destination="E2e-zh-afw" id="EVP-Uw-h2i"/>
+                        <outlet property="segmentedcontrol" destination="9Og-wY-7FQ" id="OzU-Ew-Q3K"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xH4-XS-A2q" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2594" y="8275"/>
+        </scene>
         <!--Image Preview View Controller-->
         <scene sceneID="6R4-Go-39F">
             <objects>
