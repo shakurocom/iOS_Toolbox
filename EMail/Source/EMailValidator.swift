@@ -16,12 +16,10 @@ import Foundation
  */
 public class EMailValidator {
 
-
     /// The NSPredicate used to validate email string
     public let predicate: NSPredicate = NSPredicate(format: "SELF MATCHES %@", "^\\S.*@(\\S+\\.)+\\S{2}\\S*$")
 
     public init() { }
-
 
     /// Returns true if email is valid, false otherwise
     /// See also: [validate(email: String, shouldTrim: Bool) -> String?](x-source-tag://EMailValidator.validate)
