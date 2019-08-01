@@ -109,6 +109,7 @@
 		2FFD4C9B22539BFE00B07EB6 /* AsyncResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFD4C9A22539BFE00B07EB6 /* AsyncResult.swift */; };
 		2FFE8D3E22E1F077005520F9 /* DraggableDetailsOverlayHandleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFE8D3D22E1F077005520F9 /* DraggableDetailsOverlayHandleView.swift */; };
 		5F2BE42F76A6C745178C14A5 /* Pods_iOSToolboxExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 009702E9AD272B72DEC6FC66 /* Pods_iOSToolboxExample.framework */; };
+		CE3F4E3522F2D5BB002FC6C4 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F4E3422F2D5BA002FC6C4 /* ContainerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -233,6 +234,7 @@
 		2FFE8D3D22E1F077005520F9 /* DraggableDetailsOverlayHandleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableDetailsOverlayHandleView.swift; sourceTree = "<group>"; };
 		8460D0405FC3E3B4F135CBAF /* Pods-iOSToolboxExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSToolboxExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iOSToolboxExample/Pods-iOSToolboxExample.debug.xcconfig"; sourceTree = "<group>"; };
 		BC61A924359D6E16CFD7D6E6 /* Pods-iOSToolboxExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSToolboxExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-iOSToolboxExample/Pods-iOSToolboxExample.release.xcconfig"; sourceTree = "<group>"; };
+		CE3F4E3422F2D5BA002FC6C4 /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -594,6 +596,7 @@
 		2FF279A41FDE852D00F0F769 /* Toolbox */ = {
 			isa = PBXGroup;
 			children = (
+				CE3F4E3222F2D5BA002FC6C4 /* CustomContainerViewController */,
 				2FFD4C9822539BFE00B07EB6 /* CommonTypes */,
 				2FF279A51FDE855B00F0F769 /* Device */,
 				2F129C5922E0A015002B8FB0 /* DraggableDetailsOverlay */,
@@ -821,6 +824,23 @@
 				BC61A924359D6E16CFD7D6E6 /* Pods-iOSToolboxExample.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		CE3F4E3222F2D5BA002FC6C4 /* CustomContainerViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CE3F4E3322F2D5BA002FC6C4 /* Source */,
+			);
+			name = CustomContainerViewController;
+			path = ../../../CustomContainerViewController;
+			sourceTree = "<group>";
+		};
+		CE3F4E3322F2D5BA002FC6C4 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				CE3F4E3422F2D5BA002FC6C4 /* ContainerViewController.swift */,
+			);
+			path = Source;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1066,6 +1086,7 @@
 				2F2C33E41FE177C500976FA2 /* ExampleKeychainWrapperViewController.swift in Sources */,
 				2FB05A30204E9430003B80CC /* TaskOperation.swift in Sources */,
 				2FE04E50208731C3003ECABE /* VideoCameraPreviewView.swift in Sources */,
+				CE3F4E3522F2D5BB002FC6C4 /* ContainerViewController.swift in Sources */,
 				2F03DBBC22097F65006E8404 /* HTTPClientLogger.swift in Sources */,
 				2F0E297B22C213E400CEF04D /* Lock+Execute.swift in Sources */,
 				2FF279891FDE723800F0F769 /* AppDelegate.swift in Sources */,
