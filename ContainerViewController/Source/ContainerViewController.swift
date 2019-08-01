@@ -72,27 +72,27 @@ public class ContainerViewController: UIViewController, ContainerViewControllerP
     ///   - controller: The view controller that will be presented
     ///   - style: The type of transition animation
     ///   - animated: Perform or do not perform animation during transition
-    public final func present(_ controller: UIViewController, style: TransitionStyle, animated: Bool) {
-        guard controller !== currentViewController else {
+    public final func present(_ newController: UIViewController, style: TransitionStyle, animated: Bool) {
+        guard newController !== currentViewController else {
             return
         }
-        willPresentViewController(controller, animated: animated)
+        willPresentViewController(newController, animated: animated)
         let actuallyOnScreen: Bool = isOnScreen
         let oldController: UIViewController? = currentViewController
-        currentViewController = controller
+        currentViewController = newController
 
         oldController?.willMove(toParent: nil)
         if actuallyOnScreen {
             oldController?.beginAppearanceTransition(false, animated: animated)
         }
-        addChild(controller)
+        addChild(newController)
         if actuallyOnScreen {
-            controller.beginAppearanceTransition(true, animated: animated)
+            newController.beginAppearanceTransition(true, animated: animated)
         }
 
         let fromView: UIView? = oldController?.view
 
-        let toView: UIView = controller.view
+        let toView: UIView = newController.view
         toView.translatesAutoresizingMaskIntoConstraints = true
         toView.frame = containerView.bounds
         toView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
@@ -108,11 +108,11 @@ public class ContainerViewController: UIViewController, ContainerViewControllerP
                 actualOld.removeFromParent()
             }
             if actuallyOnScreen {
-                controller.endAppearanceTransition()
+                newController.endAppearanceTransition()
             }
-            controller.didMove(toParent: self)
+            newController.didMove(toParent: self)
             self.view.isUserInteractionEnabled = true
-            self.didPresentViewController(controller, animated: animated)
+            self.didPresentViewController(newController, animated: animated)
         }
 
         if animated {
