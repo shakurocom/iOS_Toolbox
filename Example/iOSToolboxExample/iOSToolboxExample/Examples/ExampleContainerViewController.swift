@@ -58,7 +58,7 @@ class ExampleContainerViewController: ContainerViewController, ExampleViewContro
 
 private struct ExampleAnimator: ContainerViewControllerTransitionAnimator {
 
-    func animate(fromView: UIView?, toView: UIView, contentView: UIView, didFinish: @escaping () -> Void) {
+    func animate(fromView: UIView?, toView: UIView, containerView: UIView, didFinish: @escaping () -> Void) {
         guard let actualFrom =  fromView else {
             didFinish()
             return

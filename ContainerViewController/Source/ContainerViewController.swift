@@ -6,6 +6,8 @@
 import UIKit
 
 public extension UIViewController {
+
+    /// If the recipient is a child of a ContainerViewController, this property holds the view controller it is contained in.
     var containerViewController: ContainerViewController? {
         return parent as? ContainerViewController
     }
@@ -15,13 +17,23 @@ public protocol ContainerViewControllerPresenting: class {
     func present(_ controller: UIViewController, style: ContainerViewController.TransitionStyle, animated: Bool)
 }
 
+/// Custom Animator support
 public protocol ContainerViewControllerTransitionAnimator {
-    func animate(fromView: UIView?, toView: UIView, contentView: UIView, didFinish: @escaping () -> Void)
+
+    /// Will be called by the ContainerViewController during animated transition
+    ///
+    /// - Parameters:
+    ///   - fromView: Old content view or nil
+    ///   - toView: New content view to display
+    ///   - containerView: The container view where content view is placed
+    ///   - didFinish: A closure to be executed when the transition ends. 
+    func animate(fromView: UIView?, toView: UIView, containerView: UIView, didFinish: @escaping () -> Void)
 }
 
 /// A container view controller with animated transition support
 public class ContainerViewController: UIViewController, ContainerViewControllerPresenting {
 
+    /// The type of transition animation
     public enum TransitionStyle {
         case push
         case pop
@@ -29,15 +41,19 @@ public class ContainerViewController: UIViewController, ContainerViewControllerP
         case custom(animator: ContainerViewControllerTransitionAnimator)
     }
 
+    /// The view controller that is presented by this view controller or nil
     public private(set) var currentViewController: UIViewController?
+
+    /// Indicates that the controller is currently on the screen
     public private(set) var isOnScreen: Bool = false
 
-    @IBOutlet public private(set) var contentView: UIView!
+    /// The super view for currentViewController.view
+    @IBOutlet public private(set) var containerView: UIView!
 
     public override func viewDidLoad() {
         super.viewDidLoad()
         view.clipsToBounds = true
-        contentView.clipsToBounds = true
+        containerView.clipsToBounds = true
     }
 
     public  override func viewDidAppear(_ animated: Bool) {
@@ -50,6 +66,12 @@ public class ContainerViewController: UIViewController, ContainerViewControllerP
         isOnScreen = false
     }
 
+    /// Performs transition to the new view controller
+    ///
+    /// - Parameters:
+    ///   - controller: The view controller that will be presented
+    ///   - style: The type of transition animation
+    ///   - animated: Perform or do not perform animation during transition
     public final func present(_ controller: UIViewController, style: TransitionStyle, animated: Bool) {
         guard controller !== currentViewController else {
             return
@@ -72,9 +94,9 @@ public class ContainerViewController: UIViewController, ContainerViewControllerP
 
         let toView: UIView = controller.view
         toView.translatesAutoresizingMaskIntoConstraints = true
-        toView.frame = contentView.bounds
+        toView.frame = containerView.bounds
         toView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        contentView.addSubview(toView)
+        containerView.addSubview(toView)
 
         view.isUserInteractionEnabled = false
         let finishTransition: () -> Void = {
@@ -102,7 +124,7 @@ public class ContainerViewController: UIViewController, ContainerViewControllerP
             case (.fade, _):
                 animateFade(fromView: nil, toView: toView, didFinish: finishTransition)
             case (.custom(let animator), _):
-                animator.animate(fromView: fromView, toView: toView, contentView: contentView, didFinish: finishTransition)
+                animator.animate(fromView: fromView, toView: toView, containerView: containerView, didFinish: finishTransition)
             default:
                 animateFade(fromView: nil, toView: toView, didFinish: finishTransition)
             }
@@ -113,7 +135,18 @@ public class ContainerViewController: UIViewController, ContainerViewControllerP
 
     // MARK: - Override
 
+    /// Will be performed directly before transition
+    ///
+    /// - Parameters:
+    ///   - controller: The view controller that will be presented
+    ///   - animated: true if transition is animated, false otherwise
     public func willPresentViewController(_ controller: UIViewController, animated: Bool) {}
+
+    /// Will be performed when the transition ends.
+    ///
+    /// - Parameters:
+    ///   - controller: The view controller that will be presented
+    ///   - animated: true if transition was animated, false otherwise
     public func didPresentViewController(_ controller: UIViewController, animated: Bool) {}
 
 }
@@ -123,7 +156,7 @@ public class ContainerViewController: UIViewController, ContainerViewControllerP
 private extension ContainerViewController {
 
     func animatePushPop(fromView: UIView, toView: UIView, push: Bool, didFinish: @escaping () -> Void) {
-        let contentSizeWidth: CGFloat = contentView.bounds.size.width
+        let contentSizeWidth: CGFloat = containerView.bounds.size.width
         let toViewTransform: CGAffineTransform
         let fromViewTransform: CGAffineTransform
         if push {
@@ -132,7 +165,7 @@ private extension ContainerViewController {
         } else {
             toViewTransform = CGAffineTransform(translationX: -contentSizeWidth * 0.3, y: 0)
             fromViewTransform = CGAffineTransform(translationX: contentSizeWidth, y: 0)
-            contentView.sendSubviewToBack(toView)
+            containerView.sendSubviewToBack(toView)
         }
         toView.transform = toViewTransform
         UIView.animate(withDuration: 0.33, delay: 0.0, options: [.curveEaseOut], animations: {

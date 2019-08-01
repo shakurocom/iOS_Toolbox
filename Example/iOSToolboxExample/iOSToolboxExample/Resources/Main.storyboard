@@ -1323,7 +1323,7 @@
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
-                        <outlet property="contentView" destination="E2e-zh-afw" id="EVP-Uw-h2i"/>
+                        <outlet property="containerView" destination="E2e-zh-afw" id="NJJ-Mk-V3N"/>
                         <outlet property="segmentedcontrol" destination="9Og-wY-7FQ" id="OzU-Ew-Q3K"/>
                     </connections>
                 </viewController>
