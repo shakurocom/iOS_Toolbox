@@ -20,6 +20,9 @@ class ExampleContainerViewController: ContainerViewController, ExampleViewContro
     override func viewDidLoad() {
         super.viewDidLoad()
         title = example?.title
+        let initialController = UIViewController()
+        initialController.view.backgroundColor = UIColor.random()
+        present(initialController, style: .fade, animated: false)
     }
 
     override func willPresentViewController(_ controller: UIViewController, animated: Bool) {

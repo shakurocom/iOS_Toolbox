@@ -126,7 +126,7 @@ public class ContainerViewController: UIViewController, ContainerViewControllerP
             case (.custom(let animator), _):
                 animator.animate(fromView: fromView, toView: toView, containerView: containerView, didFinish: finishTransition)
             default:
-                animateFade(fromView: nil, toView: toView, didFinish: finishTransition)
+                finishTransition()
             }
         } else {
             finishTransition()
