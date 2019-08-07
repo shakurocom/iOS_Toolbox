@@ -6,7 +6,7 @@
 import XCTest
 @testable import iOSToolboxExample
 
-private struct TestOperationOptions {
+private struct TestOperationOptions: BaseOperationOptions {
     let releaseExpectation: XCTestExpectation
 }
 
@@ -20,11 +20,6 @@ private class TestOperation: BaseOperation<Int, TestOperationOptions> {
         Thread.sleep(forTimeInterval: TaskManagerTests.operationLength)
         finish(result: .success(result: 0))
     }
-
-    open override var operationType: Int {
-        return 0
-    }
-
     open override var priorityValue: Int {
         return 0
     }

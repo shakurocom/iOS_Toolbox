@@ -102,8 +102,6 @@ open class HTTPClient {
         public var headers: [String: String] = [:]
         public var authCredential: URLCredential?
         public var timeoutInterval: TimeInterval = HTTPClientConstant.defaultTimeoutInterval
-        public var completionHandler: (_ response: CancellableAsyncResult<ParserType.ResultType>, _ session: HTTPClientUserSession?) -> Void
-            = { (_, _) in }
 
         public init(method aMethod: HTTPClient.RequestMethod,
                     endpoint aEndpoint: HTTPClientAPIEndPoint,
@@ -180,8 +178,8 @@ open class HTTPClient {
         })
     }
 
-    // TODO: move completion from options to param of the method
-    public func sendRequest<ParserType: HTTPClientParserProtocol>(options: RequestOptions<ParserType>) -> HTTPClientRequest {
+    public func sendRequest<ParserType: HTTPClientParserProtocol>(options: RequestOptions<ParserType>,
+                                                                  completion: @escaping (_ response: CancellableAsyncResult<ParserType.ResultType>, _ session: HTTPClientUserSession?) -> Void) -> HTTPClientRequest {
         let requestPrefab = formRequest(options: options)
         var request = manager.request(requestPrefab)
         if let credential = options.authCredential {
@@ -197,12 +195,14 @@ open class HTTPClient {
                                                           parser: options.parser,
                                                           requestOptions: options,
                                                           logger: currentLogger)
-                options.completionHandler(parsedResult, options.userSession)
+                completion(parsedResult, options.userSession)
             })
         return request
     }
 
-    public func upload<ParserType: HTTPClientParserProtocol>(data: Data, options: RequestOptions<ParserType>) -> HTTPClientRequest {
+    public func upload<ParserType: HTTPClientParserProtocol>(data: Data,
+                                                             options: RequestOptions<ParserType>,
+                                                             completion: @escaping (_ response: CancellableAsyncResult<ParserType.ResultType>, _ session: HTTPClientUserSession?) -> Void) -> HTTPClientRequest {
         let requestPrefab = formRequest(options: options)
         var request = manager.upload(data, with: requestPrefab)
         if let credential = options.authCredential {
@@ -218,7 +218,7 @@ open class HTTPClient {
                                                           parser: options.parser,
                                                           requestOptions: options,
                                                           logger: currentLogger)
-                options.completionHandler(parsedResult, options.userSession)
+                completion(parsedResult, options.userSession)
             })
         return request
     }
@@ -230,13 +230,13 @@ open class HTTPClient {
      */
     public func upload<ParserType: HTTPClientParserProtocol>(multipartFormData: @escaping (MultipartFormData) -> Void,
                                                              options: RequestOptions<ParserType>,
-                                                             encodingSuccess: ((HTTPClientRequest) -> Void)?) {
+                                                             encodingSuccess: ((HTTPClientRequest) -> Void)?,
+                                                             completion: @escaping (_ response: CancellableAsyncResult<ParserType.ResultType>, _ session: HTTPClientUserSession?) -> Void) {
         let requestPrefab = formRequest(options: options)
         let currentAcceptableStatusCodes = acceptableStatusCodes
         let currentAcceptableContentTypes = acceptableContentTypes
         let currentCallbackQueue = callbackQueue
         let currentLogger = logger
-        let completionHandler =  options.completionHandler
         let session = options.userSession
 
         manager.upload(multipartFormData: multipartFormData, with: requestPrefab) { (encodingResult) in
@@ -255,10 +255,10 @@ open class HTTPClient {
                                                                   parser: options.parser,
                                                                   requestOptions: options,
                                                                   logger: currentLogger)
-                        completionHandler(parsedResult, session)
+                        completion(parsedResult, session)
                     })
             case .failure(let error):
-                completionHandler(.failure(error: error), session)
+                completion(.failure(error: error), session)
             }
         }
     }

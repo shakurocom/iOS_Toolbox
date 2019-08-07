@@ -253,7 +253,7 @@ internal class GetStringsFromRandomOrgOperation: BaseOperation<String, GetString
             "format": "plain",
             "rnd": "new"
         ]
-        requestOptions.completionHandler = { [weak self] (parsedResponse, _) in
+        request = options.randomOrgClient.sendRequest(options: requestOptions, completion: { [weak self] (parsedResponse, _) in
             guard let strongSelf = self else {
                 return
             }
@@ -265,8 +265,7 @@ internal class GetStringsFromRandomOrgOperation: BaseOperation<String, GetString
             case .failure(let networkError):
                 strongSelf.finish(result: .failure(error: networkError))
             }
-        }
-        request = options.randomOrgClient.sendRequest(options: requestOptions)
+        })
     }
 
     override func internalCancel() {
