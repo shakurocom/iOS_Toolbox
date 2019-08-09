@@ -152,4 +152,11 @@ Pod::Spec.new do |s|
 
     end
 
+   s.subspec 'PoliteCoreData' do |sp|
+
+        sp.source_files = 'PoliteCoreData/Source/**/*'
+        sp.frameworks = 'Foundation', 'CoreData'
+
+   end
+
 end
