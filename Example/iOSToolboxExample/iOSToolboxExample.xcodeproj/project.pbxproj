@@ -109,6 +109,9 @@
 		2FFD4C9B22539BFE00B07EB6 /* AsyncResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFD4C9A22539BFE00B07EB6 /* AsyncResult.swift */; };
 		2FFE8D3E22E1F077005520F9 /* DraggableDetailsOverlayHandleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFE8D3D22E1F077005520F9 /* DraggableDetailsOverlayHandleView.swift */; };
 		5F2BE42F76A6C745178C14A5 /* Pods_iOSToolboxExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 009702E9AD272B72DEC6FC66 /* Pods_iOSToolboxExample.framework */; };
+		CEEF88E922F45FA20080EFB6 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEF88E522F45FA20080EFB6 /* NetworkError.swift */; };
+		CEEF88EA22F45FA20080EFB6 /* GenericError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEF88E622F45FA20080EFB6 /* GenericError.swift */; };
+		CEEF88EB22F45FA20080EFB6 /* GenericError+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEF88E722F45FA20080EFB6 /* GenericError+Helpers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -233,6 +236,9 @@
 		2FFE8D3D22E1F077005520F9 /* DraggableDetailsOverlayHandleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableDetailsOverlayHandleView.swift; sourceTree = "<group>"; };
 		8460D0405FC3E3B4F135CBAF /* Pods-iOSToolboxExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSToolboxExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iOSToolboxExample/Pods-iOSToolboxExample.debug.xcconfig"; sourceTree = "<group>"; };
 		BC61A924359D6E16CFD7D6E6 /* Pods-iOSToolboxExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSToolboxExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-iOSToolboxExample/Pods-iOSToolboxExample.release.xcconfig"; sourceTree = "<group>"; };
+		CEEF88E522F45FA20080EFB6 /* NetworkError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		CEEF88E622F45FA20080EFB6 /* GenericError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericError.swift; sourceTree = "<group>"; };
+		CEEF88E722F45FA20080EFB6 /* GenericError+Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GenericError+Helpers.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -809,6 +815,7 @@
 		2FFD4C9922539BFE00B07EB6 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				CEEF88E422F45FA20080EFB6 /* GenericError */,
 				2FFD4C9A22539BFE00B07EB6 /* AsyncResult.swift */,
 			);
 			path = Source;
@@ -821,6 +828,16 @@
 				BC61A924359D6E16CFD7D6E6 /* Pods-iOSToolboxExample.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		CEEF88E422F45FA20080EFB6 /* GenericError */ = {
+			isa = PBXGroup;
+			children = (
+				CEEF88E622F45FA20080EFB6 /* GenericError.swift */,
+				CEEF88E522F45FA20080EFB6 /* NetworkError.swift */,
+				CEEF88E722F45FA20080EFB6 /* GenericError+Helpers.swift */,
+			);
+			path = GenericError;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1031,7 +1048,9 @@
 				2FF279AB1FDE855B00F0F769 /* DeviceOrientationListener.swift in Sources */,
 				2F5C2EE120317DC80031CD2D /* PullToRefreshView.swift in Sources */,
 				2F2C8BFE21AE7B7A00413ED3 /* OperationGroupResult.swift in Sources */,
+				CEEF88EA22F45FA20080EFB6 /* GenericError.swift in Sources */,
 				2F4A2DED1FE3AE3A003B9F27 /* ExampleVideoCameraViewController.swift in Sources */,
+				CEEF88E922F45FA20080EFB6 /* NetworkError.swift in Sources */,
 				2FF289471FDEB46C00F0F769 /* SimulatorCameraPreviewView.swift in Sources */,
 				2FF58C2C21D7545D003C534E /* TaskOperationWrapper.swift in Sources */,
 				2F0CC9B3204931E900A896B2 /* TaskManagerError.swift in Sources */,
@@ -1059,6 +1078,7 @@
 				2F0E297C22C213E400CEF04D /* Data+Hash.swift in Sources */,
 				2FB494FF204577550068D380 /* TaskManager.swift in Sources */,
 				2F2DBABD205A87D4000AFC0F /* ExampleLabelsViewController.swift in Sources */,
+				CEEF88EB22F45FA20080EFB6 /* GenericError+Helpers.swift in Sources */,
 				2F0E297D22C213E400CEF04D /* UIApplication+BundleIdentifier.swift in Sources */,
 				2FF2894A1FDEB46C00F0F769 /* VideoCameraError.swift in Sources */,
 				2F86E3A8204814C50045070C /* OperationCallback.swift in Sources */,
