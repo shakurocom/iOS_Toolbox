@@ -4,7 +4,7 @@
 
 Pod::Spec.new do |s|
     s.name             = 'Shakuro.iOS_Toolbox'
-    s.version          = '0.18.0'
+    s.version          = '0.19.0'
     s.summary          = 'A bunch of components for iOS'
     s.homepage         = 'https://github.com/shakurocom/iOS_Toolbox'
     s.license          = { :type => 'MIT', :file => 'LICENSE' }
@@ -21,6 +21,13 @@ Pod::Spec.new do |s|
 
         sp.source_files = 'CommonTypes/Source/**/*'
         sp.frameworks = 'Foundation'
+
+    end
+
+    s.subspec 'ContainerViewController' do |sp|
+
+        sp.source_files = 'ContainerViewController/Source/**/*'
+        sp.frameworks = 'UIKit'
 
     end
 
