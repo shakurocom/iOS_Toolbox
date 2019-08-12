@@ -109,6 +109,19 @@
 		2FFD4C9B22539BFE00B07EB6 /* AsyncResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFD4C9A22539BFE00B07EB6 /* AsyncResult.swift */; };
 		2FFE8D3E22E1F077005520F9 /* DraggableDetailsOverlayHandleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFE8D3D22E1F077005520F9 /* DraggableDetailsOverlayHandleView.swift */; };
 		5F2BE42F76A6C745178C14A5 /* Pods_iOSToolboxExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 009702E9AD272B72DEC6FC66 /* Pods_iOSToolboxExample.framework */; };
+		CE484BF122D365CC0065258E /* ExampleCoreDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE484BF022D365CC0065258E /* ExampleCoreDataViewController.swift */; };
+		CE484BF422D367FC0065258E /* CoreDataExample.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CE484BF222D367FC0065258E /* CoreDataExample.xcdatamodeld */; };
+		CE484BF922D369CA0065258E /* CDExampleEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE484BF722D369CA0065258E /* CDExampleEntity+CoreDataClass.swift */; };
+		CE484BFA22D369CA0065258E /* CDExampleEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE484BF822D369CA0065258E /* CDExampleEntity+CoreDataProperties.swift */; };
+		CE484BFC22D36A5E0065258E /* ExampleEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE484BFB22D36A5E0065258E /* ExampleEntity.swift */; };
+		CE484BFE22D38D630065258E /* CDEntity+Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE484BFD22D38D630065258E /* CDEntity+Update.swift */; };
+		CE79BE0F22E9FA32000486B2 /* PredicateConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE79BE0822E9FA31000486B2 /* PredicateConvertible.swift */; };
+		CE79BE1022E9FA32000486B2 /* ManagedEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE79BE0922E9FA31000486B2 /* ManagedEntity.swift */; };
+		CE79BE1122E9FA32000486B2 /* PoliteCoreStorage+EntityIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE79BE0A22E9FA31000486B2 /* PoliteCoreStorage+EntityIdentifier.swift */; };
+		CE79BE1222E9FA32000486B2 /* NSManagedObject+Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE79BE0B22E9FA31000486B2 /* NSManagedObject+Update.swift */; };
+		CE79BE1322E9FA32000486B2 /* SingleObjectFetchedResultController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE79BE0C22E9FA31000486B2 /* SingleObjectFetchedResultController.swift */; };
+		CE79BE1422E9FA32000486B2 /* FetchedResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE79BE0D22E9FA31000486B2 /* FetchedResultsController.swift */; };
+		CE79BE1522E9FA32000486B2 /* PoliteCoreStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE79BE0E22E9FA31000486B2 /* PoliteCoreStorage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -233,6 +246,19 @@
 		2FFE8D3D22E1F077005520F9 /* DraggableDetailsOverlayHandleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableDetailsOverlayHandleView.swift; sourceTree = "<group>"; };
 		8460D0405FC3E3B4F135CBAF /* Pods-iOSToolboxExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSToolboxExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iOSToolboxExample/Pods-iOSToolboxExample.debug.xcconfig"; sourceTree = "<group>"; };
 		BC61A924359D6E16CFD7D6E6 /* Pods-iOSToolboxExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSToolboxExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-iOSToolboxExample/Pods-iOSToolboxExample.release.xcconfig"; sourceTree = "<group>"; };
+		CE484BF022D365CC0065258E /* ExampleCoreDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleCoreDataViewController.swift; sourceTree = "<group>"; };
+		CE484BF322D367FC0065258E /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		CE484BF722D369CA0065258E /* CDExampleEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDExampleEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		CE484BF822D369CA0065258E /* CDExampleEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDExampleEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		CE484BFB22D36A5E0065258E /* ExampleEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleEntity.swift; sourceTree = "<group>"; };
+		CE484BFD22D38D630065258E /* CDEntity+Update.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDEntity+Update.swift"; sourceTree = "<group>"; };
+		CE79BE0822E9FA31000486B2 /* PredicateConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PredicateConvertible.swift; sourceTree = "<group>"; };
+		CE79BE0922E9FA31000486B2 /* ManagedEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedEntity.swift; sourceTree = "<group>"; };
+		CE79BE0A22E9FA31000486B2 /* PoliteCoreStorage+EntityIdentifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PoliteCoreStorage+EntityIdentifier.swift"; sourceTree = "<group>"; };
+		CE79BE0B22E9FA31000486B2 /* NSManagedObject+Update.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+Update.swift"; sourceTree = "<group>"; };
+		CE79BE0C22E9FA31000486B2 /* SingleObjectFetchedResultController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleObjectFetchedResultController.swift; sourceTree = "<group>"; };
+		CE79BE0D22E9FA31000486B2 /* FetchedResultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchedResultsController.swift; sourceTree = "<group>"; };
+		CE79BE0E22E9FA31000486B2 /* PoliteCoreStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PoliteCoreStorage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -560,6 +586,7 @@
 				2FF279B11FDE925A00F0F769 /* Main.storyboard */,
 				2FF2798F1FDE723800F0F769 /* Assets.xcassets */,
 				2FF279941FDE723800F0F769 /* Info.plist */,
+				CE484BF222D367FC0065258E /* CoreDataExample.xcdatamodeld */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -567,6 +594,7 @@
 		2FF2799B1FDE728B00F0F769 /* Examples */ = {
 			isa = PBXGroup;
 			children = (
+				CE484BF622D3696F0065258E /* CoreData */,
 				2FF2799C1FDE732000F0F769 /* Example.swift */,
 				2F37FFF1204ED172000C6533 /* ExampleStoryboardName.swift */,
 				2FF279A01FDE83A100F0F769 /* ExampleViewControllerProtocol.swift */,
@@ -594,6 +622,7 @@
 		2FF279A41FDE852D00F0F769 /* Toolbox */ = {
 			isa = PBXGroup;
 			children = (
+				CE79BE0622E9FA31000486B2 /* PoliteCoreData */,
 				2FFD4C9822539BFE00B07EB6 /* CommonTypes */,
 				2FF279A51FDE855B00F0F769 /* Device */,
 				2F129C5922E0A015002B8FB0 /* DraggableDetailsOverlay */,
@@ -823,6 +852,41 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		CE484BF622D3696F0065258E /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				CE484BF722D369CA0065258E /* CDExampleEntity+CoreDataClass.swift */,
+				CE484BF822D369CA0065258E /* CDExampleEntity+CoreDataProperties.swift */,
+				CE484BF022D365CC0065258E /* ExampleCoreDataViewController.swift */,
+				CE484BFB22D36A5E0065258E /* ExampleEntity.swift */,
+				CE484BFD22D38D630065258E /* CDEntity+Update.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		CE79BE0622E9FA31000486B2 /* PoliteCoreData */ = {
+			isa = PBXGroup;
+			children = (
+				CE79BE0722E9FA31000486B2 /* Source */,
+			);
+			name = PoliteCoreData;
+			path = ../../../PoliteCoreData;
+			sourceTree = "<group>";
+		};
+		CE79BE0722E9FA31000486B2 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				CE79BE0822E9FA31000486B2 /* PredicateConvertible.swift */,
+				CE79BE0922E9FA31000486B2 /* ManagedEntity.swift */,
+				CE79BE0A22E9FA31000486B2 /* PoliteCoreStorage+EntityIdentifier.swift */,
+				CE79BE0B22E9FA31000486B2 /* NSManagedObject+Update.swift */,
+				CE79BE0C22E9FA31000486B2 /* SingleObjectFetchedResultController.swift */,
+				CE79BE0D22E9FA31000486B2 /* FetchedResultsController.swift */,
+				CE79BE0E22E9FA31000486B2 /* PoliteCoreStorage.swift */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1019,6 +1083,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE79BE1522E9FA32000486B2 /* PoliteCoreStorage.swift in Sources */,
 				2FF279B81FDEA77B00F0F769 /* ExampleUIStoryboardExtensionsViewController.swift in Sources */,
 				2F0516BC2077B1CA00ECB7FF /* ExamplePullToRefreshContentView.swift in Sources */,
 				2F0E297622C213E400CEF04D /* String+Hash.swift in Sources */,
@@ -1036,14 +1101,18 @@
 				2FF58C2C21D7545D003C534E /* TaskOperationWrapper.swift in Sources */,
 				2F0CC9B3204931E900A896B2 /* TaskManagerError.swift in Sources */,
 				2FF279C31FDEB43D00F0F769 /* KeyboardHandler.swift in Sources */,
+				CE79BE1322E9FA32000486B2 /* SingleObjectFetchedResultController.swift in Sources */,
 				2F129C5E22E0A0E0002B8FB0 /* ExampleDraggableDetailsOverlayViewController.swift in Sources */,
 				2F03DBBD22097F65006E8404 /* HTTPClientParser.swift in Sources */,
+				CE484BF922D369CA0065258E /* CDExampleEntity+CoreDataClass.swift in Sources */,
 				2FF2798B1FDE723800F0F769 /* ExampleSelectorViewController.swift in Sources */,
 				2F03DBBB22097F65006E8404 /* HTTPClientError.swift in Sources */,
 				2F0E297922C213E400CEF04D /* UIStoryboard+Instantiate.swift in Sources */,
+				CE79BE1222E9FA32000486B2 /* NSManagedObject+Update.swift in Sources */,
 				2FF289481FDEB46C00F0F769 /* VideoCamera.swift in Sources */,
 				2FF2894E1FDEB6FB00F0F769 /* ExampleImageProcessorViewController.swift in Sources */,
 				2FF289491FDEB46C00F0F769 /* VideoCameraConfiguration.swift in Sources */,
+				CE484BF422D367FC0065258E /* CoreDataExample.xcdatamodeld in Sources */,
 				2F129C6222E0BA5B002B8FB0 /* UIViewController+Child.swift in Sources */,
 				2F03DBB922097F65006E8404 /* HTTPClient.swift in Sources */,
 				2FF289451FDEB46C00F0F769 /* DeviceCameraPreviewView.swift in Sources */,
@@ -1051,14 +1120,18 @@
 				2FF279AC1FDE855B00F0F769 /* DeviceType.swift in Sources */,
 				2F03DBBF22097F65006E8404 /* HTTPClientUserSession.swift in Sources */,
 				2F76AB432148170E0094A7B1 /* ExampleEMailValidatorViewController.swift in Sources */,
+				CE79BE1122E9FA32000486B2 /* PoliteCoreStorage+EntityIdentifier.swift in Sources */,
 				2FF58C2E21D7548E003C534E /* RetryTaskOperationWrapper.swift in Sources */,
 				2F0E297522C213E400CEF04D /* UITableView+Reusable.swift in Sources */,
 				2F32FBD02087315B00D61F25 /* ExampleStoryboardName.swift in Sources */,
 				2F6DCB602058155B00B5E128 /* ShakuroLogoPullToRefreshContentView.swift in Sources */,
+				CE484BFE22D38D630065258E /* CDEntity+Update.swift in Sources */,
 				2FEEDDAC1FE28F3A00C6BC0A /* ExamplePlaceholderTextViewViewController.swift in Sources */,
 				2F0E297C22C213E400CEF04D /* Data+Hash.swift in Sources */,
 				2FB494FF204577550068D380 /* TaskManager.swift in Sources */,
 				2F2DBABD205A87D4000AFC0F /* ExampleLabelsViewController.swift in Sources */,
+				CE79BE1422E9FA32000486B2 /* FetchedResultsController.swift in Sources */,
+				CE79BE0F22E9FA32000486B2 /* PredicateConvertible.swift in Sources */,
 				2F0E297D22C213E400CEF04D /* UIApplication+BundleIdentifier.swift in Sources */,
 				2FF2894A1FDEB46C00F0F769 /* VideoCameraError.swift in Sources */,
 				2F86E3A8204814C50045070C /* OperationCallback.swift in Sources */,
@@ -1070,6 +1143,7 @@
 				2F0E297B22C213E400CEF04D /* Lock+Execute.swift in Sources */,
 				2FF279891FDE723800F0F769 /* AppDelegate.swift in Sources */,
 				2F4FA519203DB276003D57C0 /* ExampleViewControllerProtocol.swift in Sources */,
+				CE484BFC22D36A5E0065258E /* ExampleEntity.swift in Sources */,
 				2F50281D2048133A0088418A /* Task.swift in Sources */,
 				2F0434F222E5B12D00FAC9BF /* DecelerationHelper.swift in Sources */,
 				2FF289441FDEB46C00F0F769 /* DeviceCamera.swift in Sources */,
@@ -1080,6 +1154,7 @@
 				2F2DBABB205A8220000AFC0F /* InsetsLabel.swift in Sources */,
 				2F4FA518203DAECC003D57C0 /* ExampleHTTPClientViewController.swift in Sources */,
 				2F956100229BE33400D5E6B9 /* BaseOperationOptions.swift in Sources */,
+				CE484BF122D365CC0065258E /* ExampleCoreDataViewController.swift in Sources */,
 				2F4A2DF01FE3B8C6003B9F27 /* ImagePreviewViewController.swift in Sources */,
 				2F05E6A922CA1DCA00280D57 /* ExamplePullToRefreshStickyHeadersViewController.swift in Sources */,
 				2F5C2EE320318B880031CD2D /* ExamplePullToRefreshViewController.swift in Sources */,
@@ -1092,6 +1167,8 @@
 				2FFC2C4322A9430D008B4B8E /* CGSize+Aspect.swift in Sources */,
 				2F86E3AA204815940045070C /* BaseOperation.swift in Sources */,
 				2F11C93C2201817F0003B754 /* RawCodable.swift in Sources */,
+				CE484BFA22D369CA0065258E /* CDExampleEntity+CoreDataProperties.swift in Sources */,
+				CE79BE1022E9FA32000486B2 /* ManagedEntity.swift in Sources */,
 				2FF279C71FDEB44700F0F769 /* KeychainWrapper.swift in Sources */,
 				2FB05A2C204E8F16003B80CC /* OperationPriority.swift in Sources */,
 				2F0E297A22C213E400CEF04D /* Array+Chunks.swift in Sources */,
@@ -1329,6 +1406,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		CE484BF222D367FC0065258E /* CoreDataExample.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				CE484BF322D367FC0065258E /* Model.xcdatamodel */,
+			);
+			currentVersion = CE484BF322D367FC0065258E /* Model.xcdatamodel */;
+			path = CoreDataExample.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 2FF2797D1FDE723800F0F769 /* Project object */;
 }
