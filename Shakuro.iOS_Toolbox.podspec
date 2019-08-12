@@ -24,6 +24,13 @@ Pod::Spec.new do |s|
 
     end
 
+    s.subspec 'ContainerViewController' do |sp|
+
+        sp.source_files = 'ContainerViewController/Source/**/*'
+        sp.frameworks = 'UIKit'
+
+    end
+
     s.subspec 'Device' do |sp|
 
         sp.source_files = 'Device/Source/**/*'
@@ -144,5 +151,12 @@ Pod::Spec.new do |s|
         sp.frameworks = 'Accelerate', 'AVFoundation', 'UIKit'
 
     end
+
+   s.subspec 'PoliteCoreData' do |sp|
+
+        sp.source_files = 'PoliteCoreData/Source/**/*'
+        sp.frameworks = 'Foundation', 'CoreData'
+
+   end
 
 end
