@@ -113,6 +113,8 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
 
     @IBOutlet private var contentScrollView: UIScrollView!
 
+    @IBOutlet private var presentationStyleControl: UISegmentedControl!
+
     @IBOutlet private var shadowSwitch: UISwitch!
     @IBOutlet private var shadowColorButton: UIButton!
 
@@ -175,8 +177,6 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
         contentViewController = ExampleDraggableDetailsContentViewController.instantiate()
         contentViewController.delegate = self
         overlayViewController = DraggableDetailsOverlayViewController(nestedController: contentViewController, delegate: self)
-        self.addChildViewController(overlayViewController, notifyAboutAppearanceTransition: false)
-        overlayViewController.show(initialAnchor: .middle(height: 400), animated: false)
 
         contentScrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 400, right: 0)
 
@@ -243,7 +243,7 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
 
     @IBAction private func showOverlayButtonDidPress() {
         view.endEditing(true)
-        overlayViewController.show(initialAnchor: .middle(height: 400), animated: true)
+        showOverlay()
     }
 
     @IBAction private func switchValueChanged(_ sender: UISwitch) {
@@ -273,6 +273,8 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
         switch sender {
         case snapCalculationDecelerationRateSegmentedControl:
             overlayViewController.snapCalculationDecelerationRate = snapCalculationDecelerationRateSegmentedControl.selectedSegmentIndex == 0 ? .normal : .fast
+        case presentationStyleControl:
+            showOverlay()
         default:
             break
         }
@@ -329,7 +331,13 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
 extension ExampleDraggableDetailsOverlayViewController: ExampleDraggableDetailsContentViewControllerDelegate {
 
     func contentDidPressCloseButton() {
-        overlayViewController.hide(animated: true)
+        if presentedViewController != nil {
+            dismiss(animated: true) {
+                self.overlayViewController.hide(animated: false)
+            }
+        } else {
+            overlayViewController.hide(animated: true)
+        }
     }
 
 }
@@ -397,6 +405,49 @@ private extension UIColor {
 }
 
 private extension ExampleDraggableDetailsOverlayViewController {
+
+    func showOverlay() {
+        guard presentedViewController == nil else {
+            dismiss(animated: true) { [weak self] in
+                guard let actualSelf = self else {
+                    return
+                }
+                actualSelf.showOverlay()
+            }
+            return
+        }
+        let selectedSegment = presentationStyleControl.selectedSegmentIndex
+        switch selectedSegment {
+        case 0:
+            addChildViewController(overlayViewController, notifyAboutAppearanceTransition: true)
+            overlayViewController.view.layoutIfNeeded()
+            overlayViewController.hide(animated: false)
+            overlayViewController.show(initialAnchor: .middle(height: 400), animated: true)
+        case 1, 2:
+            overlayViewController.hide(animated: false)
+            if overlayViewController.parent != nil {
+                overlayViewController.removeFromParentViewController(notifyAboutAppearanceTransition: true)
+                overlayViewController.hide(animated: false)
+            }
+            overlayViewController.modalPresentationStyle = .overCurrentContext
+            if selectedSegment == 1 {
+                overlayViewController.isShadowEnabled = false
+                overlayViewController.modalTransitionStyle = .coverVertical
+                overlayViewController.show(initialAnchor: .middle(height: 400), animated: false)
+                present(overlayViewController, animated: true, completion: nil)
+            } else {
+                overlayViewController.isShadowEnabled = true
+                overlayViewController.modalTransitionStyle = .crossDissolve
+                present(overlayViewController, animated: true) {
+                    self.overlayViewController.show(initialAnchor: .middle(height: 400), animated: true)
+                }
+            }
+        default:
+            break
+        }
+
+    }
+
     func updateSliderLabels() {
         draggableContainerTopCornersRadiusLabel.text = String(format: "%.1f", draggableContainerTopCornersRadiusSlider.value)
         handleContainerHeightLabel.text = String(format: "%.1f", handleContainerHeightSlider.value)
