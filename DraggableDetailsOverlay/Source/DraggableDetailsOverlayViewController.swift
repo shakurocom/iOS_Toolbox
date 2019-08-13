@@ -78,7 +78,7 @@ public protocol DraggableDetailsOverlayNestedInterface {
  */
 public class DraggableDetailsOverlayViewController: UIViewController {
 
-    public typealias NestedConstroller = UIViewController & DraggableDetailsOverlayNestedInterface
+    public typealias NestedController = UIViewController & DraggableDetailsOverlayNestedInterface
 
     public enum Anchor {
         case top(offset: CGFloat)
@@ -282,7 +282,7 @@ public class DraggableDetailsOverlayViewController: UIViewController {
     private var handleHeightConstraint: NSLayoutConstraint!
     private var dragGestureRecognizer: UIPanGestureRecognizer!
 
-    private let nestedController: NestedConstroller
+    private let nestedController: NestedController
     private weak var delegate: DraggableDetailsOverlayViewControllerDelegate?
 
     private var anchors: [Anchor] = []
@@ -308,7 +308,7 @@ public class DraggableDetailsOverlayViewController: UIViewController {
         fatalError("init(coder) is not allowed. Use init(style:)")
     }
 
-    public init(nestedController: NestedConstroller, delegate: DraggableDetailsOverlayViewControllerDelegate) {
+    public init(nestedController: NestedController, delegate: DraggableDetailsOverlayViewControllerDelegate) {
         self.nestedController = nestedController
         self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
