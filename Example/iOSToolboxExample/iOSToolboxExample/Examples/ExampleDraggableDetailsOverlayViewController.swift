@@ -331,13 +331,7 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
 extension ExampleDraggableDetailsOverlayViewController: ExampleDraggableDetailsContentViewControllerDelegate {
 
     func contentDidPressCloseButton() {
-        if presentedViewController != nil {
-            dismiss(animated: true) {
-                self.overlayViewController.hide(animated: false)
-            }
-        } else {
-            overlayViewController.hide(animated: true)
-        }
+        overlayViewController.hide(animated: true)
     }
 
 }
@@ -345,6 +339,12 @@ extension ExampleDraggableDetailsOverlayViewController: ExampleDraggableDetailsC
 // MARK: DraggableDetailsOverlayViewControllerDelegate
 
 extension ExampleDraggableDetailsOverlayViewController: DraggableDetailsOverlayViewControllerDelegate {
+
+    func draggableDetailsOverlayBecameHidden(_ overlay: DraggableDetailsOverlayViewController) {
+        if presentedViewController != nil {
+           dismiss(animated: false, completion: nil)
+        }
+    }
 
     func draggableDetailsOverlayAnchors(_ overlay: DraggableDetailsOverlayViewController) -> [DraggableDetailsOverlayViewController.Anchor] {
         return [
