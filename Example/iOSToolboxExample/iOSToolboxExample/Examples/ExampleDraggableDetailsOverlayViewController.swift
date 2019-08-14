@@ -340,12 +340,6 @@ extension ExampleDraggableDetailsOverlayViewController: ExampleDraggableDetailsC
 
 extension ExampleDraggableDetailsOverlayViewController: DraggableDetailsOverlayViewControllerDelegate {
 
-    func draggableDetailsOverlayBecameHidden(_ overlay: DraggableDetailsOverlayViewController) {
-        if presentedViewController != nil {
-           dismiss(animated: false, completion: nil)
-        }
-    }
-
     func draggableDetailsOverlayAnchors(_ overlay: DraggableDetailsOverlayViewController) -> [DraggableDetailsOverlayViewController.Anchor] {
         return [
             .top(offset: 40),
@@ -371,7 +365,9 @@ extension ExampleDraggableDetailsOverlayViewController: DraggableDetailsOverlayV
     }
 
     func draggableDetailsOverlayDidChangeIsVisible(_ overlay: DraggableDetailsOverlayViewController) {
-        print("did change is visible: \(overlay.isVisible)")
+        if !overlay.isVisible, presentedViewController != nil {
+            dismiss(animated: false, completion: nil)
+        }
     }
 
     func draggableDetailsOverlayDidUpdatedLayout(_ overlay: DraggableDetailsOverlayViewController) {

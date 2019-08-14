@@ -45,11 +45,6 @@ public protocol DraggableDetailsOverlayViewControllerDelegate: class {
 
     func draggableDetailsOverlayDidUpdatedLayout(_ overlay: DraggableDetailsOverlayViewController)
 
-    /**
-     Called when overlay became hidden/offscreen.
-     */
-    func draggableDetailsOverlayBecameHidden(_ overlay: DraggableDetailsOverlayViewController)
-
 }
 
 /**
@@ -99,7 +94,9 @@ public class DraggableDetailsOverlayViewController: UIViewController {
      */
     public private(set) var isVisible: Bool = false {
         didSet {
-            delegate?.draggableDetailsOverlayDidChangeIsVisible(self)
+            if oldValue != isVisible {
+                delegate?.draggableDetailsOverlayDidChangeIsVisible(self)
+            }
         }
     }
 
@@ -717,12 +714,8 @@ private extension DraggableDetailsOverlayViewController {
         }
         let completion = { (finished: Bool) -> Void in
             if !newVisible {
-                let wasVisible = self.isVisible
                 self.view.isHidden = true
                 self.isVisible = false
-                if wasVisible {
-                    self.delegate?.draggableDetailsOverlayBecameHidden(self)
-                }
             }
         }
         if animated {
