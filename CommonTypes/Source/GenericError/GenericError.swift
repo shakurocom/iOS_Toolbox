@@ -24,10 +24,12 @@ protocol GenericErrorProtocol: PresentableError {
     func getValue<T>() -> T?
 }
 
-struct GenericError<Interpreter>: GenericErrorProtocol {
+struct GenericError<Interpreter: ErrorInterpreterProtocol>: GenericErrorProtocol {
 
     let value: Error
     let errorDescription: String
+
+    let interpreter: Interpreter
 
     static func unknownError() -> GenericError<Interpreter> {
         return GenericError(value: GenericCommonError.unknown)
@@ -38,27 +40,41 @@ struct GenericError<Interpreter>: GenericErrorProtocol {
     }
 
     init(value: Error) {
-        let dsc: String
-        switch value {
-        case let current as NetworkErrorConvertible:
-            dsc = current.networkError().errorDescription
-        case let current as PresentableError:
-            dsc = current.errorDescription
-        case let current as NSError:
-            dsc = current.localizedDescription
-        default:
-            dsc = (value as? LocalizedError)?.errorDescription ?? "\(value)"
-        }
-        self.init(errorDescription: dsc, value: value)
+        self.init(errorDescription: Interpreter.generateDescription(value), value: value)
     }
 
     init(errorDescription: String, value: Error) {
         self.errorDescription = errorDescription
         self.value = value
+        self.interpreter = Interpreter()
     }
 
     func getValue<T>() -> T? {
         return value as? T ?? (value as? GenericErrorProtocol)?.getValue()
+    }
+}
+
+// MARK: - Interpreter
+
+extension GenericError {
+    func isNotFoundError() -> Bool {
+        return interpreter.isNotFoundError(self)
+    }
+    func isNotAuthorizedError() -> Bool {
+        return interpreter.isNotAuthorizedError(self)
+    }
+    func isCancelledError() -> Bool {
+        return interpreter.isCancelledError(self)
+    }
+    func isRequestTimedOutError() -> Bool {
+        return interpreter.isRequestTimedOutError(self)
+    }
+    func isConnectionError() -> Bool {
+        return interpreter.isConnectionError(self)
+    }
+
+    func isInternalServerError() -> Bool {
+      return interpreter.isInternalServerError(self)
     }
 }
 
