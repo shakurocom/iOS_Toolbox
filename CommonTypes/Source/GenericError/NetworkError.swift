@@ -32,10 +32,10 @@ struct NetworkError: PresentableError, NetworkErrorConvertible {
         case .invalidHTTPStatusCode(let status):
             let codeDsc: String = HTTPURLResponse.localizedString(forStatusCode: status)
             errorDescription = NSLocalizedString("Response status code was unacceptable:", comment: "") + " \(status) (\(codeDsc))"
-        case .apiError(_, _, let error):
-            errorDescription = error
-        case .generalError(let error):
-            errorDescription = error
+        case .apiError(_, _, let apiErrorDescription):
+            errorDescription = apiErrorDescription
+        case .generalError(let generalErrorDescription):
+            errorDescription = generalErrorDescription
         }
     }
 

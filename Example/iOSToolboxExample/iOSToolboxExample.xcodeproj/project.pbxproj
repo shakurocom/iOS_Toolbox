@@ -117,6 +117,7 @@
 		CE484BFA22D369CA0065258E /* CDExampleEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE484BF822D369CA0065258E /* CDExampleEntity+CoreDataProperties.swift */; };
 		CE484BFC22D36A5E0065258E /* ExampleEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE484BFB22D36A5E0065258E /* ExampleEntity.swift */; };
 		CE484BFE22D38D630065258E /* CDEntity+Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE484BFD22D38D630065258E /* CDEntity+Update.swift */; };
+		CE63A5B923043BEF00EA296D /* GenericCommonError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE63A5B823043BEF00EA296D /* GenericCommonError.swift */; };
 		CE79BE0F22E9FA32000486B2 /* PredicateConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE79BE0822E9FA31000486B2 /* PredicateConvertible.swift */; };
 		CE79BE1022E9FA32000486B2 /* ManagedEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE79BE0922E9FA31000486B2 /* ManagedEntity.swift */; };
 		CE79BE1122E9FA32000486B2 /* PoliteCoreStorage+EntityIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE79BE0A22E9FA31000486B2 /* PoliteCoreStorage+EntityIdentifier.swift */; };
@@ -259,6 +260,7 @@
 		CE484BF822D369CA0065258E /* CDExampleEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDExampleEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		CE484BFB22D36A5E0065258E /* ExampleEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleEntity.swift; sourceTree = "<group>"; };
 		CE484BFD22D38D630065258E /* CDEntity+Update.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDEntity+Update.swift"; sourceTree = "<group>"; };
+		CE63A5B823043BEF00EA296D /* GenericCommonError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericCommonError.swift; sourceTree = "<group>"; };
 		CE79BE0822E9FA31000486B2 /* PredicateConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PredicateConvertible.swift; sourceTree = "<group>"; };
 		CE79BE0922E9FA31000486B2 /* ManagedEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedEntity.swift; sourceTree = "<group>"; };
 		CE79BE0A22E9FA31000486B2 /* PoliteCoreStorage+EntityIdentifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PoliteCoreStorage+EntityIdentifier.swift"; sourceTree = "<group>"; };
@@ -923,6 +925,7 @@
 				CEEF88E622F45FA20080EFB6 /* GenericError.swift */,
 				CEEF88E522F45FA20080EFB6 /* NetworkError.swift */,
 				CEEF88E722F45FA20080EFB6 /* ErrorInterpreter.swift */,
+				CE63A5B823043BEF00EA296D /* GenericCommonError.swift */,
 			);
 			path = GenericError;
 			sourceTree = "<group>";
@@ -1127,6 +1130,7 @@
 				2FF279B81FDEA77B00F0F769 /* ExampleUIStoryboardExtensionsViewController.swift in Sources */,
 				2F0516BC2077B1CA00ECB7FF /* ExamplePullToRefreshContentView.swift in Sources */,
 				2F0E297622C213E400CEF04D /* String+Hash.swift in Sources */,
+				CE63A5B923043BEF00EA296D /* GenericCommonError.swift in Sources */,
 				2F03DBAF22097F4F006E8404 /* EventHandler.swift in Sources */,
 				2FF279BF1FDEB34800F0F769 /* ImageProcessor.swift in Sources */,
 				2F73E5DF21B0123900B3F79F /* Settings.swift in Sources */,
