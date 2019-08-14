@@ -36,15 +36,19 @@ struct GenericError<Interpreter: ErrorInterpreterProtocol>: GenericErrorProtocol
     func isNotFoundError() -> Bool {
         return Interpreter.isNotFoundError(self)
     }
+
     func isNotAuthorizedError() -> Bool {
         return Interpreter.isNotAuthorizedError(self)
     }
+
     func isCancelledError() -> Bool {
         return Interpreter.isCancelledError(self)
     }
+
     func isRequestTimedOutError() -> Bool {
         return Interpreter.isRequestTimedOutError(self)
     }
+
     func isConnectionError() -> Bool {
         return Interpreter.isConnectionError(self)
     }
