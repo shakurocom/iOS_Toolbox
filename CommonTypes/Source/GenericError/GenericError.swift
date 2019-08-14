@@ -39,14 +39,11 @@ struct GenericError<Interpreter: ErrorInterpreterProtocol>: GenericErrorProtocol
         return GenericError(value: GenericCommonError.notAuthorized)
     }
 
-    init(value: Error) {
-        self.init(errorDescription: Interpreter.generateDescription(value), value: value)
-    }
-
-    init(errorDescription: String, value: Error) {
-        self.errorDescription = errorDescription
+    init(value: Error, errorDescription: String? = nil) {
+        let currentInterpreter = Interpreter()
+        self.interpreter = currentInterpreter
+        self.errorDescription = errorDescription ?? currentInterpreter.generateDescription(value)
         self.value = value
-        self.interpreter = Interpreter()
     }
 
     func getValue<T>() -> T? {

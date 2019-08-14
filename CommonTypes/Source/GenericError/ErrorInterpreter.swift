@@ -4,7 +4,7 @@ protocol ErrorInterpreterProtocol {
 
     init()
 
-    static func generateDescription(_ error: Error) -> String
+    func generateDescription(_ error: Error) -> String
 
     func isNotFoundError(_ error: GenericErrorProtocol) -> Bool
     func isNotAuthorizedError(_ error: GenericErrorProtocol) -> Bool
@@ -16,7 +16,9 @@ protocol ErrorInterpreterProtocol {
 
 class ErrorInterpreter: ErrorInterpreterProtocol {
 
-    static func generateDescription(_ error: Error) -> String {
+    required init() {}
+
+    func generateDescription(_ error: Error) -> String {
         let dsc: String
         switch error {
         case let current as NetworkErrorConvertible:
@@ -30,8 +32,6 @@ class ErrorInterpreter: ErrorInterpreterProtocol {
         }
         return dsc
     }
-
-    required init() {}
 
     func isNotFoundError(_ error: GenericErrorProtocol) -> Bool {
         let networkError: NetworkErrorConvertible? = error.getValue()
