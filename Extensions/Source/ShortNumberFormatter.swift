@@ -14,7 +14,11 @@ public final class ShortNumberFormatter {
 
     let numberFormatter: NumberFormatter
 
-    init(numberFormatter: NumberFormatter? = nil) {
+    ///
+    /** - Parameter numberFormatter: NumberFormatter instance or nil,
+     in case of nil default number formatter (maximumFractionDigits = 2, minimumFractionDigits = 0, roundingMode = .down ) will be created atumatically
+     */
+    public init(numberFormatter: NumberFormatter? = nil) {
         if let actualFormatter = numberFormatter {
             self.numberFormatter = actualFormatter
         } else {
@@ -27,7 +31,11 @@ public final class ShortNumberFormatter {
         }
     }
 
-    func string(for doubleValue: Double) -> String {
+    /// Transforms double value to string with SI decimal prefix, 1000 -> 1k
+    ///
+    /// - Parameter doubleValue: The value to transform
+    /// - Returns: A formatted string
+    public func string(for doubleValue: Double) -> String {
         let value: Double = abs(doubleValue)
         let suffixes = Constant.suffixes
         let suffixIndex: Int

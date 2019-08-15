@@ -309,7 +309,7 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
     }
 
     @IBAction private func changeShadowColor(_ sender: UIButton) {
-        overlayViewController.shadowBackgroundColor = UIColor.random(alpha: 0.5)
+        overlayViewController.shadowBackgroundColor = UIColor.random()
         shadowColorButton.setTitleColor(overlayViewController.shadowBackgroundColor.withAlphaComponent(1.0), for: .normal)
     }
 
@@ -382,18 +382,6 @@ extension ExampleDraggableDetailsOverlayViewController: UIScrollViewDelegate {
         }
     }
 
-}
-
-// MARK: Private
-//TODO: - Add color helpers extension into toolbox
-extension UIColor {
-    static func random(alpha: CGFloat = 1.0) -> UIColor {
-        let range: ClosedRange<CGFloat> = 0...1
-        return UIColor(red: CGFloat.random(in: range),
-                       green: CGFloat.random(in: range),
-                       blue: CGFloat.random(in: range),
-                       alpha: alpha)
-    }
 }
 
 private extension ExampleDraggableDetailsOverlayViewController {
