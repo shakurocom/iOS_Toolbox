@@ -83,4 +83,5 @@ public extension UIColor {
         currentContext.fill(drawRect)
         return UIGraphicsGetImageFromCurrentImageContext()
     }
+
 }

@@ -311,7 +311,7 @@ internal class ExampleDraggableDetailsOverlayViewController: UIViewController {
     }
 
     @IBAction private func changeShadowColor(_ sender: UIButton) {
-        overlayViewController.shadowBackgroundColor = UIColor.random()
+        overlayViewController.shadowBackgroundColor = UIColor.random(alpha: 0.5)
         shadowColorButton.setTitleColor(overlayViewController.shadowBackgroundColor.withAlphaComponent(1.0), for: .normal)
     }
 

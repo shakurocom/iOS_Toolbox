@@ -67,4 +67,5 @@ public final class ShortNumberFormatter {
             return "\(resultValue)\(suffix)"
         }
     }
+
 }
