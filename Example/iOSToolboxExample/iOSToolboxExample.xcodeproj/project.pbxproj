@@ -111,6 +111,11 @@
 		5F2BE42F76A6C745178C14A5 /* Pods_iOSToolboxExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 009702E9AD272B72DEC6FC66 /* Pods_iOSToolboxExample.framework */; };
 		CE3B11DA230D312800C6F33F /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3B11D7230D294C00C6F33F /* Router.swift */; };
 		CE3B11DB230D312B00C6F33F /* SafariViewController+BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3B11D6230D294C00C6F33F /* SafariViewController+BaseViewController.swift */; };
+		CE2AC1092302E98F001A31D6 /* UIColor+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2AC1062302E98E001A31D6 /* UIColor+Helpers.swift */; };
+		CE2AC10A2302E98F001A31D6 /* ShortNumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2AC1072302E98E001A31D6 /* ShortNumberFormatter.swift */; };
+		CE2AC10B2302E98F001A31D6 /* CALayer+Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2AC1082302E98F001A31D6 /* CALayer+Transition.swift */; };
+		CE2AC1102302F0AB001A31D6 /* ShortNumberFormatterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2AC10F2302F0AB001A31D6 /* ShortNumberFormatterTest.swift */; };
+		CE2AC1112302F0FB001A31D6 /* ShortNumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2AC1072302E98E001A31D6 /* ShortNumberFormatter.swift */; };
 		CE3F4E3522F2D5BB002FC6C4 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F4E3422F2D5BA002FC6C4 /* ContainerViewController.swift */; };
 		CE3F4E3722F30770002FC6C4 /* ExampleContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F4E3622F30770002FC6C4 /* ExampleContainerViewController.swift */; };
 		CE484BF122D365CC0065258E /* ExampleCoreDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE484BF022D365CC0065258E /* ExampleCoreDataViewController.swift */; };
@@ -256,6 +261,10 @@
 		BC61A924359D6E16CFD7D6E6 /* Pods-iOSToolboxExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSToolboxExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-iOSToolboxExample/Pods-iOSToolboxExample.release.xcconfig"; sourceTree = "<group>"; };
 		CE3B11D6230D294C00C6F33F /* SafariViewController+BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SafariViewController+BaseViewController.swift"; sourceTree = "<group>"; };
 		CE3B11D7230D294C00C6F33F /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		CE2AC1062302E98E001A31D6 /* UIColor+Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Helpers.swift"; sourceTree = "<group>"; };
+		CE2AC1072302E98E001A31D6 /* ShortNumberFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortNumberFormatter.swift; sourceTree = "<group>"; };
+		CE2AC1082302E98F001A31D6 /* CALayer+Transition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CALayer+Transition.swift"; sourceTree = "<group>"; };
+		CE2AC10F2302F0AB001A31D6 /* ShortNumberFormatterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortNumberFormatterTest.swift; sourceTree = "<group>"; };
 		CE3F4E3422F2D5BA002FC6C4 /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		CE3F4E3622F30770002FC6C4 /* ExampleContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleContainerViewController.swift; sourceTree = "<group>"; };
 		CE484BF022D365CC0065258E /* ExampleCoreDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleCoreDataViewController.swift; sourceTree = "<group>"; };
@@ -429,6 +438,7 @@
 		2F68970A20357C6A00E17BB3 /* iOSToolboxTests */ = {
 			isa = PBXGroup;
 			children = (
+				CE2AC10E2302F0AB001A31D6 /* Tests */,
 				2FA876B92035BEE40070AAAF /* UnexpectedNilError.swift */,
 				2F76AB3B214814C90094A7B1 /* EMail */,
 				2F68971320357CD100E17BB3 /* Keychain */,
@@ -697,6 +707,9 @@
 		2FF279AE1FDE858900F0F769 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				CE2AC1082302E98F001A31D6 /* CALayer+Transition.swift */,
+				CE2AC1072302E98E001A31D6 /* ShortNumberFormatter.swift */,
+				CE2AC1062302E98E001A31D6 /* UIColor+Helpers.swift */,
 				2F0E297122C213E400CEF04D /* Array+Chunks.swift */,
 				2F0E297322C213E400CEF04D /* Data+Hash.swift */,
 				2F0E297222C213E400CEF04D /* Lock+Execute.swift */,
@@ -900,6 +913,15 @@
 				CE3B11D7230D294C00C6F33F /* Router.swift */,
 			);
 			path = Source;
+			sourceTree = "<group>";
+		};
+		CE2AC10E2302F0AB001A31D6 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				CE2AC10F2302F0AB001A31D6 /* ShortNumberFormatterTest.swift */,
+			);
+			name = Tests;
+			path = ../../../Extensions/Tests;
 			sourceTree = "<group>";
 		};
 		CE3F4E3222F2D5BA002FC6C4 /* ContainerViewController */ = {
@@ -1150,7 +1172,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				2FA876BA2035BEE40070AAAF /* UnexpectedNilError.swift in Sources */,
+				CE2AC1112302F0FB001A31D6 /* ShortNumberFormatter.swift in Sources */,
 				2F68971920357CD100E17BB3 /* KeychainWrapperTests.swift in Sources */,
+				CE2AC1102302F0AB001A31D6 /* ShortNumberFormatterTest.swift in Sources */,
 				2F76AB41214814C90094A7B1 /* EMailValidatorTests.swift in Sources */,
 				2FB05A49204EBA3D003B80CC /* TaskManagerTests.swift in Sources */,
 				2FA876B82035BB130070AAAF /* KeychainWrapper.swift in Sources */,
@@ -1192,6 +1216,7 @@
 				CE79BE1222E9FA32000486B2 /* NSManagedObject+Update.swift in Sources */,
 				2FF289481FDEB46C00F0F769 /* VideoCamera.swift in Sources */,
 				2FF2894E1FDEB6FB00F0F769 /* ExampleImageProcessorViewController.swift in Sources */,
+				CE2AC10B2302E98F001A31D6 /* CALayer+Transition.swift in Sources */,
 				2FF289491FDEB46C00F0F769 /* VideoCameraConfiguration.swift in Sources */,
 				CE484BF422D367FC0065258E /* CoreDataExample.xcdatamodeld in Sources */,
 				2F129C6222E0BA5B002B8FB0 /* UIViewController+Child.swift in Sources */,
@@ -1217,6 +1242,7 @@
 				CE79BE0F22E9FA32000486B2 /* PredicateConvertible.swift in Sources */,
 				2F0E297D22C213E400CEF04D /* UIApplication+BundleIdentifier.swift in Sources */,
 				2FF2894A1FDEB46C00F0F769 /* VideoCameraError.swift in Sources */,
+				CE2AC1092302E98F001A31D6 /* UIColor+Helpers.swift in Sources */,
 				2F86E3A8204814C50045070C /* OperationCallback.swift in Sources */,
 				CE3F4E3722F30770002FC6C4 /* ExampleContainerViewController.swift in Sources */,
 				2F5CED7B20581A2900BD508A /* ExamplePullToRefreshShakuroLogoViewController.swift in Sources */,
@@ -1265,6 +1291,7 @@
 				2F129C6022E0B70F002B8FB0 /* TouchTransparentView.swift in Sources */,
 				2F10B17221C0FA0D00701871 /* ExampleSettingsViewController.swift in Sources */,
 				2FF279A31FDE84AF00F0F769 /* ExampleDeviceTypeViewController.swift in Sources */,
+				CE2AC10A2302E98F001A31D6 /* ShortNumberFormatter.swift in Sources */,
 				2FF279CB1FDEB45100F0F769 /* PlaceholderTextView.swift in Sources */,
 				2FFD4C9B22539BFE00B07EB6 /* AsyncResult.swift in Sources */,
 				2F0E297722C213E400CEF04D /* UIDevice+Uptime.swift in Sources */,
