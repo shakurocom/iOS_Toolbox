@@ -109,10 +109,10 @@
 		2FFD4C9B22539BFE00B07EB6 /* AsyncResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFD4C9A22539BFE00B07EB6 /* AsyncResult.swift */; };
 		2FFE8D3E22E1F077005520F9 /* DraggableDetailsOverlayHandleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFE8D3D22E1F077005520F9 /* DraggableDetailsOverlayHandleView.swift */; };
 		5F2BE42F76A6C745178C14A5 /* Pods_iOSToolboxExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 009702E9AD272B72DEC6FC66 /* Pods_iOSToolboxExample.framework */; };
+		CE3B11DA230D312800C6F33F /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3B11D7230D294C00C6F33F /* Router.swift */; };
+		CE3B11DB230D312B00C6F33F /* SafariViewController+BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3B11D6230D294C00C6F33F /* SafariViewController+BaseViewController.swift */; };
 		CE3F4E3522F2D5BB002FC6C4 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F4E3422F2D5BA002FC6C4 /* ContainerViewController.swift */; };
 		CE3F4E3722F30770002FC6C4 /* ExampleContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F4E3622F30770002FC6C4 /* ExampleContainerViewController.swift */; };
-		CEEF88D822F45CDE0080EFB6 /* SafariViewController+BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEF88D622F45CDE0080EFB6 /* SafariViewController+BaseViewController.swift */; };
-		CEEF88D922F45CDE0080EFB6 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEF88D722F45CDE0080EFB6 /* Router.swift */; };
 		CE484BF122D365CC0065258E /* ExampleCoreDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE484BF022D365CC0065258E /* ExampleCoreDataViewController.swift */; };
 		CE484BF422D367FC0065258E /* CoreDataExample.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CE484BF222D367FC0065258E /* CoreDataExample.xcdatamodeld */; };
 		CE484BF922D369CA0065258E /* CDExampleEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE484BF722D369CA0065258E /* CDExampleEntity+CoreDataClass.swift */; };
@@ -254,10 +254,10 @@
 		2FFE8D3D22E1F077005520F9 /* DraggableDetailsOverlayHandleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableDetailsOverlayHandleView.swift; sourceTree = "<group>"; };
 		8460D0405FC3E3B4F135CBAF /* Pods-iOSToolboxExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSToolboxExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iOSToolboxExample/Pods-iOSToolboxExample.debug.xcconfig"; sourceTree = "<group>"; };
 		BC61A924359D6E16CFD7D6E6 /* Pods-iOSToolboxExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSToolboxExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-iOSToolboxExample/Pods-iOSToolboxExample.release.xcconfig"; sourceTree = "<group>"; };
+		CE3B11D6230D294C00C6F33F /* SafariViewController+BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SafariViewController+BaseViewController.swift"; sourceTree = "<group>"; };
+		CE3B11D7230D294C00C6F33F /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		CE3F4E3422F2D5BA002FC6C4 /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		CE3F4E3622F30770002FC6C4 /* ExampleContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleContainerViewController.swift; sourceTree = "<group>"; };
-		CEEF88D622F45CDE0080EFB6 /* SafariViewController+BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SafariViewController+BaseViewController.swift"; sourceTree = "<group>"; };
-		CEEF88D722F45CDE0080EFB6 /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		CE484BF022D365CC0065258E /* ExampleCoreDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleCoreDataViewController.swift; sourceTree = "<group>"; };
 		CE484BF322D367FC0065258E /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		CE484BF722D369CA0065258E /* CDExampleEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDExampleEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -272,6 +272,8 @@
 		CE79BE0C22E9FA31000486B2 /* SingleObjectFetchedResultController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleObjectFetchedResultController.swift; sourceTree = "<group>"; };
 		CE79BE0D22E9FA31000486B2 /* FetchedResultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchedResultsController.swift; sourceTree = "<group>"; };
 		CE79BE0E22E9FA31000486B2 /* PoliteCoreStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PoliteCoreStorage.swift; sourceTree = "<group>"; };
+		CEEF88D622F45CDE0080EFB6 /* SafariViewController+BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SafariViewController+BaseViewController.swift"; sourceTree = "<group>"; };
+		CEEF88D722F45CDE0080EFB6 /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		CEEF88E522F45FA20080EFB6 /* NetworkError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		CEEF88E622F45FA20080EFB6 /* GenericError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericError.swift; sourceTree = "<group>"; };
 		CEEF88E722F45FA20080EFB6 /* ErrorInterpreter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorInterpreter.swift; sourceTree = "<group>"; };
@@ -570,6 +572,7 @@
 				2FF279861FDE723800F0F769 /* Products */,
 				01BE39BBA02EC01C09E54379 /* Frameworks */,
 				648C2D4DF12EAC81F72FC144 /* Pods */,
+				CE3B11D3230D293300C6F33F /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -639,7 +642,7 @@
 		2FF279A41FDE852D00F0F769 /* Toolbox */ = {
 			isa = PBXGroup;
 			children = (
-				CEEF88D422F45CDE0080EFB6 /* Router */,
+				CE3B11D4230D294C00C6F33F /* Router */,
 				CE3F4E3222F2D5BA002FC6C4 /* ContainerViewController */,
 				CE79BE0622E9FA31000486B2 /* PoliteCoreData */,
 				2FFD4C9822539BFE00B07EB6 /* CommonTypes */,
@@ -870,6 +873,33 @@
 				BC61A924359D6E16CFD7D6E6 /* Pods-iOSToolboxExample.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		CE3B11D3230D293300C6F33F /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				CEEF88D622F45CDE0080EFB6 /* SafariViewController+BaseViewController.swift */,
+				CEEF88D722F45CDE0080EFB6 /* Router.swift */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		CE3B11D4230D294C00C6F33F /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				CE3B11D5230D294C00C6F33F /* Source */,
+			);
+			name = Router;
+			path = ../../../Router;
+			sourceTree = "<group>";
+		};
+		CE3B11D5230D294C00C6F33F /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				CE3B11D6230D294C00C6F33F /* SafariViewController+BaseViewController.swift */,
+				CE3B11D7230D294C00C6F33F /* Router.swift */,
+			);
+			path = Source;
 			sourceTree = "<group>";
 		};
 		CE3F4E3222F2D5BA002FC6C4 /* ContainerViewController */ = {
@@ -1147,11 +1177,9 @@
 				2F2C8BFE21AE7B7A00413ED3 /* OperationGroupResult.swift in Sources */,
 				CEEF88EA22F45FA20080EFB6 /* GenericError.swift in Sources */,
 				2F4A2DED1FE3AE3A003B9F27 /* ExampleVideoCameraViewController.swift in Sources */,
-				CEEF88D822F45CDE0080EFB6 /* SafariViewController+BaseViewController.swift in Sources */,
 				CEEF88E922F45FA20080EFB6 /* NetworkError.swift in Sources */,
 				2FF289471FDEB46C00F0F769 /* SimulatorCameraPreviewView.swift in Sources */,
 				2FF58C2C21D7545D003C534E /* TaskOperationWrapper.swift in Sources */,
-				CEEF88D922F45CDE0080EFB6 /* Router.swift in Sources */,
 				2F0CC9B3204931E900A896B2 /* TaskManagerError.swift in Sources */,
 				2FF279C31FDEB43D00F0F769 /* KeyboardHandler.swift in Sources */,
 				CE79BE1322E9FA32000486B2 /* SingleObjectFetchedResultController.swift in Sources */,
@@ -1171,6 +1199,7 @@
 				2FF289451FDEB46C00F0F769 /* DeviceCameraPreviewView.swift in Sources */,
 				2F03DBBA22097F65006E8404 /* HTTPClientAPIEndPoint.swift in Sources */,
 				2FF279AC1FDE855B00F0F769 /* DeviceType.swift in Sources */,
+				CE3B11DB230D312B00C6F33F /* SafariViewController+BaseViewController.swift in Sources */,
 				2F03DBBF22097F65006E8404 /* HTTPClientUserSession.swift in Sources */,
 				2F76AB432148170E0094A7B1 /* ExampleEMailValidatorViewController.swift in Sources */,
 				CE79BE1122E9FA32000486B2 /* PoliteCoreStorage+EntityIdentifier.swift in Sources */,
@@ -1212,6 +1241,7 @@
 				2F956100229BE33400D5E6B9 /* BaseOperationOptions.swift in Sources */,
 				CE484BF122D365CC0065258E /* ExampleCoreDataViewController.swift in Sources */,
 				2F4A2DF01FE3B8C6003B9F27 /* ImagePreviewViewController.swift in Sources */,
+				CE3B11DA230D312800C6F33F /* Router.swift in Sources */,
 				2F05E6A922CA1DCA00280D57 /* ExamplePullToRefreshStickyHeadersViewController.swift in Sources */,
 				2F5C2EE320318B880031CD2D /* ExamplePullToRefreshViewController.swift in Sources */,
 				2F10746921AD7A91002D07DB /* RetryHandler.swift in Sources */,

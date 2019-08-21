@@ -6,16 +6,10 @@ import UIKit
 import UserNotifications
 import SafariServices
 
-enum CustomTransitionStyle {
-    case push
-    case pop
-    case crossDissolve
-}
-
 enum NavigationStyle {
     case push(asRoot: Bool)
     case modal(transitionStyle: UIModalTransitionStyle?, completion: (() -> Void)?)
-    case custom(transitionStyle: CustomTransitionStyle)
+    case container(transitionStyle: ContainerViewController.TransitionStyle)
     case splitDetail
 
     static let pushDefault: NavigationStyle = .push(asRoot: false)
@@ -53,8 +47,8 @@ protocol RouterProtocol: class {
     func presentAlert(_ title: String?, message: String?, actions: [UIAlertAction], sender: UIViewController?, animated: Bool)
     func presentAlert(_ title: String?, message: String?, sender: UIViewController?, animated: Bool)
 
-    func presentError(_ error: GenericAppError, sender: UIViewController?, animated: Bool)
-    func presentError(_ error: GenericAppError,
+    func presentError(_ error: PresentableError, sender: UIViewController?, animated: Bool)
+    func presentError(_ error: PresentableError,
                       actions: [UIAlertAction],
                       sender: UIViewController?, animated: Bool)
     func presentError(_ errorMessage: String,
@@ -121,7 +115,7 @@ class Router: RouterProtocol {
                 controller.modalTransitionStyle = trStyle
             }
             presentingController.present(controller, animated: animated, completion: completion)
-        case .custom(let transitionStyle):
+        case .container(let transitionStyle):
             if let customContainer: ContainerViewControllerPresenting = from?.lookupCustomContainerViewControllerPresening() {
                 customContainer.present(controller, style: transitionStyle, animated: animated)
             } else {
@@ -238,14 +232,14 @@ extension Router {
 
 extension Router {
 
-    func presentError(_ error: GenericAppError, sender: UIViewController?, animated: Bool) {
-        presentError(error.errorDescription(), sender: sender, animated: animated)
+    func presentError(_ error: PresentableError, sender: UIViewController?, animated: Bool) {
+        presentError(error.errorDescription, sender: sender, animated: animated)
     }
 
-    func presentError(_ error: GenericAppError,
+    func presentError(_ error: PresentableError,
                       actions: [UIAlertAction],
                       sender: UIViewController?, animated: Bool) {
-        presentError(error.errorDescription(),
+        presentError(error.errorDescription,
                      actions: actions,
                      sender: sender,
                      animated: animated)
@@ -276,8 +270,7 @@ extension Router {
 // MARK: - Private
 
 private extension UIViewController {
-    func lookupCustomContainerViewControllerPresening() -> CustomContainerViewControllerPresening? {
-        return (self as? CustomContainerViewControllerPresening) ?? self.customContainerViewController ?? self.parent?.lookupCustomContainerViewControllerPresening()
+    func lookupCustomContainerViewControllerPresening() -> ContainerViewControllerPresenting? {
+        return (self as? ContainerViewControllerPresenting) ?? self.customContainerViewController ?? self.parent?.lookupCustomContainerViewControllerPresening()
     }
 }
-
