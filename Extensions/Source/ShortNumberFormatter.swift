@@ -33,31 +33,31 @@ public final class ShortNumberFormatter {
 
     /// Transforms double value to string with SI decimal prefix, 1000 -> 1k
     ///
-    /// - Parameter doubleValue: The value to transform
+    /// - Parameter value: The value to transform
     /// - Returns: A formatted string
-    public func string(for doubleValue: Double) -> String {
-        let value: Double = abs(doubleValue)
+    public func string(for value: Double) -> String {
+        let absValue: Double = abs(value)
         let suffixes = Constant.suffixes
         let suffixIndex: Int
         let shortValue: Double
-        if value < Constant.step {
+        if absValue < Constant.step {
             suffixIndex = 0
-            shortValue = value
+            shortValue = absValue
         } else {
-            let digitCount: Double = log10(value)
+            let digitCount: Double = log10(absValue)
             if digitCount.isFinite {
                 let maxIndex = suffixes.count - 1
                 let maxDigitCount = Double(Constant.digitsInStep * maxIndex)
                 suffixIndex = digitCount < maxDigitCount ? Int(digitCount / Double(Constant.digitsInStep)) : maxIndex
-                shortValue = value/pow(Constant.step, Double(suffixIndex))
+                shortValue = absValue/pow(Constant.step, Double(suffixIndex))
             } else {
                 // fallback to original value without prefix
                 assertionFailure("\(type(of: self)) - \(#function): . log10(value) produced NaN or infinity")
                 suffixIndex = 0
-                shortValue = value
+                shortValue = absValue
             }
         }
-        let resultValue = doubleValue < 0 ? -shortValue : shortValue
+        let resultValue = value < 0 ? -shortValue : shortValue
         let suffix = suffixes[suffixIndex]
         if let shortString: String = numberFormatter.string(for: resultValue) {
             return "\(shortString)\(suffix)"
