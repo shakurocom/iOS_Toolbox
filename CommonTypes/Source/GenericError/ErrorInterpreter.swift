@@ -1,6 +1,11 @@
+//
+// Copyright (c) 2019 Shakuro (https://shakuro.com/)
+//
+//
+
 import Foundation
 
-protocol ErrorInterpreterProtocol {
+public protocol ErrorInterpreterProtocol {
 
     static func generateDescription(_ error: Error) -> String
 
@@ -12,9 +17,9 @@ protocol ErrorInterpreterProtocol {
     static func isInternalServerError(_ error: GenericErrorProtocol) -> Bool
 }
 
-class ErrorInterpreter: ErrorInterpreterProtocol {
+public class ErrorInterpreter: ErrorInterpreterProtocol {
 
-    static func generateDescription(_ error: Error) -> String {
+    public static func generateDescription(_ error: Error) -> String {
         let dsc: String
         switch error {
         case let current as NetworkErrorConvertible:
@@ -29,12 +34,12 @@ class ErrorInterpreter: ErrorInterpreterProtocol {
         return dsc
     }
 
-    static func isNotFoundError(_ error: GenericErrorProtocol) -> Bool {
+    public static func isNotFoundError(_ error: GenericErrorProtocol) -> Bool {
         let networkError: NetworkErrorConvertible? = error.getValue()
         return networkError?.networkError().statusCode == 404
     }
 
-    static func isNotAuthorizedError(_ error: GenericErrorProtocol) -> Bool {
+    public static func isNotAuthorizedError(_ error: GenericErrorProtocol) -> Bool {
         if let error: GenericCommonError = error.getValue() {
             return error == .notAuthorized
         }
@@ -47,14 +52,14 @@ class ErrorInterpreter: ErrorInterpreterProtocol {
         return false
     }
 
-    static func isCancelledError(_ error: GenericErrorProtocol) -> Bool {
+    public static func isCancelledError(_ error: GenericErrorProtocol) -> Bool {
         if let error: NSError = error.getValue() {
             return error.domain == NSURLErrorDomain && error.code == NSURLErrorCancelled
         }
         return false
     }
 
-    static func isRequestTimedOutError(_ error: GenericErrorProtocol) -> Bool {
+    public static func isRequestTimedOutError(_ error: GenericErrorProtocol) -> Bool {
         if let error: NSError = error.getValue() {
             return error.domain == NSURLErrorDomain && error.code == NSURLErrorTimedOut
         }
@@ -62,14 +67,14 @@ class ErrorInterpreter: ErrorInterpreterProtocol {
 
     }
 
-    static func isConnectionError(_ error: GenericErrorProtocol) -> Bool {
+    public static func isConnectionError(_ error: GenericErrorProtocol) -> Bool {
         if let error: NSError = error.getValue() {
             return error.domain == NSURLErrorDomain && [NSURLErrorTimedOut, NSURLErrorNetworkConnectionLost, NSURLErrorNotConnectedToInternet].contains(error.code)
         }
         return false
     }
 
-    static func isInternalServerError(_ error: GenericErrorProtocol) -> Bool {
+    public static func isInternalServerError(_ error: GenericErrorProtocol) -> Bool {
         let networkError: NetworkErrorConvertible? = error.getValue()
         return networkError?.networkError().statusCode == 500
     }
