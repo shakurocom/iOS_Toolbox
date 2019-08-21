@@ -111,6 +111,8 @@
 		5F2BE42F76A6C745178C14A5 /* Pods_iOSToolboxExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 009702E9AD272B72DEC6FC66 /* Pods_iOSToolboxExample.framework */; };
 		CE3F4E3522F2D5BB002FC6C4 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F4E3422F2D5BA002FC6C4 /* ContainerViewController.swift */; };
 		CE3F4E3722F30770002FC6C4 /* ExampleContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F4E3622F30770002FC6C4 /* ExampleContainerViewController.swift */; };
+		CEEF88D822F45CDE0080EFB6 /* SafariViewController+BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEF88D622F45CDE0080EFB6 /* SafariViewController+BaseViewController.swift */; };
+		CEEF88D922F45CDE0080EFB6 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEF88D722F45CDE0080EFB6 /* Router.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -237,6 +239,8 @@
 		BC61A924359D6E16CFD7D6E6 /* Pods-iOSToolboxExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSToolboxExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-iOSToolboxExample/Pods-iOSToolboxExample.release.xcconfig"; sourceTree = "<group>"; };
 		CE3F4E3422F2D5BA002FC6C4 /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		CE3F4E3622F30770002FC6C4 /* ExampleContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleContainerViewController.swift; sourceTree = "<group>"; };
+		CEEF88D622F45CDE0080EFB6 /* SafariViewController+BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SafariViewController+BaseViewController.swift"; sourceTree = "<group>"; };
+		CEEF88D722F45CDE0080EFB6 /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -599,6 +603,7 @@
 		2FF279A41FDE852D00F0F769 /* Toolbox */ = {
 			isa = PBXGroup;
 			children = (
+				CEEF88D422F45CDE0080EFB6 /* Router */,
 				CE3F4E3222F2D5BA002FC6C4 /* ContainerViewController */,
 				2FFD4C9822539BFE00B07EB6 /* CommonTypes */,
 				2FF279A51FDE855B00F0F769 /* Device */,
@@ -846,6 +851,24 @@
 			path = Source;
 			sourceTree = "<group>";
 		};
+		CEEF88D422F45CDE0080EFB6 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				CEEF88D522F45CDE0080EFB6 /* Source */,
+			);
+			name = Router;
+			path = ../../../Router;
+			sourceTree = "<group>";
+		};
+		CEEF88D522F45CDE0080EFB6 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				CEEF88D622F45CDE0080EFB6 /* SafariViewController+BaseViewController.swift */,
+				CEEF88D722F45CDE0080EFB6 /* Router.swift */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1055,8 +1078,10 @@
 				2F5C2EE120317DC80031CD2D /* PullToRefreshView.swift in Sources */,
 				2F2C8BFE21AE7B7A00413ED3 /* OperationGroupResult.swift in Sources */,
 				2F4A2DED1FE3AE3A003B9F27 /* ExampleVideoCameraViewController.swift in Sources */,
+				CEEF88D822F45CDE0080EFB6 /* SafariViewController+BaseViewController.swift in Sources */,
 				2FF289471FDEB46C00F0F769 /* SimulatorCameraPreviewView.swift in Sources */,
 				2FF58C2C21D7545D003C534E /* TaskOperationWrapper.swift in Sources */,
+				CEEF88D922F45CDE0080EFB6 /* Router.swift in Sources */,
 				2F0CC9B3204931E900A896B2 /* TaskManagerError.swift in Sources */,
 				2FF279C31FDEB43D00F0F769 /* KeyboardHandler.swift in Sources */,
 				2F129C5E22E0A0E0002B8FB0 /* ExampleDraggableDetailsOverlayViewController.swift in Sources */,
