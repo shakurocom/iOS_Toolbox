@@ -120,6 +120,10 @@ open class BaseOperation<ResultType, OptionsType: BaseOperationOptions>: TaskOpe
         addDependencyInternal(operation: test, isStrongDependency: isStrongDependency)
     }
 
+    final public func performProtected<T>(_ closure: () -> T) -> T {
+        return accessLock.execute(closure)
+    }
+
     /**
      Start operation. You can start operation manually, but only if this operation is not in the queue.
      You should not start already executing or finished operation.
