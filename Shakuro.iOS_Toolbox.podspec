@@ -81,7 +81,7 @@ Pod::Spec.new do |s|
         sp.dependency 'Shakuro.iOS_Toolbox/CommonTypes'
         sp.source_files = 'HTTPClient/Source/**/*'
         sp.frameworks = 'Foundation'
-        sp.dependency 'Alamofire', '4.7.3'
+        sp.dependency 'Alamofire', '4.8.1'
 
     end
 
