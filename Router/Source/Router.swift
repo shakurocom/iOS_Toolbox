@@ -6,7 +6,7 @@ import UIKit
 import UserNotifications
 import SafariServices
 
-enum NavigationStyle {
+public enum NavigationStyle {
     case push(asRoot: Bool)
     case modal(transitionStyle: UIModalTransitionStyle?, completion: (() -> Void)?)
     case container(transitionStyle: ContainerViewController.TransitionStyle)
@@ -17,7 +17,7 @@ enum NavigationStyle {
     static let modalCrossDissolve: NavigationStyle = .modal(transitionStyle: .crossDissolve, completion:nil)
 }
 
-protocol RouterProtocol: class {
+public protocol RouterProtocol: class {
 
     var isModalViewControllerOnScreen: Bool {get}
 
@@ -60,23 +60,23 @@ protocol RouterProtocol: class {
                       animated: Bool)
 }
 
-class Router: RouterProtocol {
+public class Router: RouterProtocol {
 
-    let rootNavigationController: UINavigationController
-    private(set) var rootViewController: UIViewController?
+    public let rootNavigationController: UINavigationController
+    private(set) public var rootViewController: UIViewController?
 
-    var isModalViewControllerOnScreen: Bool {
+    public var isModalViewControllerOnScreen: Bool {
         return rootNavigationController.presentedViewController != nil
     }
 
-    init(rootController: UINavigationController) {
+    public init(rootController: UINavigationController) {
         rootNavigationController = rootController
     }
 
     // MARK: - General
 
     @discardableResult
-    func presentURL(_ sender: UIViewController, options: SafariViewControllerOptions) -> SFSafariViewController? {
+    public func presentURL(_ sender: UIViewController, options: SafariViewControllerOptions) -> SFSafariViewController? {
         if options.canOpentViaSafariViewController() {
             return SFSafariViewController.present(sender,
                                                   router: self,
@@ -89,10 +89,10 @@ class Router: RouterProtocol {
     }
 
     @discardableResult
-    func presentViewController(controller: UIViewController,
-                               from: UIViewController?,
-                               style: NavigationStyle,
-                               animated: Bool) -> UIViewController? {
+    public func presentViewController(controller: UIViewController,
+                                      from: UIViewController?,
+                                      style: NavigationStyle,
+                                      animated: Bool) -> UIViewController? {
         //some of controllers for example MFMessageComposeViewController, can return nil in non optional value even if canSendText() == true
         let uikitBugFixController: UIViewController? = controller
         guard uikitBugFixController != nil else {
@@ -135,9 +135,9 @@ class Router: RouterProtocol {
         return controller
     }
 
-    func popToFirstViewController<ControllerType>(_ controllerType: ControllerType.Type,
-                                                  sender: UIViewController,
-                                                  animated: Bool = true) {
+    public func popToFirstViewController<ControllerType>(_ controllerType: ControllerType.Type,
+                                                         sender: UIViewController,
+                                                         animated: Bool = true) {
         if let navController: UINavigationController = sender.navigationController,
             navController.viewControllers.count > 1 {
             let controllers: [UIViewController] = navController.viewControllers
@@ -148,13 +148,13 @@ class Router: RouterProtocol {
         }
     }
 
-    func popToViewController(_ controller: UIViewController, sender: UIViewController, animated: Bool = true) {
+    public func popToViewController(_ controller: UIViewController, sender: UIViewController, animated: Bool = true) {
         if let navController: UINavigationController = sender.navigationController, navController.viewControllers.count > 1 {
             navController.popToViewController(controller, animated: animated)
         }
     }
 
-    func dismissViewController(_ controller: UIViewController, animated: Bool = true) {
+    public func dismissViewController(_ controller: UIViewController, animated: Bool = true) {
         if let navController: UINavigationController = controller.navigationController, navController.viewControllers.count > 1 {
             if navController.topViewController === controller {
                 navController.popViewController(animated: animated)
@@ -168,11 +168,11 @@ class Router: RouterProtocol {
         }
     }
 
-    func dismissAllModalViewControllers(_ animated: Bool = true) {
+    public func dismissAllModalViewControllers(_ animated: Bool = true) {
         rootNavigationController.dismiss(animated: animated, completion: nil)
     }
 
-    func setRootViewController(controller: UIViewController, animated: Bool = true) {
+    public func setRootViewController(controller: UIViewController, animated: Bool = true) {
         rootViewController = controller
         rootNavigationController.setViewControllers([controller], animated: animated)
     }
@@ -182,7 +182,7 @@ class Router: RouterProtocol {
 
 extension Router {
 
-    func presentAlert(_ title: String?, message: String?, sender: UIViewController?, animated: Bool) {
+    public func presentAlert(_ title: String?, message: String?, sender: UIViewController?, animated: Bool) {
         let action = UIAlertAction(title: NSLocalizedString("Ok", comment: ""), style: .default, handler: nil)
         presentAlert(title,
                      message: message,
@@ -191,7 +191,7 @@ extension Router {
                      animated: animated)
     }
 
-    func presentAlert(_ title: String?, message: String?, actions: [UIAlertAction], sender: UIViewController?, animated: Bool) {
+    public func presentAlert(_ title: String?, message: String?, actions: [UIAlertAction], sender: UIViewController?, animated: Bool) {
         let alertController: UIAlertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         actions.forEach({alertController.addAction($0)})
         let presentingController: UIViewController
@@ -203,12 +203,12 @@ extension Router {
         presentingController.present(alertController, animated: animated, completion: nil)
     }
 
-    func presentActionSheet(_ title: String?,
-                            message: String?,
-                            actions: [UIAlertAction],
-                            sender: UIViewController?,
-                            popoverSourceView: UIView?,
-                            animated: Bool) {
+    public func presentActionSheet(_ title: String?,
+                                   message: String?,
+                                   actions: [UIAlertAction],
+                                   sender: UIViewController?,
+                                   popoverSourceView: UIView?,
+                                   animated: Bool) {
         let alertController: UIAlertController = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
         actions.forEach({alertController.addAction($0)})
         if let sourceView = popoverSourceView {
@@ -232,22 +232,22 @@ extension Router {
 
 extension Router {
 
-    func presentError(_ error: PresentableError, sender: UIViewController?, animated: Bool) {
+    public func presentError(_ error: PresentableError, sender: UIViewController?, animated: Bool) {
         presentError(error.errorDescription, sender: sender, animated: animated)
     }
 
-    func presentError(_ error: PresentableError,
-                      actions: [UIAlertAction],
-                      sender: UIViewController?, animated: Bool) {
+    public func presentError(_ error: PresentableError,
+                             actions: [UIAlertAction],
+                             sender: UIViewController?, animated: Bool) {
         presentError(error.errorDescription,
                      actions: actions,
                      sender: sender,
                      animated: animated)
     }
 
-    func presentError(_ errorMessage: String,
-                      sender: UIViewController?,
-                      animated: Bool) {
+    public func presentError(_ errorMessage: String,
+                             sender: UIViewController?,
+                             animated: Bool) {
         let action = UIAlertAction(title: NSLocalizedString("Ok", comment: ""), style: .default, handler: nil)
         presentError(errorMessage,
                      actions: [action],
@@ -255,10 +255,10 @@ extension Router {
                      animated: animated)
     }
 
-    func presentError(_ errorMessage: String,
-                      actions: [UIAlertAction],
-                      sender: UIViewController?,
-                      animated: Bool) {
+    public func presentError(_ errorMessage: String,
+                             actions: [UIAlertAction],
+                             sender: UIViewController?,
+                             animated: Bool) {
         presentAlert(NSLocalizedString("Oops!", comment: ""),
                      message: errorMessage,
                      actions: actions,

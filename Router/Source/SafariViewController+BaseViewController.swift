@@ -5,30 +5,30 @@
 import UIKit
 import SafariServices
 
-struct SafariViewControllerOptions {
+public struct SafariViewControllerOptions {
     static let validSchema: [String] = ["http", "https"]
 
-    let URI: URL
+    public let URI: URL
 
-    private(set) weak var delegate: SFSafariViewControllerDelegate?
+    private(set) weak public var delegate: SFSafariViewControllerDelegate?
 
-    func canOpentViaSafariViewController() -> Bool {
+    public func canOpentViaSafariViewController() -> Bool {
         return ["http", "https"].contains(URI.scheme?.lowercased() ?? "")
     }
 }
 
-final class SafariViewController: SFSafariViewController {
+public final class SafariViewController: SFSafariViewController {
 
-    override func viewDidAppear(_ animated: Bool) {
+    public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
 }
 
 extension SFSafariViewController {
 
-    static func present(_ sender: UIViewController,
-                        router: RouterProtocol,
-                        options: SafariViewControllerOptions) -> SFSafariViewController? {
+    public static func present(_ sender: UIViewController,
+                               router: RouterProtocol,
+                               options: SafariViewControllerOptions) -> SFSafariViewController? {
         let controller: SafariViewController = SafariViewController(url: options.URI)
         controller.delegate = options.delegate
         return router.presentViewController(controller: controller,
