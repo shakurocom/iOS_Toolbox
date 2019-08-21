@@ -1,22 +1,27 @@
+//
+// Copyright (c) 2019 Shakuro (https://shakuro.com/)
+//
+//
+
 import Foundation
 
-protocol NetworkErrorConvertible {
+public protocol NetworkErrorConvertible {
     func networkError() -> NetworkError
 }
 
-struct NetworkError: PresentableError, NetworkErrorConvertible {
+public struct NetworkError: PresentableError, NetworkErrorConvertible {
 
-    enum Value {
+    public enum Value {
         case invalidHTTPStatusCode(Int)
         case apiError(status: Int, faultCode: String, errorDescription: String)
         case generalError(errorDescription: String)
     }
 
-    let requestURL: URL?
-    let value: Value
-    let errorDescription: String
+    public let requestURL: URL?
+    public let value: Value
+    public let errorDescription: String
 
-    var statusCode: Int? {
+    public var statusCode: Int? {
         switch value {
         case .invalidHTTPStatusCode(let status), .apiError(let status, _, _):
             return status
@@ -25,7 +30,7 @@ struct NetworkError: PresentableError, NetworkErrorConvertible {
         }
     }
 
-    init(value: Value, requestURL: URL?) {
+    public init(value: Value, requestURL: URL?) {
         self.value = value
         self.requestURL = requestURL
         switch value {
@@ -39,7 +44,7 @@ struct NetworkError: PresentableError, NetworkErrorConvertible {
         }
     }
 
-    func networkError() -> NetworkError {
+    public func networkError() -> NetworkError {
         return self
     }
 }

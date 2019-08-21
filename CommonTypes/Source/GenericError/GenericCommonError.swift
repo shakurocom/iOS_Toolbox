@@ -1,10 +1,15 @@
+//
+// Copyright (c) 2019 Shakuro (https://shakuro.com/)
+//
+//
+
 import Foundation
 
-enum GenericCommonError: Int, PresentableError {
+public enum GenericCommonError: Int, PresentableError {
     case notAuthorized = 101
     case unknown = 102
 
-    var errorDescription: String {
+    public var errorDescription: String {
         let dsc: String
         switch self {
         case .notAuthorized:

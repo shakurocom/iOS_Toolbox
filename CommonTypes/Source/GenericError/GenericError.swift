@@ -1,59 +1,64 @@
+//
+// Copyright (c) 2019 Shakuro (https://shakuro.com/)
+//
+//
+
 import Foundation
 
 // MARK: - PresentableError
 
-protocol PresentableError: Error {
+public protocol PresentableError: Error {
     var errorDescription: String {get}
 }
 
 // MARK: - GenericError
 
-typealias DefaultGenericError = GenericError<ErrorInterpreter>
+public typealias DefaultGenericError = GenericError<ErrorInterpreter>
 
-protocol GenericErrorProtocol: PresentableError {
+public protocol GenericErrorProtocol: PresentableError {
     var value: Error {get}
     var errorDescription: String {get}
 
     func getValue<T>() -> T?
 }
 
-struct GenericError<Interpreter: ErrorInterpreterProtocol>: GenericErrorProtocol {
+public struct GenericError<Interpreter: ErrorInterpreterProtocol>: GenericErrorProtocol {
 
-    let value: Error
+    public let value: Error
 
-    var errorDescription: String {
+    public var errorDescription: String {
         return Interpreter.generateDescription(self)
     }
 
-    init(_ value: Error) {
+    public init(_ value: Error) {
         self.value = value
     }
 
-    func getValue<T>() -> T? {
+    public func getValue<T>() -> T? {
         return value as? T ?? (value as? GenericErrorProtocol)?.getValue()
     }
 
-    func isNotFoundError() -> Bool {
+    public func isNotFoundError() -> Bool {
         return Interpreter.isNotFoundError(self)
     }
 
-    func isNotAuthorizedError() -> Bool {
+    public func isNotAuthorizedError() -> Bool {
         return Interpreter.isNotAuthorizedError(self)
     }
 
-    func isCancelledError() -> Bool {
+    public func isCancelledError() -> Bool {
         return Interpreter.isCancelledError(self)
     }
 
-    func isRequestTimedOutError() -> Bool {
+    public func isRequestTimedOutError() -> Bool {
         return Interpreter.isRequestTimedOutError(self)
     }
 
-    func isConnectionError() -> Bool {
+    public func isConnectionError() -> Bool {
         return Interpreter.isConnectionError(self)
     }
 
-    func isInternalServerError() -> Bool {
+    public func isInternalServerError() -> Bool {
         return Interpreter.isInternalServerError(self)
     }
 }
