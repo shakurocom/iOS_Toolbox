@@ -163,6 +163,7 @@ Pod::Spec.new do |s|
 
         sp.dependency 'Shakuro.iOS_Toolbox/CommonTypes'
         sp.dependency 'Shakuro.iOS_Toolbox/Extensions'
+        sp.dependency 'Shakuro.iOS_Toolbox/ContainerViewController'
         sp.source_files = 'Router/Source/**/*'
         sp.frameworks = 'UIKit'
 
