@@ -40,6 +40,13 @@ class ShortNumberFormatterTest: XCTestCase {
             let formattedValue = formatter.string(for: value)
             XCTAssertEqual(entry.1, formattedValue)
         }
+
+        //negative test
+        testSample.forEach { (entry) in
+            let value = -pow(10, entry.0)
+            let formattedValue = formatter.string(for: value)
+            XCTAssertEqual("-\(entry.1)", formattedValue)
+        }
     }
 
 }

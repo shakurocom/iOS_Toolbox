@@ -42,29 +42,28 @@ public final class ShortNumberFormatter {
         let shortValue: Double
         if absValue < Constant.step {
             suffixIndex = 0
-            shortValue = absValue
+            shortValue = value
         } else {
             let digitCount: Double = log10(absValue)
             if digitCount.isFinite {
                 let maxIndex = suffixes.count - 1
                 let maxDigitCount = Double(Constant.digitsInStep * maxIndex)
                 suffixIndex = digitCount < maxDigitCount ? Int(digitCount / Double(Constant.digitsInStep)) : maxIndex
-                shortValue = absValue/pow(Constant.step, Double(suffixIndex))
+                shortValue = value/pow(Constant.step, Double(suffixIndex))
             } else {
                 // fallback to original value without prefix
                 assertionFailure("\(type(of: self)) - \(#function): . log10(value) produced NaN or infinity")
                 suffixIndex = 0
-                shortValue = absValue
+                shortValue = value
             }
         }
-        let resultValue = value < 0 ? -shortValue : shortValue
         let suffix = suffixes[suffixIndex]
-        if let shortString: String = numberFormatter.string(for: resultValue) {
+        if let shortString: String = numberFormatter.string(for: shortValue) {
             return "\(shortString)\(suffix)"
         } else {
             // fallback to string interpolation
             assertionFailure("\(type(of: self)) - \(#function): . numberFormatter returned nil result")
-            return "\(resultValue)\(suffix)"
+            return "\(shortValue)\(suffix)"
         }
     }
 
