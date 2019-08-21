@@ -271,6 +271,6 @@ extension Router {
 
 private extension UIViewController {
     func lookupCustomContainerViewControllerPresening() -> ContainerViewControllerPresenting? {
-        return (self as? ContainerViewControllerPresenting) ?? self.customContainerViewController ?? self.parent?.lookupCustomContainerViewControllerPresening()
+        return (self as? ContainerViewControllerPresenting) ?? self.containerViewController ?? self.parent?.lookupCustomContainerViewControllerPresening()
     }
 }
