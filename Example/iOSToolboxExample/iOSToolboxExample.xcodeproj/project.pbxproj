@@ -122,6 +122,7 @@
 		CE484BFA22D369CA0065258E /* CDExampleEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE484BF822D369CA0065258E /* CDExampleEntity+CoreDataProperties.swift */; };
 		CE484BFC22D36A5E0065258E /* ExampleEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE484BFB22D36A5E0065258E /* ExampleEntity.swift */; };
 		CE484BFE22D38D630065258E /* CDEntity+Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE484BFD22D38D630065258E /* CDEntity+Update.swift */; };
+		CE63A5B923043BEF00EA296D /* GenericCommonError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE63A5B823043BEF00EA296D /* GenericCommonError.swift */; };
 		CE79BE0F22E9FA32000486B2 /* PredicateConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE79BE0822E9FA31000486B2 /* PredicateConvertible.swift */; };
 		CE79BE1022E9FA32000486B2 /* ManagedEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE79BE0922E9FA31000486B2 /* ManagedEntity.swift */; };
 		CE79BE1122E9FA32000486B2 /* PoliteCoreStorage+EntityIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE79BE0A22E9FA31000486B2 /* PoliteCoreStorage+EntityIdentifier.swift */; };
@@ -129,6 +130,9 @@
 		CE79BE1322E9FA32000486B2 /* SingleObjectFetchedResultController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE79BE0C22E9FA31000486B2 /* SingleObjectFetchedResultController.swift */; };
 		CE79BE1422E9FA32000486B2 /* FetchedResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE79BE0D22E9FA31000486B2 /* FetchedResultsController.swift */; };
 		CE79BE1522E9FA32000486B2 /* PoliteCoreStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE79BE0E22E9FA31000486B2 /* PoliteCoreStorage.swift */; };
+		CEEF88E922F45FA20080EFB6 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEF88E522F45FA20080EFB6 /* NetworkError.swift */; };
+		CEEF88EA22F45FA20080EFB6 /* GenericError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEF88E622F45FA20080EFB6 /* GenericError.swift */; };
+		CEEF88EB22F45FA20080EFB6 /* ErrorInterpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEF88E722F45FA20080EFB6 /* ErrorInterpreter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -265,6 +269,7 @@
 		CE484BF822D369CA0065258E /* CDExampleEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDExampleEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		CE484BFB22D36A5E0065258E /* ExampleEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleEntity.swift; sourceTree = "<group>"; };
 		CE484BFD22D38D630065258E /* CDEntity+Update.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDEntity+Update.swift"; sourceTree = "<group>"; };
+		CE63A5B823043BEF00EA296D /* GenericCommonError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericCommonError.swift; sourceTree = "<group>"; };
 		CE79BE0822E9FA31000486B2 /* PredicateConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PredicateConvertible.swift; sourceTree = "<group>"; };
 		CE79BE0922E9FA31000486B2 /* ManagedEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedEntity.swift; sourceTree = "<group>"; };
 		CE79BE0A22E9FA31000486B2 /* PoliteCoreStorage+EntityIdentifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PoliteCoreStorage+EntityIdentifier.swift"; sourceTree = "<group>"; };
@@ -272,6 +277,9 @@
 		CE79BE0C22E9FA31000486B2 /* SingleObjectFetchedResultController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleObjectFetchedResultController.swift; sourceTree = "<group>"; };
 		CE79BE0D22E9FA31000486B2 /* FetchedResultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchedResultsController.swift; sourceTree = "<group>"; };
 		CE79BE0E22E9FA31000486B2 /* PoliteCoreStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PoliteCoreStorage.swift; sourceTree = "<group>"; };
+		CEEF88E522F45FA20080EFB6 /* NetworkError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		CEEF88E622F45FA20080EFB6 /* GenericError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericError.swift; sourceTree = "<group>"; };
+		CEEF88E722F45FA20080EFB6 /* ErrorInterpreter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorInterpreter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -857,6 +865,7 @@
 		2FFD4C9922539BFE00B07EB6 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				CEEF88E422F45FA20080EFB6 /* GenericError */,
 				2FFD4C9A22539BFE00B07EB6 /* AsyncResult.swift */,
 			);
 			path = Source;
@@ -930,6 +939,17 @@
 				CE79BE0E22E9FA31000486B2 /* PoliteCoreStorage.swift */,
 			);
 			path = Source;
+			sourceTree = "<group>";
+		};
+		CEEF88E422F45FA20080EFB6 /* GenericError */ = {
+			isa = PBXGroup;
+			children = (
+				CEEF88E622F45FA20080EFB6 /* GenericError.swift */,
+				CEEF88E522F45FA20080EFB6 /* NetworkError.swift */,
+				CEEF88E722F45FA20080EFB6 /* ErrorInterpreter.swift */,
+				CE63A5B823043BEF00EA296D /* GenericCommonError.swift */,
+			);
+			path = GenericError;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1134,6 +1154,7 @@
 				2FF279B81FDEA77B00F0F769 /* ExampleUIStoryboardExtensionsViewController.swift in Sources */,
 				2F0516BC2077B1CA00ECB7FF /* ExamplePullToRefreshContentView.swift in Sources */,
 				2F0E297622C213E400CEF04D /* String+Hash.swift in Sources */,
+				CE63A5B923043BEF00EA296D /* GenericCommonError.swift in Sources */,
 				2F03DBAF22097F4F006E8404 /* EventHandler.swift in Sources */,
 				2FF279BF1FDEB34800F0F769 /* ImageProcessor.swift in Sources */,
 				2F73E5DF21B0123900B3F79F /* Settings.swift in Sources */,
@@ -1143,7 +1164,9 @@
 				2FF279AB1FDE855B00F0F769 /* DeviceOrientationListener.swift in Sources */,
 				2F5C2EE120317DC80031CD2D /* PullToRefreshView.swift in Sources */,
 				2F2C8BFE21AE7B7A00413ED3 /* OperationGroupResult.swift in Sources */,
+				CEEF88EA22F45FA20080EFB6 /* GenericError.swift in Sources */,
 				2F4A2DED1FE3AE3A003B9F27 /* ExampleVideoCameraViewController.swift in Sources */,
+				CEEF88E922F45FA20080EFB6 /* NetworkError.swift in Sources */,
 				2FF289471FDEB46C00F0F769 /* SimulatorCameraPreviewView.swift in Sources */,
 				2FF58C2C21D7545D003C534E /* TaskOperationWrapper.swift in Sources */,
 				2F0CC9B3204931E900A896B2 /* TaskManagerError.swift in Sources */,
@@ -1178,6 +1201,7 @@
 				2F0E297C22C213E400CEF04D /* Data+Hash.swift in Sources */,
 				2FB494FF204577550068D380 /* TaskManager.swift in Sources */,
 				2F2DBABD205A87D4000AFC0F /* ExampleLabelsViewController.swift in Sources */,
+				CEEF88EB22F45FA20080EFB6 /* ErrorInterpreter.swift in Sources */,
 				CE79BE1422E9FA32000486B2 /* FetchedResultsController.swift in Sources */,
 				CE79BE0F22E9FA32000486B2 /* PredicateConvertible.swift in Sources */,
 				2F0E297D22C213E400CEF04D /* UIApplication+BundleIdentifier.swift in Sources */,
