@@ -7,7 +7,7 @@ import Foundation
 import Alamofire
 
 extension AFError: NetworkErrorConvertible {
-    func networkError() -> NetworkError {
+    public func networkError() -> NetworkError {
         if let invalidCode = responseCode {
             return NetworkError(value: .invalidHTTPStatusCode(invalidCode), requestURL: url)
         }
