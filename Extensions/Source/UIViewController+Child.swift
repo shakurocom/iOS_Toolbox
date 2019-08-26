@@ -9,23 +9,26 @@ extension UIViewController {
 
     /**
      Helper method to add child view controller.
+
      - parameter childViewController: target child view controller to be added.
      - parameter notifyAbouAppearanceTransition: If true will perform beginAppearanceTransition() and endAppearanceTransition().
      - parameter targetContainerView: container view, where child should be added.
-     Should be in hierarchy of parent view controller's view.
-     If `nil` - parent's view will be used.
+            Should be in hierarchy of parent view controller's view.
+            If `nil` - parent's view will be used.
      - parameter belowSubview: child will be added just below this view (among it's siblings).
-     If `nil` - will be added as top subview.
+            If `nil` - will be added as top subview.
      - parameter animationDuration: duration of animation (if any).
      - parameter animations: block for transition animations.
-     If `nil` - whole process will not be animated.
+            If `nil` - whole process will not be animated.
+     - parameter completion: completion block.
      */
     public func addChildViewController(_ childViewController: UIViewController,
                                        notifyAboutAppearanceTransition: Bool,
                                        targetContainerView: UIView? = nil,
                                        belowSubview: UIView? = nil,
                                        animationDuration: TimeInterval = 0.25,
-                                       animations: ((_ containerView: UIView, _ childView: UIView) -> Void)? = nil) {
+                                       animations: ((_ containerView: UIView, _ childView: UIView) -> Void)? = nil,
+                                       completion: (() -> Void)? = nil) {
         addChild(childViewController)
 
         let containerView: UIView = targetContainerView ?? view
@@ -53,6 +56,7 @@ extension UIViewController {
                         childViewController.endAppearanceTransition()
                     }
                     childViewController.didMove(toParent: self)
+                    completion?()
 
             })
         } else {
@@ -60,7 +64,7 @@ extension UIViewController {
                 childViewController.endAppearanceTransition()
             }
             childViewController.didMove(toParent: self)
-
+            completion?()
         }
     }
 

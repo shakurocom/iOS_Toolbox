@@ -377,7 +377,7 @@ extension DraggableDetailsOverlayViewController: UIGestureRecognizerDelegate {
         guard recognizer === dragGestureRecognizer, !view.isHidden else {
             return
         }
-        let translationY: CGFloat = dragGestureRecognizer.translation(in: dragGestureRecognizer.view).y
+        let translationY = dragGestureRecognizer.translation(in: dragGestureRecognizer.view).y
         let velocity = dragGestureRecognizer.velocity(in: dragGestureRecognizer.view)
         dragGestureRecognizer.setTranslation(CGPoint.zero, in: dragGestureRecognizer.view)
         switch recognizer.state {
@@ -440,44 +440,42 @@ extension DraggableDetailsOverlayViewController: UIGestureRecognizerDelegate {
         case .ended,
              .cancelled,
              .failed:
-            if isContentScrollAtTop(contentScrollView: currentPanStartingContentScrollView) || translationY < 0 {
-                let currentOffset = draggableContainerShownTopConstraint.constant
-                if isSnapToAnchorsEnabled {
-                    let restOffset: CGFloat
-                    let shouldHide: Bool
-                    if snapCalculationUsesDeceleration {
-                        let deceleratedOffset = DecelerationHelper.project(
-                            value: currentOffset,
-                            initialVelocity: velocity.y / 1000.0, /* because this should be in milliseconds */
-                            decelerationRate: snapCalculationDecelerationRate.rawValue)
-                        if snapCalculationDecelerationCanSkipNextAnchor {
-                            let closestAnchor = closestAnchorOffset(targetOffset: deceleratedOffset)
-                            restOffset = closestAnchor.anchorOffset
-                            shouldHide = closestAnchor.shouldHide
-                        } else {
-                            let closestAnchor = closestAnchorOffset(targetOffset: deceleratedOffset, currentOffset: currentOffset)
-                            restOffset = closestAnchor.anchorOffset
-                            shouldHide = closestAnchor.shouldHide
-                        }
+            let currentOffset = draggableContainerShownTopConstraint.constant
+            if isSnapToAnchorsEnabled {
+                let restOffset: CGFloat
+                let shouldHide: Bool
+                if snapCalculationUsesDeceleration {
+                    let deceleratedOffset = DecelerationHelper.project(
+                        value: currentOffset,
+                        initialVelocity: velocity.y / 1000.0, /* because this should be in milliseconds */
+                        decelerationRate: snapCalculationDecelerationRate.rawValue)
+                    if snapCalculationDecelerationCanSkipNextAnchor {
+                        let closestAnchor = closestAnchorOffset(targetOffset: deceleratedOffset)
+                        restOffset = closestAnchor.anchorOffset
+                        shouldHide = closestAnchor.shouldHide
                     } else {
-                        let closestAnchor = closestAnchorOffset(targetOffset: currentOffset)
+                        let closestAnchor = closestAnchorOffset(targetOffset: deceleratedOffset, currentOffset: currentOffset)
                         restOffset = closestAnchor.anchorOffset
                         shouldHide = closestAnchor.shouldHide
                     }
-                    if isDragOffScreenToHideEnabled && shouldHide {
-                        hide(animated: currentOffset < screenBottomOffset)
-                    } else if currentOffset != restOffset {
-                        let isSpring = restOffset == cachedAnchorOffsets.first ? snapAnimationTopAnchorUseSpring : snapAnimationUseSpring
-                        animateToOffset(restOffset, isSpring: isSpring)
-                    }
-                } else if isDragOffScreenToHideEnabled && currentOffset >= screenBottomOffset {
-                    hide(animated: false)
+                } else {
+                    let closestAnchor = closestAnchorOffset(targetOffset: currentOffset)
+                    restOffset = closestAnchor.anchorOffset
+                    shouldHide = closestAnchor.shouldHide
                 }
-                currentPanStartingContentScrollView = nil
-                DispatchQueue.main.async(execute: { // to prevent deceleration behaviour in content's scroll
-                    self.setPreventContentScroll(false)
-                })
+                if isDragOffScreenToHideEnabled && shouldHide {
+                    hide(animated: currentOffset < screenBottomOffset)
+                } else if currentOffset != restOffset {
+                    let isSpring = restOffset == cachedAnchorOffsets.first ? snapAnimationTopAnchorUseSpring : snapAnimationUseSpring
+                    animateToOffset(restOffset, isSpring: isSpring)
+                }
+            } else if isDragOffScreenToHideEnabled && currentOffset >= screenBottomOffset {
+                hide(animated: false)
             }
+            currentPanStartingContentScrollView = nil
+            DispatchQueue.main.async(execute: { // to prevent deceleration behaviour in content's scroll
+                self.setPreventContentScroll(false)
+            })
             delegate?.draggableDetailsOverlayDidEndDragging(self)
 
         @unknown default:
