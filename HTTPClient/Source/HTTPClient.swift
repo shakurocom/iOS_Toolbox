@@ -5,7 +5,7 @@
 
 import Alamofire
 import Foundation
-
+//TODO: parse & serialize methods should throw error instead of returning nil
 public enum HTTPClientConstant {
     public static let defaultTimeoutInterval: TimeInterval = 60.0
 }
