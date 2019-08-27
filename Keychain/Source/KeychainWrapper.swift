@@ -152,7 +152,7 @@ public class KeychainWrapper {
         var searchQuery: [String: Any] = makeKeychainQuery(serviceName: serviceName, accessGroup: accessGroup)
         searchQuery[kSecMatchLimit as String] = kSecMatchLimitAll
         searchQuery[kSecReturnAttributes as String] = kCFBooleanTrue
-        searchQuery[kSecReturnData as String] = kCFBooleanFalse
+        searchQuery[kSecReturnData as String] = kCFBooleanTrue
         var queryResult: AnyObject?
         let status = SecItemCopyMatching(searchQuery as CFDictionary, &queryResult)
         switch status {
@@ -190,6 +190,17 @@ public class KeychainWrapper {
             throw realError
         }
         return resultItems
+    }
+
+    /**
+     - throws: KeychainWrapper.Error
+     */
+    public static func removeKeychainItems(serviceName: String, accessGroup: String? = nil) throws {
+        let searchQuery = makeKeychainQuery(serviceName: serviceName, accessGroup: accessGroup)
+        let status = SecItemDelete(searchQuery as CFDictionary)
+        guard status == noErr || status == errSecItemNotFound else {
+            throw KeychainWrapper.Error.deleteKeychainItemError(osStatus: status)
+        }
     }
 
     // MARK: - Private
