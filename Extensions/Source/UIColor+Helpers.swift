@@ -4,7 +4,7 @@
 
 import UIKit
 
-public extension UIColor {
+extension UIColor {
 
     /// Creates UIColor instance from random components in range
     ///
@@ -14,10 +14,10 @@ public extension UIColor {
     ///   - blueRange: The range for blue color component max range is 0..255
     ///   - alpha: The alpha value of color
     /// - Returns: A random color
-    static func random(redRange: ClosedRange<Int> = 0...255,
-                       greenRange: ClosedRange<Int> = 0...255,
-                       blueRange: ClosedRange<Int> = 0...255,
-                       alpha: CGFloat = 1.0) -> UIColor {
+    public static func random(redRange: ClosedRange<Int> = 0...255,
+                              greenRange: ClosedRange<Int> = 0...255,
+                              blueRange: ClosedRange<Int> = 0...255,
+                              alpha: CGFloat = 1.0) -> UIColor {
         let redValue =  CGFloat(Int.random(in: redRange)) / 255.0
         let greenValue  =  CGFloat(Int.random(in: greenRange)) / 255.0
         let blueValue  =  CGFloat(Int.random(in: blueRange)) / 255.0
@@ -27,10 +27,10 @@ public extension UIColor {
                        alpha: alpha)
     }
 
-    /// Inites UIColor with decimal representation
+    /// Init UIColor with decimal representation
     ///
     /// - Parameter decimalColor: A decimal representation color
-    convenience init(decimalColor: UInt32) {
+    public convenience init(decimalColor: UInt32) {
         let mask = 0x000000FF
         let rComponent: Int = Int(decimalColor >> 16) & mask
         let gComponent: Int = Int(decimalColor >> 8) & mask
@@ -43,10 +43,12 @@ public extension UIColor {
         self.init(red: red, green: green, blue: blue, alpha: 1.0)
     }
 
-    /// Inites UIColor with hexadecimal representation
+    /// Init UIColor with hexadecimal representation.
     ///
     /// - Parameter hex: A hexadecimal color string
-    convenience init(hex: String) {
+    ///
+    /// - returns: `nil` if string do not contain hex value.
+    public convenience init?(hex: String) {
         let validateHex: String = hex.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         let scanner: Scanner = Scanner(string: validateHex)
 
@@ -54,8 +56,20 @@ public extension UIColor {
             scanner.scanLocation = 1
         }
         var color: UInt32 = 0
-        scanner.scanHexInt32(&color)
+        guard scanner.scanHexInt32(&color) else {
+            return nil
+        }
         self.init(decimalColor: color)
+    }
+
+    /// Init UIColor with channels as UInt8.
+    ///
+    /// - parameter red: red channel
+    /// - parameter green: green channel
+    /// - parameter blue: blue channel
+    /// - parameter floatAlpha: alpha channel. Float. Default value is `1.0`.
+    public convenience init(uint8Red red: UInt8, green: UInt8, blue: UInt8, floatAlpha: CGFloat = 1.0) {
+        self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: floatAlpha)
     }
 
     /// Generates image from color
@@ -65,9 +79,9 @@ public extension UIColor {
     ///   - scale: UIImage.scale, Pass 0 for auto selection
     ///   - opaque: If true result image will be opaque
     /// - Returns: UIImage instance or nil
-    func generateImage(destinationSize: CGSize = CGSize(width: 1.0, height: 1.0),
-                       scale: CGFloat = 0,
-                       opaque: Bool = false) -> UIImage? {
+    public func generateImage(destinationSize: CGSize = CGSize(width: 1.0, height: 1.0),
+                              scale: CGFloat = 0,
+                              opaque: Bool = false) -> UIImage? {
         guard !destinationSize.equalTo(CGSize.zero) else {
             return nil
         }
